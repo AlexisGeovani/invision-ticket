@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.ModelConfiguration;
 
 namespace InVision_Ticket.Models.Mapping
@@ -25,6 +25,12 @@ namespace InVision_Ticket.Models.Mapping
             this.Property(t => t.Type).HasColumnName("Type");
             this.Property(t => t.CustomerID).HasColumnName("CustomerID");
             this.Property(t => t.Desciption).HasColumnName("Desciption");
+
+            // Relationships
+            this.HasRequired(t => t.Customer)
+                .WithMany(t => t.Systems)
+                .HasForeignKey(d => d.CustomerID);
+
         }
     }
 }

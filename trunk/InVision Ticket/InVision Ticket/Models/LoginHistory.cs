@@ -7,7 +7,9 @@ namespace InVision_Ticket.Models
     {
         public long LoginHistoryID { get; set; }
         public long LoginID { get; set; }
-        public Nullable<DateTime> DateTime { get; set; }
+        public DateTime DateTime { get; set; }
+        public string IPAddress { get; set; }
+        public string Browser { get; set; }
         public virtual Login Login { get; set; }
     }
 }

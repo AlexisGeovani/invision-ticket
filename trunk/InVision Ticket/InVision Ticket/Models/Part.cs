@@ -5,8 +5,11 @@ namespace InVision_Ticket.Models
 {
     public class Part
     {
-        public string Name { get; set; }
+        public string Summary { get; set; }
         public long PartID { get; set; }
-        public Nullable<decimal> Price { get; set; }
+        public Nullable<decimal> Cost { get; set; }
+        public decimal Charge { get; set; }
+        public long TicketID { get; set; }
+        public virtual Ticket Ticket { get; set; }
     }
 }

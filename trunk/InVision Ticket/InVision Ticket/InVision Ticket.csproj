@@ -6,7 +6,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{74F810DA-8E42-41D6-BE62-EACC90A6DED8}</ProjectGuid>
+    <ProjectGuid>{47EEE38D-C01C-4782-ABB3-E23BE46C4665}</ProjectGuid>
     <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -34,8 +34,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.2.2.0\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.4.1.10331.0\lib\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -62,21 +65,23 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\AuthenticationController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\LogoutController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserTypeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BillRate.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerContact.cs" />
     <Compile Include="Models\InVisionTicketContext.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\LoginHistory.cs" />
+    <Compile Include="Models\Mapping\BillRateMap.cs" />
     <Compile Include="Models\Mapping\CustomerContactMap.cs" />
     <Compile Include="Models\Mapping\CustomerMap.cs" />
     <Compile Include="Models\Mapping\LocationMap.cs" />
@@ -85,17 +90,20 @@
     <Compile Include="Models\Mapping\PartMap.cs" />
     <Compile Include="Models\Mapping\SystemMap.cs" />
     <Compile Include="Models\Mapping\TicketMap.cs" />
+    <Compile Include="Models\Mapping\TicketStatusMap.cs" />
+    <Compile Include="Models\Mapping\TicketTypeMap.cs" />
     <Compile Include="Models\Mapping\UpdateMap.cs" />
-    <Compile Include="Models\Mapping\UrgentUpdateUserMap.cs" />
     <Compile Include="Models\Mapping\UserTypeMap.cs" />
     <Compile Include="Models\Part.cs" />
     <Compile Include="Models\System.cs" />
     <Compile Include="Models\Ticket.cs" />
+    <Compile Include="Models\TicketStatu.cs" />
+    <Compile Include="Models\TicketType.cs" />
     <Compile Include="Models\Update.cs" />
-    <Compile Include="Models\UrgentUpdateUser.cs" />
-    <Compile Include="Scripts\UserType.cs" />
+    <Compile Include="Models\UserType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\PasswordHash.cs" />
+    <Compile Include="ViewModel\CustomerViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -160,7 +168,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Authentication\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -169,37 +177,19 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Customer\Details.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Customer\Create.cshtml" />
+    <Content Include="Views\Login\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Customer\Edit.cshtml" />
+    <Content Include="Views\Login\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Customer\Delete.cshtml" />
+    <Content Include="Views\Login\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\_AnonLayout.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Authentication\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\User\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\User\Details.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\User\Create.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\User\Edit.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\User\Delete.cshtml" />
+    <Content Include="Views\Login\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\UserType\Index.cshtml" />
@@ -233,7 +223,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>2832</DevelopmentServerPort>
+          <DevelopmentServerPort>1400</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

@@ -1,33 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using InVision_Ticket.Models;
 
 namespace InVision_Ticket.Controllers
-{ 
+{
     public class CustomerController : Controller
     {
-        private InVisionTicketContext db = new InVisionTicketContext();
-
         //
         // GET: /Customer/
 
-        public ViewResult Index()
+        public ActionResult Index()
         {
-            return View(db.Customers.ToList());
+            return View();
         }
 
         //
         // GET: /Customer/Details/5
 
-        public ViewResult Details(long id)
+        public ActionResult Details(int id)
         {
-            Customer customer = db.Customers.Find(id);
-            return View(customer);
+            return View();
         }
 
         //
@@ -42,67 +36,70 @@ namespace InVision_Ticket.Controllers
         // POST: /Customer/Create
 
         [HttpPost]
-        public ActionResult Create(Customer customer)
+        public ActionResult Create(FormCollection collection)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Customers.Add(customer);
-                db.SaveChanges();
-                return RedirectToAction("Index");  
-            }
+                // TODO: Add insert logic here
 
-            return View(customer);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
         
         //
         // GET: /Customer/Edit/5
  
-        public ActionResult Edit(long id)
+        public ActionResult Edit(int id)
         {
-            Customer customer = db.Customers.Find(id);
-            return View(customer);
+            return View();
         }
 
         //
         // POST: /Customer/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(Customer customer)
+        public ActionResult Edit(int id, FormCollection collection)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(customer).State = EntityState.Modified;
-                db.SaveChanges();
+                // TODO: Add update logic here
+ 
                 return RedirectToAction("Index");
             }
-            return View(customer);
+            catch
+            {
+                return View();
+            }
         }
 
         //
         // GET: /Customer/Delete/5
  
-        public ActionResult Delete(long id)
+        public ActionResult Delete(int id)
         {
-            Customer customer = db.Customers.Find(id);
-            return View(customer);
+            return View();
         }
 
         //
         // POST: /Customer/Delete/5
 
-        [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(long id)
-        {            
-            Customer customer = db.Customers.Find(id);
-            db.Customers.Remove(customer);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
+        [HttpPost]
+        public ActionResult Delete(int id, FormCollection collection)
         {
-            db.Dispose();
-            base.Dispose(disposing);
+            try
+            {
+                // TODO: Add delete logic here
+ 
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }

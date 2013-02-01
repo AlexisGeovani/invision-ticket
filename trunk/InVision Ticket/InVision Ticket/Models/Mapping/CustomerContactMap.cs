@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.ModelConfiguration;
 
 namespace InVision_Ticket.Models.Mapping
@@ -16,6 +16,7 @@ namespace InVision_Ticket.Models.Mapping
                 .HasMaxLength(255);
 
             this.Property(t => t.LastName)
+                .IsRequired()
                 .HasMaxLength(255);
 
             this.Property(t => t.AddressLine1)
@@ -31,6 +32,7 @@ namespace InVision_Ticket.Models.Mapping
                 .HasMaxLength(255);
 
             this.Property(t => t.Email)
+                .IsRequired()
                 .HasMaxLength(255);
 
             // Table & Column Mappings
@@ -46,6 +48,7 @@ namespace InVision_Ticket.Models.Mapping
             this.Property(t => t.Zip).HasColumnName("Zip");
             this.Property(t => t.CustomerID).HasColumnName("CustomerID");
             this.Property(t => t.Email).HasColumnName("Email");
+            this.Property(t => t.PromotionalEmails).HasColumnName("PromotionalEmails");
 
             // Relationships
             this.HasOptional(t => t.Customer)

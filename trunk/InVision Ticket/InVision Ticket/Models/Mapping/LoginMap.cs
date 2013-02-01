@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.ModelConfiguration;
 
 namespace InVision_Ticket.Models.Mapping
@@ -20,8 +20,10 @@ namespace InVision_Ticket.Models.Mapping
 
             this.Property(t => t.DisplayName)
                 .IsRequired()
-                .IsFixedLength()
-                .HasMaxLength(10);
+                .HasMaxLength(255);
+
+            this.Property(t => t.Theme)
+                .HasMaxLength(500);
 
             // Table & Column Mappings
             this.ToTable("Login");
@@ -31,6 +33,7 @@ namespace InVision_Ticket.Models.Mapping
             this.Property(t => t.UserTypeID).HasColumnName("UserTypeID");
             this.Property(t => t.LocationID).HasColumnName("LocationID");
             this.Property(t => t.LoginID).HasColumnName("LoginID");
+            this.Property(t => t.Theme).HasColumnName("Theme");
 
             // Relationships
             this.HasOptional(t => t.Location)
