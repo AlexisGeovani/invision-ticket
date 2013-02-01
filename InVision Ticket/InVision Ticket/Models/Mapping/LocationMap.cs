@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.ModelConfiguration;
 
 namespace InVision_Ticket.Models.Mapping
@@ -11,14 +11,14 @@ namespace InVision_Ticket.Models.Mapping
             this.HasKey(t => t.LocationID);
 
             // Properties
-            this.Property(t => t.Location1)
+            this.Property(t => t.StoreLocation)
                 .IsRequired()
                 .HasMaxLength(255);
 
             // Table & Column Mappings
             this.ToTable("Location");
             this.Property(t => t.LocationID).HasColumnName("LocationID");
-            this.Property(t => t.Location1).HasColumnName("Location");
+            this.Property(t => t.StoreLocation).HasColumnName("Location");
         }
     }
 }

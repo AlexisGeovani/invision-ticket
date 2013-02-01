@@ -16,6 +16,7 @@ namespace InVision_Ticket.Models
 		{
 		}
 
+        public DbSet<BillRate> BillRates { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<CustomerContact> CustomerContacts { get; set; }
         public DbSet<Location> Locations { get; set; }
@@ -24,12 +25,14 @@ namespace InVision_Ticket.Models
         public DbSet<Part> Parts { get; set; }
         public DbSet<System> Systems { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<TicketStatu> TicketStatus { get; set; }
+        public DbSet<TicketType> TicketTypes { get; set; }
         public DbSet<Update> Updates { get; set; }
-        public DbSet<UrgentUpdateUser> UrgentUpdateUsers { get; set; }
         public DbSet<UserType> UserTypes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Configurations.Add(new BillRateMap());
             modelBuilder.Configurations.Add(new CustomerMap());
             modelBuilder.Configurations.Add(new CustomerContactMap());
             modelBuilder.Configurations.Add(new LocationMap());
@@ -38,8 +41,9 @@ namespace InVision_Ticket.Models
             modelBuilder.Configurations.Add(new PartMap());
             modelBuilder.Configurations.Add(new SystemMap());
             modelBuilder.Configurations.Add(new TicketMap());
+            modelBuilder.Configurations.Add(new TicketStatusMap());
+            modelBuilder.Configurations.Add(new TicketTypeMap());
             modelBuilder.Configurations.Add(new UpdateMap());
-            modelBuilder.Configurations.Add(new UrgentUpdateUserMap());
             modelBuilder.Configurations.Add(new UserTypeMap());
         }
     }

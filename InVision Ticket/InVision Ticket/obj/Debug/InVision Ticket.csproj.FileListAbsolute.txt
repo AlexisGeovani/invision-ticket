@@ -1,14 +1,8 @@
-C:\Users\ptaylor\Desktop\InVision Ticket\InVision Ticket\obj\Debug\InVision Ticket.csprojResolveAssemblyReference.cache
-C:\Users\ptaylor\Desktop\InVision Ticket\InVision Ticket\bin\InVision Ticket.dll
-C:\Users\ptaylor\Desktop\InVision Ticket\InVision Ticket\bin\InVision Ticket.pdb
-C:\Users\ptaylor\Desktop\InVision Ticket\InVision Ticket\bin\EntityFramework.dll
-C:\Users\ptaylor\Desktop\InVision Ticket\InVision Ticket\bin\EntityFramework.xml
-C:\Users\ptaylor\Desktop\InVision Ticket\InVision Ticket\obj\Debug\InVision Ticket.dll
-C:\Users\ptaylor\Desktop\InVision Ticket\InVision Ticket\obj\Debug\InVision Ticket.pdb
-C:\Users\ptaylor\Desktop\invision-ticket\InVision Ticket\InVision Ticket\bin\InVision Ticket.dll
-C:\Users\ptaylor\Desktop\invision-ticket\InVision Ticket\InVision Ticket\bin\InVision Ticket.pdb
-C:\Users\ptaylor\Desktop\invision-ticket\InVision Ticket\InVision Ticket\bin\EntityFramework.dll
-C:\Users\ptaylor\Desktop\invision-ticket\InVision Ticket\InVision Ticket\bin\EntityFramework.xml
-C:\Users\ptaylor\Desktop\invision-ticket\InVision Ticket\InVision Ticket\obj\Debug\InVision Ticket.csprojResolveAssemblyReference.cache
-C:\Users\ptaylor\Desktop\invision-ticket\InVision Ticket\InVision Ticket\obj\Debug\InVision Ticket.dll
-C:\Users\ptaylor\Desktop\invision-ticket\InVision Ticket\InVision Ticket\obj\Debug\InVision Ticket.pdb
+C:\users\ptaylor\desktop\InVision Ticket\InVision Ticket\bin\InVision Ticket.dll
+C:\users\ptaylor\desktop\InVision Ticket\InVision Ticket\bin\InVision Ticket.pdb
+C:\users\ptaylor\desktop\InVision Ticket\InVision Ticket\bin\EntityFramework.dll
+C:\users\ptaylor\desktop\InVision Ticket\InVision Ticket\bin\EntityFramework.xml
+C:\users\ptaylor\desktop\InVision Ticket\InVision Ticket\obj\Debug\InVision Ticket.dll
+C:\users\ptaylor\desktop\InVision Ticket\InVision Ticket\obj\Debug\InVision Ticket.pdb
+C:\users\ptaylor\desktop\InVision Ticket\InVision Ticket\bin\AutoMapper.dll
+C:\users\ptaylor\desktop\InVision Ticket\InVision Ticket\bin\AutoMapper.xml

@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.ModelConfiguration;
 
 namespace InVision_Ticket.Models.Mapping

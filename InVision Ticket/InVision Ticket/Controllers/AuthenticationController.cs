@@ -8,21 +8,20 @@ using System.Web.Security;
 using InVision_Ticket.Utilities;
 namespace InVision_Ticket.Controllers
 {
-    public class AuthenticationController : Controller
-    {
-        //
-        // GET: /Authenticaton/
+	public class AuthenticationController : Controller
+	{
+		//
+		// GET: /Authenticaton/
 
-        public ActionResult Index()
-        {
-            return View();
-        }
+		public ActionResult Index()
+		{
+			return View();
+		}
 		[HttpPost]
 		public ActionResult Index(Login login)
 		{
 			
-
-			if (ModelState.IsValid)
+			if(true)//if (ModelState.IsValid)
 			{
 				using (InVisionTicketContext data = new InVisionTicketContext())
 				{
@@ -39,5 +38,5 @@ namespace InVision_Ticket.Controllers
 			ModelState.AddModelError("", "Invalid username or password.");
 			return View();
 		}
-    }
+	}
 }

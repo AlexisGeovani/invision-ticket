@@ -16,6 +16,7 @@ namespace InVision_Ticket.Models
         public Nullable<int> Zip { get; set; }
         public Nullable<long> CustomerID { get; set; }
         public string Email { get; set; }
+        public bool PromotionalEmails { get; set; }
         public virtual Customer Customer { get; set; }
     }
 }

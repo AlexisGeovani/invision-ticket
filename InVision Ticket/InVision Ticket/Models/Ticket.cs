@@ -7,6 +7,7 @@ namespace InVision_Ticket.Models
     {
         public Ticket()
         {
+            this.Parts = new List<Part>();
             this.Updates = new List<Update>();
         }
 
@@ -14,24 +15,33 @@ namespace InVision_Ticket.Models
         public string Summary { get; set; }
         public string Details { get; set; }
         public DateTime CreatedDateTime { get; set; }
-        public Nullable<long> SalesmenID { get; set; }
-        public Nullable<long> TechnicianID { get; set; }
+        public Nullable<long> SalesmenLoginID { get; set; }
+        public Nullable<long> TechnicianLoginID { get; set; }
         public Nullable<int> Priority { get; set; }
-        public Nullable<long> CustomerID { get; set; }
-        public string TicketType { get; set; }
-        public DateTime LastModifiedDateTime { get; set; }
-        public string Status { get; set; }
-        public string ResolvedDateTime { get; set; }
+        public long CustomerID { get; set; }
+        public long TicketTypeID { get; set; }
+        public Nullable<DateTime> LastModifiedDateTime { get; set; }
+        public long StatusID { get; set; }
+        public Nullable<DateTime> ResolvedDateTime { get; set; }
         public Nullable<DateTime> LastModified { get; set; }
-        public long CurrentlyEditByLogin { get; set; }
-        public long CreatedBy { get; set; }
-        public long LocationID { get; set; }
+        public Nullable<long> CurrentlyEditByLoginID { get; set; }
+        public long CreatedByLoginID { get; set; }
+        public long CreatedByCustomerID { get; set; }
+        public Nullable<long> LocationID { get; set; }
+        public Nullable<long> SystemID { get; set; }
+        public Nullable<long> BillRateID { get; set; }
+        public virtual BillRate BillRate { get; set; }
+        public virtual Customer CreatedByCustomer { get; set; }
         public virtual Customer Customer { get; set; }
-        public virtual Customer Customer1 { get; set; }
         public virtual Location Location { get; set; }
         public virtual Login Login { get; set; }
-        public virtual Login Login1 { get; set; }
-        public virtual Login Login2 { get; set; }
+        public virtual Login Technician { get; set; }
+        public virtual Login CreatedByLogin { get; set; }
+        public virtual Login CurrentlyEditByLogin { get; set; }
+        public virtual ICollection<Part> Parts { get; set; }
+        public virtual System System { get; set; }
+        public virtual TicketStatu TicketStatus { get; set; }
+        public virtual TicketType TicketType { get; set; }
         public virtual ICollection<Update> Updates { get; set; }
     }
 }

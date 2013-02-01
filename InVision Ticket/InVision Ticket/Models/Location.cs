@@ -8,12 +8,12 @@ namespace InVision_Ticket.Models
         public Location()
         {
             this.Logins = new List<Login>();
-            this.Tickets = new List<Ticket>();
+            this.LocationTickets = new List<Ticket>();
         }
 
         public long LocationID { get; set; }
-        public string Location1 { get; set; }
+        public string StoreLocation { get; set; }
         public virtual ICollection<Login> Logins { get; set; }
-        public virtual ICollection<Ticket> Tickets { get; set; }
+        public virtual ICollection<Ticket> LocationTickets { get; set; }
     }
 }
