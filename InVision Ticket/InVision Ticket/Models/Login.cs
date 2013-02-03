@@ -28,7 +28,7 @@ namespace InVision_Ticket.Models
         public long LoginID { get; set; }
         public string Theme { get; set; }
         public virtual Location Location { get; set; }
-		[Required]
+		//[Required]
         public virtual UserType UserType { get; set; }
         public virtual ICollection<LoginHistory> LoginHistories { get; set; }
         public virtual ICollection<Ticket> SalesmanTickets { get; set; }

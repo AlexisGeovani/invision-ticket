@@ -8,7 +8,7 @@ namespace InVision_Ticket.Models
         public long CustomerContactID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public int Phone { get; set; }
+        public long Phone { get; set; }
         public string AddressLine1 { get; set; }
         public string AddressLine2 { get; set; }
         public string City { get; set; }
