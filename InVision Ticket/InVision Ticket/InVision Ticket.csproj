@@ -105,6 +105,9 @@
     <Compile Include="Utilities\CustomerCustomerView.cs" />
     <Compile Include="Utilities\PasswordHash.cs" />
     <Compile Include="ViewModel\CustomerViewModel.cs" />
+    <Compile Include="ViewModel\TicketListViewModel.cs" />
+    <Compile Include="ViewModel\TicketViewModel.cs" />
+    <Compile Include="ViewModel\UpdateListView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
