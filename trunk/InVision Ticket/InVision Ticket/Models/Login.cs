@@ -17,7 +17,8 @@ namespace InVision_Ticket.Models
         }
 		[Required]
         public string Email { get; set; }
-		[Required]
+
+		[StringLength(1000, MinimumLength = 6, ErrorMessage = "field must be atleast 6 characters")]
         public string Password { get; set; }
 
 

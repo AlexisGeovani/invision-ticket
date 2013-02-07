@@ -38,7 +38,7 @@ namespace InVision_Ticket.Controllers
         public ActionResult Create()
         {
 
-            ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Location1");
+            ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "StoreLocation");
             ViewBag.UserTypeID = new SelectList(db.UserTypes, "UserTypeID", "UserType1");
             return View();
         } 
@@ -49,6 +49,11 @@ namespace InVision_Ticket.Controllers
         [HttpPost]
         public ActionResult Create(Login login)
         {
+			if (login.Password == "")
+			{
+				ModelState.AddModelError("", "Password Required");
+				return View();
+			}
 			if (ModelState.IsValid)
 			{
 				login.Password = PasswordHash.CreateHash(login.Password);
@@ -57,7 +62,7 @@ namespace InVision_Ticket.Controllers
 				return RedirectToAction("Index");
 			}
 
-            ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Location1", login.LocationID);
+            ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "StoreLocation", login.LocationID);
             ViewBag.UserTypeID = new SelectList(db.UserTypes, "UserTypeID", "UserType1", login.UserTypeID);
             return View(login);
         }
@@ -68,7 +73,8 @@ namespace InVision_Ticket.Controllers
         public ActionResult Edit(long id)
         {
             Login login = db.Logins.Find(id);
-            ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Location1", login.LocationID);
+			login.Password = "";
+			ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "StoreLocation", login.LocationID);
             ViewBag.UserTypeID = new SelectList(db.UserTypes, "UserTypeID", "UserType1", login.UserTypeID);
             return View(login);
         }
@@ -79,13 +85,24 @@ namespace InVision_Ticket.Controllers
         [HttpPost]
         public ActionResult Edit(Login login)
         {
+
             if (ModelState.IsValid)
             {
-                db.Entry(login).State = EntityState.Modified;
+				Login dbLogin = db.Logins.Find(login.LoginID);
+				if (!string.IsNullOrWhiteSpace(login.Password))
+				{
+					dbLogin.Password = PasswordHash.CreateHash(login.Password);
+				}
+				
+				dbLogin.Location = login.Location;
+				dbLogin.Email = login.Email;
+				dbLogin.DisplayName = login.DisplayName;
+				dbLogin.UserType = login.UserType;
+				dbLogin.Theme = login.Theme;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Location1", login.LocationID);
+			ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "StoreLocation", login.LocationID);
             ViewBag.UserTypeID = new SelectList(db.UserTypes, "UserTypeID", "UserType1", login.UserTypeID);
             return View(login);
         }
