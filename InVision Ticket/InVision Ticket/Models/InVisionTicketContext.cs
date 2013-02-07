@@ -29,6 +29,7 @@ namespace InVision_Ticket.Models
         public DbSet<TicketType> TicketTypes { get; set; }
         public DbSet<Update> Updates { get; set; }
         public DbSet<UserType> UserTypes { get; set; }
+	
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
