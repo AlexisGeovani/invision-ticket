@@ -3,7 +3,7 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace InVision_Ticket.Models.Mapping
 {
-    public class TicketStatusMap : EntityTypeConfiguration<TicketStatu>
+    public class TicketStatusMap : EntityTypeConfiguration<TicketStatus>
     {
         public TicketStatusMap()
         {

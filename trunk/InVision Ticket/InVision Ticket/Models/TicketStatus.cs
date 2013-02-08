@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace InVision_Ticket.Models
 {
-    public class TicketStatu
+    public class TicketStatus
     {
-        public TicketStatu()
+        public TicketStatus()
         {
             this.StatusTickets = new List<Ticket>();
         }

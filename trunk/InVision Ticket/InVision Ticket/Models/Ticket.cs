@@ -40,7 +40,7 @@ namespace InVision_Ticket.Models
         public virtual Login CurrentlyEditByLogin { get; set; }
         public virtual ICollection<Part> Parts { get; set; }
         public virtual System System { get; set; }
-        public virtual TicketStatu TicketStatus { get; set; }
+        public virtual TicketStatus TicketStatus { get; set; }
         public virtual TicketType TicketType { get; set; }
         public virtual ICollection<Update> Updates { get; set; }
     }

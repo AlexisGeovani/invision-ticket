@@ -105,7 +105,7 @@
     <Compile Include="Models\Part.cs" />
     <Compile Include="Models\System.cs" />
     <Compile Include="Models\Ticket.cs" />
-    <Compile Include="Models\TicketStatu.cs" />
+    <Compile Include="Models\TicketStatus.cs" />
     <Compile Include="Models\TicketType.cs" />
     <Compile Include="Models\Update.cs" />
     <Compile Include="Models\UserType.cs" />
@@ -114,6 +114,7 @@
     <Compile Include="Utilities\PasswordHash.cs" />
     <Compile Include="ViewModel\CustomerViewModel.cs" />
     <Compile Include="ViewModel\TicketListViewModel.cs" />
+    <Compile Include="ViewModel\TicketView.cs" />
     <Compile Include="ViewModel\TicketViewModel.cs" />
     <Compile Include="ViewModel\UpdateListView.cs" />
   </ItemGroup>

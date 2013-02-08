@@ -25,7 +25,7 @@ namespace InVision_Ticket.Models
         public DbSet<Part> Parts { get; set; }
         public DbSet<System> Systems { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
-        public DbSet<TicketStatu> TicketStatus { get; set; }
+        public DbSet<TicketStatus> TicketStatus { get; set; }
         public DbSet<TicketType> TicketTypes { get; set; }
         public DbSet<Update> Updates { get; set; }
         public DbSet<UserType> UserTypes { get; set; }
