@@ -70,7 +70,7 @@ namespace InVision_Ticket.Controllers
 									join tl in db.Logins on t.TechnicianLoginID equals tl.LoginID
 									join cl in db.Logins on t.CreatedByLoginID equals cl.LoginID
 									where t.TicketID == id
-									select new { ticket = t, br.TicketBillRate, ts.TicketStatus, tt.TicketType1,
+									select new { ticket = t, br.TicketBillRate, ts.Status, tt.TicketType1,
 										c.CustomerName, cc.Phone, c.BusinessCustomer, cc.Email, 
 										Salesman = sl.DisplayName, Technician = tl.DisplayName, 
 										Createdby = cl.DisplayName }

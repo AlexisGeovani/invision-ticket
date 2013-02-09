@@ -11,14 +11,14 @@ namespace InVision_Ticket.Models.Mapping
             this.HasKey(t => t.TicketStatusID);
 
             // Properties
-            this.Property(t => t.TicketStatus)
+            this.Property(t => t.Status)
                 .IsRequired()
                 .HasMaxLength(255);
 
             // Table & Column Mappings
             this.ToTable("TicketStatus");
             this.Property(t => t.TicketStatusID).HasColumnName("TicketStatusID");
-            this.Property(t => t.TicketStatus).HasColumnName("TicketStatus");
+            this.Property(t => t.Status).HasColumnName("TicketStatus");
         }
     }
 }
