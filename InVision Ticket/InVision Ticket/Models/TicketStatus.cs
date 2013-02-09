@@ -11,7 +11,7 @@ namespace InVision_Ticket.Models
         }
 
         public long TicketStatusID { get; set; }
-        public string TicketStatus { get; set; }
+        public string Status { get; set; }
         public virtual ICollection<Ticket> StatusTickets { get; set; }
     }
 }
