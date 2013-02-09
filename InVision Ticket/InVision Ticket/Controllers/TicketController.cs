@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using InVision_Ticket.Models;
+using InVision_Ticket.ViewModels;
+using System.Reflection;
 
 namespace InVision_Ticket.Controllers
 {
@@ -57,20 +59,28 @@ namespace InVision_Ticket.Controllers
         public ActionResult Edit(int id)
         {
 			using (InVisionTicketContext db = new InVisionTicketContext())
-			{ 
-				var QueryResults = (from t in db.Tickets
+			{
+				var tquery = (from t in db.Tickets
 									join br in db.BillRates on t.BillRateID equals br.BillRateID
 									join ts in db.TicketStatus on t.StatusID equals ts.TicketStatusID
 									join tt in db.TicketTypes on t.TicketTypeID equals tt.TicketTypeID
 									join c in db.Customers on t.CustomerID equals c.CustomerID
 									join cc in db.CustomerContacts on c.CustomerID equals cc.CustomerID
-									join l in db.Logins on t.SalesmenLoginID equals l.LoginID
-									join 
-					
-					)
-			
-			
-
+									join sl in db.Logins on t.SalesmenLoginID equals sl.LoginID
+									join tl in db.Logins on t.TechnicianLoginID equals tl.LoginID
+									join cl in db.Logins on t.CreatedByLoginID equals cl.LoginID
+									where t.TicketID == id
+									select new { ticket = t, br.TicketBillRate, ts.TicketStatus, tt.TicketType1,
+										c.CustomerName, cc.Phone, c.BusinessCustomer, cc.Email, 
+										Salesman = sl.DisplayName, Technician = tl.DisplayName, 
+										Createdby = cl.DisplayName }
+									).SingleOrDefault();
+				TicketView vm = new TicketView();
+				if (tquery != null)
+				{
+					vm.TicketID = id;
+					vm.TicketStatus = tquery.ticket.TicketStatus;
+				}
 				return View();
 			}
 		}

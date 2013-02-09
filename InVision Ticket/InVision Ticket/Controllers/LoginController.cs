@@ -122,8 +122,7 @@ namespace InVision_Ticket.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
         {            
-            Login login = db.Logins.Find(id);
-            db.Logins.Remove(login);
+            db.Logins.Remove(db.Logins.Find(id));
             db.SaveChanges();
             return RedirectToAction("Index");
         }

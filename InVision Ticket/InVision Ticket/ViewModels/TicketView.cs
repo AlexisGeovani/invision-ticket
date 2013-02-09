@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using InVision_Ticket.Models;
 
-namespace InVision_Ticket.ViewModel
+namespace InVision_Ticket.ViewModels
 {
 	public class TicketView
 	{

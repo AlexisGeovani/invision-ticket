@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace InVision_Ticket.ViewModel
+namespace InVision_Ticket.ViewModels
 {
 	public class UpdateListView
 	{
