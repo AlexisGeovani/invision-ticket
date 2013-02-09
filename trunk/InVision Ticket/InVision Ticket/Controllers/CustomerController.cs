@@ -39,10 +39,8 @@ namespace InVision_Ticket.Controllers
         {
 			using (InVisionTicketContext db = new InVisionTicketContext())
 			{
-				CustomerContact CC = new CustomerContact();
-				CC = db.CustomerContacts.Find(id);
-				Customer C = new Customer();
-				C = db.Customers.Find(CC.CustomerID);
+				CustomerContact CC = db.CustomerContacts.Find(id);
+				Customer C = db.Customers.Find(CC.CustomerID);
 				CustomerViewModel CVM = CustomerCustomerView.ConvertToCustomerViewModel(C, CC);
 				return View(CVM);
 			}
