@@ -23,10 +23,10 @@ namespace InVision_Ticket.Models
         public Nullable<DateTime> LastModifiedDateTime { get; set; }
         public long StatusID { get; set; }
         public Nullable<DateTime> ResolvedDateTime { get; set; }
-        public Nullable<DateTime> LastModified { get; set; }
+        public Nullable<long> LastModifiedBy { get; set; }
         public Nullable<long> CurrentlyEditByLoginID { get; set; }
-        public long CreatedByLoginID { get; set; }
-        public long CreatedByCustomerID { get; set; }
+        public Nullable<long> CreatedByLoginID { get; set; }
+        public Nullable<long> CreatedByCustomerID { get; set; }
         public Nullable<long> LocationID { get; set; }
         public Nullable<long> SystemID { get; set; }
         public Nullable<long> BillRateID { get; set; }
