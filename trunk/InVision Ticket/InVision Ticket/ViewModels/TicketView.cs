@@ -19,8 +19,8 @@ namespace InVision_Ticket.ViewModels
 		public long TicketTypeID { get; set; }
 		public Nullable<DateTime> LastModifiedDateTime { get; set; }
 		public Nullable<DateTime> ResolvedDateTime { get; set; }
-		public Nullable<DateTime> LastModified { get; set; }
 		public Nullable<long> CurrentlyEditByLoginID { get; set; }
+		public Nullable<long> LastModifiedBy { get; set; }
 		public long CreatedByLoginID { get; set; }
 		public long CreatedByCustomerID { get; set; }
 		public Nullable<long> LocationID { get; set; }
@@ -42,7 +42,7 @@ namespace InVision_Ticket.ViewModels
 
 
 
-
+		public List<Location> LocationList { get; set; }
 		public List<BillRate> BillRateList { get; set; }
 		public List<TicketType> TicketTypeList { get; set; }
 		public List<TicketStatus> TicketStatusList { get; set; }

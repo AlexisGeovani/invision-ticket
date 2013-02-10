@@ -45,7 +45,7 @@ namespace InVision_Ticket.Models.Mapping
             this.HasOptional(t => t.BillRate)
                 .WithMany(t => t.BillRateTickets)
                 .HasForeignKey(d => d.BillRateID);
-            this.HasRequired(t => t.CreatedByCustomer)
+            this.HasOptional(t => t.CreatedByCustomer)
                 .WithMany(t => t.CreatedByCustomerTickets)
                 .HasForeignKey(d => d.CreatedByCustomerID);
             this.HasRequired(t => t.Customer)
@@ -60,7 +60,7 @@ namespace InVision_Ticket.Models.Mapping
             this.HasOptional(t => t.Technician)
                 .WithMany(t => t.TechnicianTickets)
                 .HasForeignKey(d => d.TechnicianLoginID);
-            this.HasRequired(t => t.CreatedByLogin)
+            this.HasOptional(t => t.CreatedByLogin)
                 .WithMany(t => t.CreatedTickets)
                 .HasForeignKey(d => d.CreatedByLoginID);
             this.HasOptional(t => t.CurrentlyEditByLogin)

@@ -69,17 +69,45 @@ namespace InVision_Ticket.Controllers
 									join sl in db.Logins on t.SalesmenLoginID equals sl.LoginID
 									join tl in db.Logins on t.TechnicianLoginID equals tl.LoginID
 									join cl in db.Logins on t.CreatedByLoginID equals cl.LoginID
+									join lm in db.Logins on t.LastModifiedBy equals lm.LoginID
 									where t.TicketID == id
-									select new { ticket = t, br.TicketBillRate, ts.Status, tt.TicketType1,
-										c.CustomerName, cc.Phone, c.BusinessCustomer, cc.Email, 
-										Salesman = sl.DisplayName, Technician = tl.DisplayName, 
+									select new { ticket = t, billrate =br, ts.Status, tt.TicketType1,
+										cc.FirstName, cc.LastName,
+										c.CustomerName, cc.Phone, c.BusinessCustomer, cc.Email,
+										Salesman = sl.DisplayName, SalesmanID = sl.LoginID,
+										TechnicnanID = tl.LoginID, Technician = tl.DisplayName,
 										Createdby = cl.DisplayName }
 									).SingleOrDefault();
-				TicketView vm = new TicketView();
+				
 				if (tquery != null)
 				{
+					TicketView vm = new TicketView();
 					vm.TicketID = id;
 					vm.TicketStatus = tquery.ticket.TicketStatus;
+					vm.BillRate.TicketBillRate = tquery.billrate.TicketBillRate;
+					vm.Summary = tquery.ticket.Summary;
+					vm.Details = tquery.ticket.Details;
+					vm.CreatedDateTime = tquery.ticket.CreatedDateTime;
+					vm.SalesmenLoginID = tquery.ticket.SalesmenLoginID;
+					vm.TechnicianLoginID = tquery.ticket.TechnicianLoginID;
+					vm.Priority = tquery.ticket.Priority;
+					vm.CustomerID = tquery.ticket.CustomerID;
+					vm.TicketTypeID = tquery.ticket.TicketTypeID;
+					vm.LastModifiedDateTime = tquery.ticket.LastModifiedDateTime;
+					vm.ResolvedDateTime = tquery.ticket.ResolvedDateTime;
+					vm.LastModifiedBy = tquery.ticket.LastModifiedBy;
+					vm.CreatedByLoginID = tquery.ticket.CreatedByLoginID.Value;
+					vm.CreatedByCustomerID = tquery.ticket.CreatedByCustomerID.Value;
+					vm.LocationID = tquery.ticket.LocationID;
+					vm.SystemID = tquery.ticket.SystemID;
+					vm.SalesmanName = tquery.Salesman;
+					vm.TechnicianName = tquery.Technician;
+					if(tquery.BusinessCustomer.Value)
+					{
+						vm.CustomerContactName = tquery.
+					}
+
+
 				}
 				return View();
 			}
