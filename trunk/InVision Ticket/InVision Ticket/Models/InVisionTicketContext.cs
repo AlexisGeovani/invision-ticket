@@ -1,21 +1,22 @@
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using InVision_Ticket.Models.Mapping;
+using System.IO;
 
 namespace InVision_Ticket.Models
 {
     public class InVisionTicketContext : DbContext
     {
+		
         static InVisionTicketContext()
         {
             Database.SetInitializer<InVisionTicketContext>(null);
         }
 
 		public InVisionTicketContext()
-			: base("Name=InVisionTicketContext")
-		{
-		}
+			: base("Name=InVisionTicketContext"){}
 
+		public TextWriter Log { get; set; }
         public DbSet<BillRate> BillRates { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<CustomerContact> CustomerContacts { get; set; }

@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using InVision_Ticket.Models;
 using InVision_Ticket.ViewModels;
-using System.Reflection;
+using System.Reflection; 
 
 namespace InVision_Ticket.Controllers
 {
@@ -61,30 +61,34 @@ namespace InVision_Ticket.Controllers
 			using (InVisionTicketContext db = new InVisionTicketContext())
 			{
 				var tquery = (from t in db.Tickets
-									join br in db.BillRates on t.BillRateID equals br.BillRateID
-									join ts in db.TicketStatus on t.StatusID equals ts.TicketStatusID
-									join tt in db.TicketTypes on t.TicketTypeID equals tt.TicketTypeID
-									join c in db.Customers on t.CustomerID equals c.CustomerID
-									join cc in db.CustomerContacts on c.CustomerID equals cc.CustomerID
-									join sl in db.Logins on t.SalesmenLoginID equals sl.LoginID
-									join tl in db.Logins on t.TechnicianLoginID equals tl.LoginID
-									join cl in db.Logins on t.CreatedByLoginID equals cl.LoginID
-									join lm in db.Logins on t.LastModifiedBy equals lm.LoginID
+							  join br in db.BillRates on t.BillRateID equals br.BillRateID
+							  join ts in db.TicketStatus on t.StatusID equals ts.TicketStatusID
+							  join tt in db.TicketTypes on t.TicketTypeID equals tt.TicketTypeID
+							  join c in db.Customers on t.CustomerID equals c.CustomerID
+							  join cc in db.CustomerContacts on c.CustomerID equals cc.CustomerID
+							  join sl in db.Logins on t.SalesmenLoginID equals sl.LoginID
+							  join tl in db.Logins on t.TechnicianLoginID equals tl.LoginID
+							  join cl in db.Logins on t.CreatedByLoginID equals cl.LoginID
+							  //join lm in db.Logins on t.LastModifiedBy equals lm.LoginID
 									where t.TicketID == id
-									select new { ticket = t, billrate =br, ts.Status, tt.TicketType1,
-										cc.FirstName, cc.LastName,
+									select new { ticket = t, billrate = br, ticketstatus = ts, 
+										tickettype = tt,	cc.FirstName, cc.LastName,
 										c.CustomerName, cc.Phone, c.BusinessCustomer, cc.Email,
 										Salesman = sl.DisplayName, SalesmanID = sl.LoginID,
 										TechnicnanID = tl.LoginID, Technician = tl.DisplayName,
 										Createdby = cl.DisplayName }
-									).SingleOrDefault();
-				
+									).Single();
 				if (tquery != null)
 				{
+
 					TicketView vm = new TicketView();
 					vm.TicketID = id;
 					vm.TicketStatus = tquery.ticket.TicketStatus;
 					vm.BillRate.TicketBillRate = tquery.billrate.TicketBillRate;
+					vm.BillRate.BillRateDescription = tquery.billrate.BillRateDescription;
+					vm.TicketStatus = tquery.ticketstatus;
+					vm.BillRate = tquery.billrate;
+					vm.TicketType = tquery.tickettype;
 					vm.Summary = tquery.ticket.Summary;
 					vm.Details = tquery.ticket.Details;
 					vm.CreatedDateTime = tquery.ticket.CreatedDateTime;
@@ -102,12 +106,26 @@ namespace InVision_Ticket.Controllers
 					vm.SystemID = tquery.ticket.SystemID;
 					vm.SalesmanName = tquery.Salesman;
 					vm.TechnicianName = tquery.Technician;
-					if(tquery.BusinessCustomer.Value)
+					if (tquery.BusinessCustomer.Value)
 					{
-						vm.CustomerContactName = tquery.
+						vm.CustomerContactName = tquery.LastName + ", " + tquery.FirstName;
+						vm.BusinessName = tquery.CustomerName;
 					}
+					else
+					{
+						vm.CustomerContactName = tquery.CustomerName;
+					}
+					if (tquery.ticket.CreatedByCustomerID.HasValue)
+					{
+						vm.CreatedByCustomer = true;
+					}
+					else
+					{
+						vm.CreatedByLogin = tquery.Createdby;
+					}
+					vm.Phone = tquery.Phone;
 
-
+					return View(vm);
 				}
 				return View();
 			}
