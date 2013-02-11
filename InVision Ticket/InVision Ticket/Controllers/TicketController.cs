@@ -84,8 +84,8 @@ namespace InVision_Ticket.Controllers
 					TicketView vm = new TicketView();
 					vm.TicketID = id;
 					vm.TicketStatus = tquery.ticket.TicketStatus;
-					vm.BillRate.TicketBillRate = tquery.billrate.TicketBillRate;
-					vm.BillRate.BillRateDescription = tquery.billrate.BillRateDescription;
+					//vm.BillRate.TicketBillRate = tquery.billrate.TicketBillRate;
+					//vm.BillRate.BillRateDescription = tquery.billrate.BillRateDescription;
 					vm.TicketStatus = tquery.ticketstatus;
 					vm.BillRate = tquery.billrate;
 					vm.TicketType = tquery.tickettype;
@@ -100,8 +100,15 @@ namespace InVision_Ticket.Controllers
 					vm.LastModifiedDateTime = tquery.ticket.LastModifiedDateTime;
 					vm.ResolvedDateTime = tquery.ticket.ResolvedDateTime;
 					vm.LastModifiedBy = tquery.ticket.LastModifiedBy;
-					vm.CreatedByLoginID = tquery.ticket.CreatedByLoginID.Value;
-					vm.CreatedByCustomerID = tquery.ticket.CreatedByCustomerID.Value;
+					vm.Phone = tquery.Phone;
+					if (tquery.ticket.CreatedByLoginID.HasValue)
+					{
+						vm.CreatedByLoginID = tquery.ticket.CreatedByLoginID.Value;
+					}
+					else
+					{
+						vm.CreatedByCustomerID = tquery.ticket.CreatedByCustomerID.Value;
+					}
 					vm.LocationID = tquery.ticket.LocationID;
 					vm.SystemID = tquery.ticket.SystemID;
 					vm.SalesmanName = tquery.Salesman;
@@ -123,7 +130,8 @@ namespace InVision_Ticket.Controllers
 					{
 						vm.CreatedByLogin = tquery.Createdby;
 					}
-					vm.Phone = tquery.Phone;
+
+
 
 					return View(vm);
 				}
