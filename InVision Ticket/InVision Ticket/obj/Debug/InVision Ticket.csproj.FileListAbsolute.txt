@@ -20,3 +20,17 @@ C:\Users\ptaylor\Desktop\invision-ticket\InVision Ticket\InVision Ticket\obj\Deb
 C:\Users\ptaylor\Desktop\invision-ticket\InVision Ticket\InVision Ticket\obj\Debug\InVision Ticket.pdb
 C:\Users\ptaylor\Desktop\invision-ticket\InVision Ticket\InVision Ticket\obj\Debug\InVision Ticket.csprojResolveAssemblyReference.cache
 C:\Users\ptaylor\Desktop\invision-ticket\InVision Ticket\InVision Ticket\bin\System.Web.Mvc.xml
+C:\Users\Preston\Desktop\invision-ticket\trunk\InVision Ticket\InVision Ticket\obj\Debug\InVision Ticket.csprojResolveAssemblyReference.cache
+C:\Users\Preston\Desktop\invision-ticket\trunk\InVision Ticket\InVision Ticket\obj\Debug\InVision Ticket.dll
+C:\Users\Preston\Desktop\invision-ticket\trunk\InVision Ticket\InVision Ticket\obj\Debug\InVision Ticket.pdb
+C:\Users\Preston\Desktop\invision-ticket\trunk\InVision Ticket\InVision Ticket\bin\InVision Ticket.dll
+C:\Users\Preston\Desktop\invision-ticket\trunk\InVision Ticket\InVision Ticket\bin\InVision Ticket.pdb
+C:\Users\Preston\Desktop\invision-ticket\trunk\InVision Ticket\InVision Ticket\bin\AutoMapper.dll
+C:\Users\Preston\Desktop\invision-ticket\trunk\InVision Ticket\InVision Ticket\bin\EntityFramework.dll
+C:\Users\Preston\Desktop\invision-ticket\trunk\InVision Ticket\InVision Ticket\bin\System.Web.Abstractions.dll
+C:\Users\Preston\Desktop\invision-ticket\trunk\InVision Ticket\InVision Ticket\bin\System.Web.dll
+C:\Users\Preston\Desktop\invision-ticket\trunk\InVision Ticket\InVision Ticket\bin\System.Web.Mvc.dll
+C:\Users\Preston\Desktop\invision-ticket\trunk\InVision Ticket\InVision Ticket\bin\System.Web.Routing.dll
+C:\Users\Preston\Desktop\invision-ticket\trunk\InVision Ticket\InVision Ticket\bin\AutoMapper.xml
+C:\Users\Preston\Desktop\invision-ticket\trunk\InVision Ticket\InVision Ticket\bin\EntityFramework.xml
+C:\Users\Preston\Desktop\invision-ticket\trunk\InVision Ticket\InVision Ticket\bin\System.Web.Mvc.xml
