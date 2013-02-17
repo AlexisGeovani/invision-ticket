@@ -40,7 +40,7 @@ namespace InVision_Ticket.ViewModels
 		public virtual TicketStatus TicketStatus { get; set; }
 		public virtual TicketType TicketType { get; set; }
 
-
+        public List<Update> Updates { get; set; }
 
 		public List<Location> LocationList { get; set; }
 		public List<BillRate> BillRateList { get; set; }
