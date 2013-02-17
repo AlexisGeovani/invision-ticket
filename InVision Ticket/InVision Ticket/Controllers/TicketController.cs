@@ -131,8 +131,13 @@ namespace InVision_Ticket.Controllers
 						vm.CreatedByLogin = tquery.Createdby;
 					}
 
+                    vm.BillRateList = db.BillRates.ToList();
+                    vm.LocationList = db.Locations.ToList();
+                    vm.TicketStatusList = db.TicketStatus.ToList();
+                    vm.TicketTypeList = db.TicketTypes.ToList();
 
-
+                    vm.Updates = db.Updates.Where(x => x.TicketID == vm.TicketID).ToList();
+                    
 					return View(vm);
 				}
 				return View();
