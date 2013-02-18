@@ -69,6 +69,8 @@ namespace InVision_Ticket.Controllers
 							  join sl in db.Logins on t.SalesmenLoginID equals sl.LoginID
 							  join tl in db.Logins on t.TechnicianLoginID equals tl.LoginID
 							  join cl in db.Logins on t.CreatedByLoginID equals cl.LoginID
+                              join loc in db.Locations on t.LocationID equals loc.LocationID
+                              join sys in db.Systems on t.SystemID equals sys.SystemID
 							  //join lm in db.Logins on t.LastModifiedBy equals lm.LoginID
 									where t.TicketID == id
 									select new { ticket = t, billrate = br, ticketstatus = ts, 
@@ -76,7 +78,7 @@ namespace InVision_Ticket.Controllers
 										c.CustomerName, cc.Phone, c.BusinessCustomer, cc.Email,
 										Salesman = sl.DisplayName, SalesmanID = sl.LoginID,
 										TechnicnanID = tl.LoginID, Technician = tl.DisplayName,
-										Createdby = cl.DisplayName }
+										Createdby = cl.DisplayName, location = loc, system = sys }
 									).Single();
 				if (tquery != null)
 				{
@@ -92,8 +94,6 @@ namespace InVision_Ticket.Controllers
 					vm.Summary = tquery.ticket.Summary;
 					vm.Details = tquery.ticket.Details;
 					vm.CreatedDateTime = tquery.ticket.CreatedDateTime;
-					vm.SalesmenLoginID = tquery.ticket.SalesmenLoginID;
-					vm.TechnicianLoginID = tquery.ticket.TechnicianLoginID;
 					vm.Priority = tquery.ticket.Priority;
 					vm.CustomerID = tquery.ticket.CustomerID;
 					vm.TicketTypeID = tquery.ticket.TicketTypeID;
@@ -109,10 +109,8 @@ namespace InVision_Ticket.Controllers
 					{
 						vm.CreatedByCustomerID = tquery.ticket.CreatedByCustomerID.Value;
 					}
-					vm.LocationID = tquery.ticket.LocationID;
-					vm.SystemID = tquery.ticket.SystemID;
-					vm.SalesmanName = tquery.Salesman;
-					vm.TechnicianName = tquery.Technician;
+                    vm.Location = tquery.location;
+                    vm.System = tquery.system;
 					if (tquery.BusinessCustomer.Value)
 					{
 						vm.CustomerContactName = tquery.LastName + ", " + tquery.FirstName;
@@ -135,7 +133,7 @@ namespace InVision_Ticket.Controllers
                     vm.LocationList = db.Locations.ToList();
                     vm.TicketStatusList = db.TicketStatus.ToList();
                     vm.TicketTypeList = db.TicketTypes.ToList();
-
+                    vm.LoginList = db.Logins.Where(l => l.LocationID == vm.Location.LocationID).ToList();
                     vm.Updates = db.Updates.Where(x => x.TicketID == vm.TicketID).ToList();
                     
 					return View(vm);
