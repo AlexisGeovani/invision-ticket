@@ -66,84 +66,81 @@
             @Html.ValidationMessageFor(model => model.TicketType)
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.LastModifiedDateTime)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.LastModifiedDateTime)
-            @Html.ValidationMessageFor(model => model.LastModifiedDateTime)
-        </div>
+
+        @if (Model.LastModifiedDateTime.HasValue)
+        { //
+            <div class="editor-label">
+            Html.LabelFor(model => model.LastModifiedDateTime)
+            </div>
+            <div class="editor-field">
+            Html.DisplayFor(model => model.LastModifiedDateTime)
+            <br />
+            Html.Raw(TimeAgo.getStringTime(Model.LastModifiedDateTime.Value));
+            </div>
+        }
+
+        @if(Model.ResolvedDateTime.HasValue)
+        {
+            <div class="editor-label">
+                Html.LabelFor(model => model.ResolvedDateTime)
+            </div>
+            <div class="editor-field">
+                Html.DisplayFor(model => model.ResolvedDateTime)
+                Html.Raw(TimeAgo.getStringTime(Model.ResolvedDateTime.Value));
+            </div>
+        }
+        
+        @if(Model.LastModifiedBy.HasValue)
+        {
+            <div class="editor-label">
+                @Html.LabelFor(model => model.LastModifiedBy)
+            </div>
+            <div class="editor-field">
+                @Html.DisplayFor(model => model.LastModifiedBy)
+            </div>
+        }
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.ResolvedDateTime)
+            @Html.LabelFor(model => model.Location.StoreLocation)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.ResolvedDateTime)
-            @Html.ValidationMessageFor(model => model.ResolvedDateTime)
+            @Html.DropDownListFor(model => model.Location.LocationID, new SelectList(Model.LocationList, "LocationID", "StoreLocation"))
+            @Html.ValidationMessageFor(model => model.Location)
         </div>
 
+
+        <div class="system-info editor-field">
+            <div class="system-info-toggle-link">
+                <a id="system-info-toggle-link" href="javascript:void(0)" onclick="toggleSystemDiv();">+ System Info</a>
+            </div> 
+            <div id="system-info-toggle" class="system-info-toggle">
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.System.SystemID)
+                </div>
+                <div class="editor-field">
+                    @Html.DisplayFor(model => model.System.SystemID)
+                </div>
+                <div class="editor-field">
+                    @Html.DisplayFor(model => model.System.Desciption)
+                </div>
+            </div>
+        </div>
+     
         <div class="editor-label">
-            @Html.LabelFor(model => model.CurrentlyEditByLoginID)
+            @Html.LabelFor(model => model.SalesLogin.DisplayName)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.CurrentlyEditByLoginID)
-            @Html.ValidationMessageFor(model => model.CurrentlyEditByLoginID)
+            @Html.DropDownListFor(model => model.SalesLogin.LoginID, new SelectList(Model.LoginList, "LoginID", "DisplayName"))
+            @Html.ValidationMessageFor(model => model.SalesLogin)
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.LastModifiedBy)
+       <div class="editor-label">
+            @Html.LabelFor(model => model.TechLogin.DisplayName)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.LastModifiedBy)
-            @Html.ValidationMessageFor(model => model.LastModifiedBy)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CreatedByLoginID)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.CreatedByLoginID)
-            @Html.ValidationMessageFor(model => model.CreatedByLoginID)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CreatedByCustomerID)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.CreatedByCustomerID)
-            @Html.ValidationMessageFor(model => model.CreatedByCustomerID)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.LocationID)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.LocationID)
-            @Html.ValidationMessageFor(model => model.LocationID)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.SystemID)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.SystemID)
-            @Html.ValidationMessageFor(model => model.SystemID)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.SalesmanName)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.SalesmanName)
-            @Html.ValidationMessageFor(model => model.SalesmanName)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.TechnicianName)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.TechnicianName)
-            @Html.ValidationMessageFor(model => model.TechnicianName)
+            @Html.DropDownListFor(model => model.TechLogin.LoginID, new SelectList(Model.LoginList, "LoginID", "DisplayName"))
+            @Html.ValidationMessageFor(model => model.TechLogin)
         </div>
 
         <div class="editor-label">
@@ -203,3 +200,25 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+
+
+<script type="text/javascript">
+    function toggleSystemDiv()
+    {
+        var div = document.getElementById("system-info-toggle");
+        var link = document.getElementById("system-info-toggle-link");
+        if (div.style.display == "block") {
+            div.style.display = "none";
+            link.innerHTML = "+ System Info";
+        }
+        else
+        {
+            div.style.display = "block";
+            link.innerHTML = "- System Info";
+        }
+
+    }
+
+
+</script>

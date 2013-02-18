@@ -7,27 +7,27 @@ namespace InVision_Ticket.Utilities
 {
     public class TimeAgo
     {
-        public static string getStringTime(DateTime date)
+        public static string getStringTime(DateTime dt)
         {
-            TimeSpan span = System.DateTime.Now.Subtract(date);
+            TimeSpan span = System.DateTime.Now.Subtract(dt);
 
-            if (span.Hours < 17)
+            if (span.TotalHours < 17)
             {
-                if (span.Hours < 2)
+                if (span.TotalHours < 2)
                 {
-                    return (span.Minutes.ToString() + " Minutes Ago");
+                    return ((int)span.TotalMinutes + " Minutes Ago");
                     
                 }
-                return (span.Hours.ToString() + " Hours ago");
+                return ((int)span.TotalHours + " Hours ago");
 
             }
-            if (span.Hours > 16)
+            if (span.TotalHours > 16)
             {
-                if (span.Hours > 36)
+                if (span.TotalHours > 36)
                 {
-                    return (span.TotalDays.ToString());
+                    return ((int)span.TotalDays + " Days Ago");
                 }
-                return (span.Hours.ToString() + " Hours ago");
+                return ((int)span.TotalHours + " Hours ago");
 
             }
             return "";
