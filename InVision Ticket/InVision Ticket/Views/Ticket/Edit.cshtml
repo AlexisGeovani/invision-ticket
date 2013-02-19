@@ -2,7 +2,7 @@
 @using InVision_Ticket.Utilities
 @using System.Linq
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit Ticket: " + Model.TicketID;
 }
 
 <h2>Edit</h2>
@@ -143,6 +143,41 @@
             @Html.ValidationMessageFor(model => model.TechLogin)
         </div>
 
+
+        @{
+            if (Model.CreatedByCustomer)
+            {
+                Html.Raw("<div class=\"editor-field\"> Ticket created online by customer.</div>");
+
+
+            }
+            else 
+            { 
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.CreatedByLogin)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.CreatedByLogin)
+                    @Html.ValidationMessageFor(model => model.CreatedByLogin)
+                </div>
+            }
+        }
+
+
+        @{
+            if (Model.BusinessCustomer)
+            { 
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.BusinessName)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.BusinessName)
+                    @Html.ValidationMessageFor(model => model.BusinessName)
+                </div>
+    
+            }    
+            
+        }
         <div class="editor-label">
             @Html.LabelFor(model => model.CustomerContactName)
         </div>
@@ -151,37 +186,7 @@
             @Html.ValidationMessageFor(model => model.CustomerContactName)
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CreatedByLogin)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.CreatedByLogin)
-            @Html.ValidationMessageFor(model => model.CreatedByLogin)
-        </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CreatedByCustomer)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.CreatedByCustomer)
-            @Html.ValidationMessageFor(model => model.CreatedByCustomer)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.BusinessName)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.BusinessName)
-            @Html.ValidationMessageFor(model => model.BusinessName)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.BusinessCustomer)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.BusinessCustomer)
-            @Html.ValidationMessageFor(model => model.BusinessCustomer)
-        </div>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Phone)
@@ -190,7 +195,7 @@
             @Html.EditorFor(model => model.Phone)
             @Html.ValidationMessageFor(model => model.Phone)
         </div>
-
+        @Html.ActionLink("Customer Information", "Details", "Customer", new { id = Model.CustomerContactID }, new { target="_blank" })
         <p>
             <input type="submit" value="Save" />
         </p>
