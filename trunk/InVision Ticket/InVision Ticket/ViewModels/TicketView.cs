@@ -35,7 +35,7 @@ namespace InVision_Ticket.ViewModels
 		public string BusinessName { get; set; }
 		public bool BusinessCustomer { get; set; }
 		public long Phone { get; set; }
-
+        public long CustomerContactID { get; set; }
         public virtual Login SalesLogin { get; set; }
         public virtual Login TechLogin { get; set; }
         public virtual Models.System System { get; set; }
