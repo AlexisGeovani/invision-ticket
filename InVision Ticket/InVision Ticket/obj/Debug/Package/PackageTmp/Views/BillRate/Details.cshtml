@@ -1,0 +1,25 @@
+﻿@model InVision_Ticket.Models.BillRate
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>BillRate</legend>
+
+    <div class="display-label">TicketBillRate</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TicketBillRate)
+    </div>
+
+    <div class="display-label">BillRateDescription</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.BillRateDescription)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.BillRateID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
