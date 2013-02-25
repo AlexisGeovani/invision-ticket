@@ -26,7 +26,7 @@ namespace InVision_Ticket.Models
         public string DisplayName { get; set; }
         public long UserTypeID { get; set; }
         public Nullable<long> LocationID { get; set; }
-        public long LoginID { get; set; }
+        public int LoginID { get; set; }
         public string Theme { get; set; }
         public virtual Location Location { get; set; }
 		//[Required]

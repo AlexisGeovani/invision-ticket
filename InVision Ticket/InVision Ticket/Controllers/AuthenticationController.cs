@@ -25,11 +25,23 @@ namespace InVision_Ticket.Controllers
 			{
 				using (InVisionTicketContext data = new InVisionTicketContext())
 				{
+                    
 					if (data.Logins.Count(l => l.Email == login.Email) == 1)
 					{
-						if (PasswordHash.ValidatePassword(login.Password, data.Logins.SingleOrDefault(l => l.Email.ToLower() == login.Email.ToLower()).Password))
+                        var Login = data.Logins.SingleOrDefault(l => l.Email.ToLower() == login.Email.ToLower());
+						if (PasswordHash.ValidatePassword(login.Password, Login.Password))
 						{
-							FormsAuthentication.SetAuthCookie(login.Email, false);
+                            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
+                                2,
+                                Login.Email,
+                                DateTime.Now,
+                                DateTime.Now.AddHours(8),
+                                false,
+                                Login.Location.StoreLocation + ":" + Login.UserType.UserType1);
+                            string encryptedTicket = FormsAuthentication.Encrypt(ticket);
+                            HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+							this.Response.Cookies.Add(cookie);
+                            //FormsAuthentication.SetAuthCookie(login.Email, false);
 							return RedirectToAction("Index", "Home");
 						}
 					}
