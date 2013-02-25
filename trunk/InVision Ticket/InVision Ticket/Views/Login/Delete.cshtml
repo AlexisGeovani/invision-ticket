@@ -1,24 +1,18 @@
-﻿@model InVision_Ticket.Models.Login
+﻿@model InVision_Ticket.ViewModels.LoginViewModel
 
 @{
     ViewBag.Title = "Delete";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Delete</h2>
 
 <h3>Are you sure you want to delete this?</h3>
 <fieldset>
-    <legend>Login</legend>
+    <legend>LoginViewModel</legend>
 
     <div class="display-label">Email</div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Email)
-    </div>
-
-    <div class="display-label">Password</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Password)
     </div>
 
     <div class="display-label">DisplayName</div>
@@ -26,19 +20,29 @@
         @Html.DisplayFor(model => model.DisplayName)
     </div>
 
-    <div class="display-label">UserType</div>
+    <div class="display-label">UserTypeID</div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.UserType.UserType1)
+        @Html.DisplayFor(model => model.UserTypeID)
     </div>
 
-    <div class="display-label">Location</div>
+    <div class="display-label">LocationID</div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.Location.StoreLocation)
+        @Html.DisplayFor(model => model.LocationID)
     </div>
 
     <div class="display-label">Theme</div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Theme)
+    </div>
+
+    <div class="display-label">StoreLocation</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.StoreLocation)
+    </div>
+
+    <div class="display-label">UserType</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UserType)
     </div>
 </fieldset>
 @using (Html.BeginForm()) {

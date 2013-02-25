@@ -15,8 +15,8 @@ namespace InVision_Ticket.Models
         public string Summary { get; set; }
         public string Details { get; set; }
         public DateTime CreatedDateTime { get; set; }
-        public Nullable<long> SalesmenLoginID { get; set; }
-        public Nullable<long> TechnicianLoginID { get; set; }
+        public Nullable<int> SalesmenLoginID { get; set; }
+        public Nullable<int> TechnicianLoginID { get; set; }
         public Nullable<int> Priority { get; set; }
         public long CustomerID { get; set; }
         public long TicketTypeID { get; set; }
@@ -24,8 +24,8 @@ namespace InVision_Ticket.Models
         public long StatusID { get; set; }
         public Nullable<DateTime> ResolvedDateTime { get; set; }
         public Nullable<long> LastModifiedBy { get; set; }
-        public Nullable<long> CurrentlyEditByLoginID { get; set; }
-        public Nullable<long> CreatedByLoginID { get; set; }
+        public Nullable<int> CurrentlyEditByLoginID { get; set; }
+        public Nullable<int> CreatedByLoginID { get; set; }
         public Nullable<long> CreatedByCustomerID { get; set; }
         public Nullable<long> LocationID { get; set; }
         public Nullable<long> SystemID { get; set; }

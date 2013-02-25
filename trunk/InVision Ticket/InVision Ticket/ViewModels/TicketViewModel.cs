@@ -6,7 +6,7 @@ using InVision_Ticket.Models;
 
 namespace InVision_Ticket.ViewModels
 {
-	public class TicketView
+	public class TicketViewModel
 	{
 		public long TicketID { get; set; }
 		public string Summary { get; set; }
@@ -34,7 +34,7 @@ namespace InVision_Ticket.ViewModels
 		public bool CreatedByCustomer { get; set; }
 		public string BusinessName { get; set; }
 		public bool BusinessCustomer { get; set; }
-		public long Phone { get; set; }
+		public string Phone { get; set; }
         public long CustomerContactID { get; set; }
         public virtual Login SalesLogin { get; set; }
         public virtual Login TechLogin { get; set; }

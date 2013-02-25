@@ -14,7 +14,7 @@ namespace InVision_Ticket.ViewModels
 		public Nullable<int> ActualMinutes { get; set; }
 		public DateTime ActivityDateTime { get; set; }
 		public Nullable<bool> Urgent { get; set; }
-		public long LoginID { get; set; }
+		public int LoginID { get; set; }
 		public string Login {get; set;}
 	}
 }

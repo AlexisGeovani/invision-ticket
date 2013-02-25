@@ -12,7 +12,7 @@ namespace InVision_Ticket.Models
         public Nullable<int> ActualMinutes { get; set; }
         public DateTime ActivityDateTime { get; set; }
         public Nullable<bool> Urgent { get; set; }
-        public long LoginID { get; set; }
+        public int LoginID { get; set; }
         public virtual Login Login { get; set; }
         public virtual Ticket Ticket { get; set; }
     }
