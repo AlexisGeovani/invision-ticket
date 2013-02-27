@@ -13,6 +13,16 @@
     <div class="display-field">
         @Html.DisplayFor(model => model.Status)
     </div>
+
+    <div class="display-label">Open</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Open)
+    </div>
+
+    <div class="display-label">AttentionRequired</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.AttentionRequired)
+    </div>
 </fieldset>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id=Model.TicketStatusID }) |

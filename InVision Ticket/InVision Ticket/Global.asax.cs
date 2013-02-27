@@ -46,7 +46,6 @@ namespace InVision_Ticket
             Mapper.CreateMap<Login, LoginViewModel>()
                 .ForMember(d => d.UserType, o => o.MapFrom(s => s.UserType.UserType1))
                 .ForMember(d => d.StoreLocation, o => o.MapFrom(s =>s.Location.StoreLocation));
-            Mapper.CreateMap<LoginViewModel, Login>();
             Mapper.CreateMap<Ticket, TicketViewModel>()
                 .ForMember(d => d.CreatedByLogin, o => o.MapFrom(s => s.CreatedByLogin.DisplayName))
                 .ForMember(d => d.CreatedByCustomer, o => o.MapFrom(s => s.CreatedByCustomer.CustomerName))
@@ -54,6 +53,9 @@ namespace InVision_Ticket
                 .ForMember(d => d.CustomerContactName, o => o.ResolveUsing<CustomerContactResolver>())
                 .ForMember(d => d.BusinessName, o => o.ResolveUsing<BusinessNameResolver>())
                 .ForMember(d => d.Phone, o => o.MapFrom(s=>s.Customer.CustomerContacts.FirstOrDefault().Phone.ToString().Insert(0, "(").Insert(4, ") ").Insert(9, "-")));
+            Mapper.CreateMap<Ticket, TicketListViewModel>()
+                .ForMember(d => d.BillRate, o => o.MapFrom(s => s.BillRate.TicketBillRate))
+                .ForMember(d => d.BillRateDescription, o => o.MapFrom(s => s.BillRate.BillRateDescription));
                 
 
 

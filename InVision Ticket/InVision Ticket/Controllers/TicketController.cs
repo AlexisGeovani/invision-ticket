@@ -25,10 +25,13 @@ namespace InVision_Ticket.Controllers
 
             using(InVisionTicketContext db = new InVisionTicketContext())
             {
-                
+                var ticketsq = db.Tickets.Where(t => t.TicketStatus.Open == true);
+                return View(Mapper.Map<List<Ticket>, List<TicketListViewModel>>(ticketsq.ToList()));
             }
+            
 
-            return View();
+
+         //   return View();
         }
 
 		////

@@ -12,6 +12,8 @@ namespace InVision_Ticket.Models
 
         public long TicketStatusID { get; set; }
         public string Status { get; set; }
+        public bool Open { get; set; }
+        public bool AttentionRequired { get; set; }
         public virtual ICollection<Ticket> StatusTickets { get; set; }
     }
 }
