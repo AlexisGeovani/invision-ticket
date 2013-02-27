@@ -275,21 +275,6 @@
     <Content Include="Views\BillRate\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\TicketStatus\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\TicketStatus\Details.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\TicketStatus\Create.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\TicketStatus\Edit.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\TicketStatus\Delete.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\TicketType\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -316,10 +301,17 @@
     <Content Include="Views\Login\ChangePassword.cshtml" />
     <Content Include="Views\Login\Create.cshtml" />
     <Content Include="Views\Login\Delete.cshtml" />
+    <Content Include="Views\TicketStatus\Index.cshtml" />
+    <Content Include="Views\TicketStatus\Details.cshtml" />
+    <Content Include="Views\TicketStatus\Create.cshtml" />
+    <Content Include="Views\TicketStatus\Edit.cshtml" />
+    <Content Include="Views\TicketStatus\Delete.cshtml" />
+    <Content Include="Views\Ticket\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Ticket\Edit.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
