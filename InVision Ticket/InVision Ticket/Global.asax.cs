@@ -55,7 +55,13 @@ namespace InVision_Ticket
                 .ForMember(d => d.Phone, o => o.MapFrom(s=>s.Customer.CustomerContacts.FirstOrDefault().Phone.ToString().Insert(0, "(").Insert(4, ") ").Insert(9, "-")));
             Mapper.CreateMap<Ticket, TicketListViewModel>()
                 .ForMember(d => d.BillRate, o => o.MapFrom(s => s.BillRate.TicketBillRate))
-                .ForMember(d => d.BillRateDescription, o => o.MapFrom(s => s.BillRate.BillRateDescription));
+                .ForMember(d => d.BillRateDescription, o => o.MapFrom(s => s.BillRate.BillRateDescription))
+                .ForMember(d => d.CustomerPhone, o => o.MapFrom(s => s.Customer.CustomerContacts.First().Phone))
+                .ForMember(d => d.CustomerName, o => o.MapFrom(s => s.Customer.CustomerName))
+                .ForMember(d => d.TicketType, o => o.MapFrom(s => s.TicketType.TicketType1))
+                .ForMember(d => d.CreatedBy, o => o.ResolveUsing<TicketCreatedByTicketListResolver>())
+                .ForMember(d => d.Technician, o => o.MapFrom(s => s.Technician.DisplayName))
+                .ForMember(d => d.LastModifiedDateTime, o=> o.MapFrom(s => s.LastModifiedDateTime.Value));
                 
 
 
@@ -70,6 +76,18 @@ namespace InVision_Ticket
             return source.Customer.CustomerName;
         
         }
+    }
+    public class TicketCreatedByTicketListResolver : ValueResolver<Ticket, string>
+    {
+        protected override string ResolveCore(Ticket source)
+        {
+            if (source.CreatedByCustomer == null)
+            {
+                return source.CreatedByLogin.DisplayName;
+            }
+            return source.CreatedByCustomer.CustomerName;
+        }
+        
     }
     public class BusinessNameResolver : ValueResolver<Ticket, string>
     {

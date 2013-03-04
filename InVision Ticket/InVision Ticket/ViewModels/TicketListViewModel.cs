@@ -14,8 +14,7 @@ namespace InVision_Ticket.ViewModels
 		public Nullable<int> Priority { get; set; }
 		public Nullable<DateTime> LastModifiedDateTime { get; set; }
 		public Nullable<DateTime> ResolvedDateTime { get; set; }
-		public Nullable<DateTime> LastModified { get; set; }
-		public string Status { get; set; }
+		public string TicketStatus { get; set; }
 		public long CustomerID { get; set; }
 		public string CustomerPhone { get; set; }
 		public string CustomerName { get; set; }
