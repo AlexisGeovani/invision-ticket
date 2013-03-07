@@ -1,0 +1,4 @@
+C:\Users\ptaylor\Desktop\invision-ticket\Markdown Sharp\MarkdownSharp\bin\Debug\MarkdownSharp.dll
+C:\Users\ptaylor\Desktop\invision-ticket\Markdown Sharp\MarkdownSharp\bin\Debug\MarkdownSharp.pdb
+C:\Users\ptaylor\Desktop\invision-ticket\Markdown Sharp\MarkdownSharp\obj\Debug\MarkdownSharp.dll
+C:\Users\ptaylor\Desktop\invision-ticket\Markdown Sharp\MarkdownSharp\obj\Debug\MarkdownSharp.pdb

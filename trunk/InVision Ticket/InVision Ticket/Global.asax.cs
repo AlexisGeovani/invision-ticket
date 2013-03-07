@@ -61,7 +61,8 @@ namespace InVision_Ticket
                 .ForMember(d => d.TicketType, o => o.MapFrom(s => s.TicketType.TicketType1))
                 .ForMember(d => d.CreatedBy, o => o.ResolveUsing<TicketCreatedByTicketListResolver>())
                 .ForMember(d => d.Technician, o => o.MapFrom(s => s.Technician.DisplayName))
-                .ForMember(d => d.LastModifiedDateTime, o=> o.MapFrom(s => s.LastModifiedDateTime.Value));
+                .ForMember(d => d.LastModifiedDateTime, o=> o.MapFrom(s => s.LastModifiedDateTime))
+                .ForMember(d => d.TicketStatus, o => o.MapFrom(s => s.TicketStatus.Status));
                 
 
 

@@ -20,6 +20,7 @@ namespace InVision_Ticket.Models.Mapping
             this.Property(t => t.UpdateID).HasColumnName("UpdateID");
             this.Property(t => t.TicketID).HasColumnName("TicketID");
             this.Property(t => t.Comment).HasColumnName("Comment");
+            this.Property(t => t.CommentMarkDown).HasColumnName("CommentMarkDown");
             this.Property(t => t.BilledMinutes).HasColumnName("BilledMinutes");
             this.Property(t => t.ActualMinutes).HasColumnName("ActualMinutes");
             this.Property(t => t.ActivityDateTime).HasColumnName("ActivityDateTime");

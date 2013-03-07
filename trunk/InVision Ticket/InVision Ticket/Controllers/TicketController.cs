@@ -166,8 +166,9 @@ namespace InVision_Ticket.Controllers
         // POST: /Ticket/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(TicketViewModel ticket)
         {
+            var x = ticket.Updates;
             try
             {
                 // TODO: Add update logic here
