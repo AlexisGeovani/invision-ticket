@@ -11,6 +11,7 @@ namespace InVision_Ticket.ViewModels
 		public long TicketID { get; set; }
 		public string Summary { get; set; }
 		public string Details { get; set; }
+        public string DetailsMarkDown { get; set; }
 		public DateTime CreatedDateTime { get; set; }
         //public Nullable<long> SalesmenLoginID { get; set; }
         //public Nullable<long> TechnicianLoginID { get; set; }

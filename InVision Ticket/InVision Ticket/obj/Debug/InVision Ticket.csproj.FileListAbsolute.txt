@@ -35,3 +35,8 @@ C:\Users\Preston\Desktop\invision-ticket\trunk\InVision Ticket\InVision Ticket\b
 C:\Users\Preston\Desktop\invision-ticket\trunk\InVision Ticket\InVision Ticket\bin\EntityFramework.xml
 C:\Users\Preston\Desktop\invision-ticket\trunk\InVision Ticket\InVision Ticket\bin\System.Web.Mvc.xml
 C:\Users\ptaylor\Desktop\invision-ticket\InVision Ticket\InVision Ticket\bin\WebActivator.dll
+C:\Users\ptaylor\Desktop\invision-ticket\InVision Ticket\InVision Ticket\bin\MarkdownSharp.dll
+C:\Users\ptaylor\Desktop\invision-ticket\InVision Ticket\InVision Ticket\bin\MarkdownSharp.pdb
+C:\Users\ptaylor\Desktop\invision-ticket\InVision Ticket\InVision Ticket\bin\MarkdownSharp.xml
+C:\Users\ptaylor\Desktop\invision-ticket\InVision Ticket\InVision Ticket\bin\MarkdownDeep.dll
+C:\Users\ptaylor\Desktop\invision-ticket\InVision Ticket\InVision Ticket\bin\MarkdownDeep.pdb

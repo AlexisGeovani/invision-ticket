@@ -8,6 +8,7 @@ namespace InVision_Ticket.Models
         public long UpdateID { get; set; }
         public long TicketID { get; set; }
         public string Comment { get; set; }
+        public string CommentMarkDown { get; set; }
         public int BilledMinutes { get; set; }
         public Nullable<int> ActualMinutes { get; set; }
         public DateTime ActivityDateTime { get; set; }

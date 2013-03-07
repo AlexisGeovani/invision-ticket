@@ -18,9 +18,6 @@
             Summary
         </th>
         <th>
-            Details
-        </th>
-        <th>
             CreatedDateTime
         </th>
         <th>
@@ -31,9 +28,6 @@
         </th>
         <th>
             ResolvedDateTime
-        </th>
-        <th>
-            LastModified
         </th>
         <th>
             Status
@@ -92,19 +86,30 @@
             @Html.DisplayFor(modelItem => item.Summary)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Details)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.CreatedDateTime)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Priority)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.LastModifiedDateTime)
+            @if (item.LastModifiedDateTime.HasValue)
+            {
+                @Html.DisplayFor(modelItem => item.LastModifiedDateTime.Value)
+            }
+            else
+            {
+                @Html.Raw("-");
+            }
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ResolvedDateTime)
+             @if (item.ResolvedDateTime.HasValue)
+            {
+                @Html.DisplayFor(modelItem => item.ResolvedDateTime.Value)
+            }
+            else
+            {
+                @Html.Raw("-");
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.TicketStatus)
@@ -152,9 +157,7 @@
             @Html.DisplayFor(modelItem => item.TicketStatusAttentionRequired)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Edit", "Edit", new { id = item.TicketID }) 
         </td>
     </tr>
 }

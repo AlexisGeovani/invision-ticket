@@ -18,6 +18,9 @@ namespace InVision_Ticket.Models.Mapping
             this.Property(t => t.Details)
                 .IsRequired()
                 .HasMaxLength(4000);
+            this.Property(t => t.DetailsMarkDown)
+                .IsRequired()
+                .HasMaxLength(4000);
 
             // Table & Column Mappings
             this.ToTable("Ticket");
@@ -40,6 +43,7 @@ namespace InVision_Ticket.Models.Mapping
             this.Property(t => t.LocationID).HasColumnName("LocationID");
             this.Property(t => t.SystemID).HasColumnName("SystemID");
             this.Property(t => t.BillRateID).HasColumnName("BillRateID");
+            this.Property(t => t.DetailsMarkDown).HasColumnName("DetailsMarkDown");
 
             // Relationships
             this.HasOptional(t => t.BillRate)
