@@ -1,0 +1,107 @@
+﻿@model InVision_Ticket.ViewModels.TicketViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Create a Ticket</legend>
+
+        <div class="scrollable" id="CustomerSelectDiv">
+            <select size=@Model.Customers.Count() class="scrollableinside" id="CustomerSelect">
+                @foreach (var customer in Model.Customers)
+                { 
+                    <option  value=@customer.CustomerContacts.First().CustomerContactID>@customer.CustomerName</option>
+                }
+            </select>
+        </div>
+        <div id="CustomerAjax"></div>
+
+        <div class="editor-label ClearBoth">
+            @Html.LabelFor(model => model.Summary)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Summary)
+            @Html.ValidationMessageFor(model => model.Summary)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Details)
+        </div>
+            
+        <div class="editor-field">
+            <div class="mdd_preview" id="details_preview">@Model.Details</div>
+            <a id="mdd_link" href="javascript:void(0)" onclick="toggleDetailsEdit();">+ Edit Details</a>
+            <div class="mdd_toolbar" id="details_toolbar"></div>
+            @Html.TextAreaFor(model => model.DetailsMarkDown, new { @class = "mdd_editor", @id = "details_textarea"})
+		    <div class="mdd_resizer" id="details_resizer"></div>
+        </div>
+
+
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Priority)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Priority)
+            @Html.ValidationMessageFor(model => model.Priority)
+        </div>
+
+            @Html.HiddenFor(model => model.CustomerID)
+            @Html.ValidationMessageFor(model => model.CustomerID)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TicketTypeID)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TicketTypeID)
+            @Html.ValidationMessageFor(model => model.TicketTypeID)
+        </div>
+
+
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<script type="text/javascript">
+   window.onload=function() {
+       document.getElementById("CustomerSelect").onchange = function () {
+           $('#CustomerAjax').html("<img src=\"/Content/Loading.gif\" alt=\"Loading\" >");
+           var url = "/Customer/DetailsPartial/" + document.getElementById("CustomerSelect").value;
+
+           $.post(url, function (data) {
+                $('#CustomerAjax').html(data);
+           });
+        }
+     }
+</script>
+<style type="text/css">
+ .scrollable{
+   overflow: auto;
+   width: 200px; /* adjust this width depending to amount of text to display */
+   height: 300px; /* adjust height depending on number of options to display */
+   border: 1px silver solid;
+ }
+ .scrollable select{
+   border: none;
+ }
+ .scrollableinside
+ {
+     width: 200px;
+     height: 300px;
+ }
+     
+</style>

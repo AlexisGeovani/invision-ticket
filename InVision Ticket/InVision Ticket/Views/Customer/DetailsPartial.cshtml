@@ -1,0 +1,88 @@
+﻿@model InVision_Ticket.Models.CustomerViewModel
+@{
+    Layout = null;
+}
+    
+<fieldset>
+    <legend>CustomerViewModel</legend>
+
+@*    <div class="display-label">CustomerID</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CustomerID)
+    </div>*@
+
+    <div class="display-label">BusinessCustomer</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.BusinessCustomer)
+    </div>
+    <div class="display-label">CustomerName</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CustomerName)
+    </div>
+
+
+
+@*    <div class="display-label">CustomerContactID</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CustomerContactID)
+    </div>*@
+
+    <div class="display-label">FirstName</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FirstName)
+    </div>
+
+    <div class="display-label">LastName</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LastName)
+    </div>
+
+    <div class="display-label">PhoneString</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.PhoneString)
+    </div>
+
+    <div class="display-label">Address1</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Address1)
+    </div>
+
+    <div class="display-label">Address2</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Address2)
+    </div>
+
+    <div class="display-label">City</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.City)
+    </div>
+
+    <div class="display-label">State</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.State)
+    </div>
+
+    <div class="display-label">Zip</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Zip)
+    </div>
+
+    <div class="display-label">Email</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Email)
+    </div>
+
+    <div class="display-label">PromotionalEmails</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.PromotionalEmails)
+    </div>
+    <div class="display-label">CustomerNotes</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CustomerNotes)
+    </div>
+
+
+</fieldset>
+<p>
+    @Html.ActionLink("Edit Customer", "Edit", new { Model.CustomerContactID })
+</p>

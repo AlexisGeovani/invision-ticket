@@ -8,7 +8,8 @@ using InVision_Ticket.ViewModels;
 using System.Reflection;
 using AutoMapper;
 using System.Security.Principal;
-using System.Web.Security; 
+using System.Web.Security;
+using MarkdownDeep;
 
 namespace InVision_Ticket.Controllers
 {
@@ -47,7 +48,19 @@ namespace InVision_Ticket.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            using(InVisionTicketContext db = new InVisionTicketContext())
+            {
+                TicketViewModel vm = new TicketViewModel();
+
+                vm.BillRateList = db.BillRates.ToList();
+                vm.LocationList = db.Locations.ToList();
+                vm.TicketStatusList = db.TicketStatus.ToList();
+                vm.TicketTypeList = db.TicketTypes.ToList();
+                vm.LoginList = db.Logins.ToList();
+                vm.Updates = db.Updates.Where(x => x.TicketID == vm.TicketID).ToList();
+                vm.Customers = db.Customers.Include("CustomerContacts").Where(c => c.CustomerContacts.Count > 0).ToList();
+                return View(vm);
+            }
         } 
 
         //
@@ -76,9 +89,7 @@ namespace InVision_Ticket.Controllers
 			using (InVisionTicketContext db = new InVisionTicketContext())
 			{
                     var ticket = db.Tickets.Find(id);
-
-                    TicketViewModel vm = Mapper.Map<Ticket, TicketViewModel>(ticket);
-                
+#region OldShit
                     //var tquery = (from t in db.Tickets
                     //              join br in db.BillRates on t.BillRateID equals br.BillRateID
                     //              join ts in db.TicketStatus on t.StatusID equals ts.TicketStatusID
@@ -147,7 +158,11 @@ namespace InVision_Ticket.Controllers
                     //    else
                     //    {
                     //        vm.CreatedByLogin = tquery.Createdby;
-                    //    }
+                    //    } 
+                    #endregion
+                    TicketViewModel vm = Mapper.Map<Ticket, TicketViewModel>(ticket);
+          
+                    
                     
                     
                     vm.BillRateList = db.BillRates.ToList();
@@ -166,19 +181,13 @@ namespace InVision_Ticket.Controllers
         // POST: /Ticket/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(TicketViewModel ticket)
+        public ActionResult Edit(TicketViewModel vm)
         {
-            var x = ticket.Updates;
-            try
-            {
-                // TODO: Add update logic here
- 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            Markdown md = new Markdown();
+            vm.Details = md.Transform(vm.DetailsMarkDown);
+            Ticket ticket = Mapper.Map<TicketViewModel, Ticket>(vm);
+
+            return RedirectToAction("Index");
         }
 
         //

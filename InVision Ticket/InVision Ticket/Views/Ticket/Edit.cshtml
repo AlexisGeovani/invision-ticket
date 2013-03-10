@@ -1,4 +1,4 @@
-﻿@model InVision_Ticket.ViewModels.TicketViewModel
+﻿ @model InVision_Ticket.ViewModels.TicketViewModel
 @using InVision_Ticket.Utilities
 @using System.Linq
 @{
@@ -42,9 +42,6 @@
             <div class="mdd_toolbar" id="details_toolbar"></div>
             @Html.TextAreaFor(model => model.DetailsMarkDown, new { @class = "mdd_editor", @id = "details_textarea"})
 		    <div class="mdd_resizer" id="details_resizer"></div>
-
-@*            @Html.TextAreaFor(model => model.Details)
-            @Html.ValidationMessageFor(model => model.Details)*@
         </div>
 
         <div class="editor-label">
@@ -77,7 +74,7 @@
 
 
         @if (Model.LastModifiedDateTime.HasValue)
-        { //
+        { 
             <div class="editor-label">
             Html.LabelFor(model => model.LastModifiedDateTime)
             </div>

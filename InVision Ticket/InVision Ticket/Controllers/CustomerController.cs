@@ -34,7 +34,17 @@ namespace InVision_Ticket.Controllers
 
         //
         // GET: /Customer/Details/5
-
+        public ActionResult DetailsPartial(int id)
+        {
+            using (InVisionTicketContext db = new InVisionTicketContext())
+            {
+                CustomerContact CC = db.CustomerContacts.Find(id);
+                Customer C = db.Customers.Find(CC.CustomerID);
+                CustomerViewModel CVM = CustomerCustomerView.ConvertToCustomerViewModel(C, CC);
+                return View(CVM);
+            }
+        
+        }
         public ActionResult Details(int id)
         {
 			using (InVisionTicketContext db = new InVisionTicketContext())

@@ -71,6 +71,7 @@ namespace InVision_Ticket.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 db.Entry(location).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

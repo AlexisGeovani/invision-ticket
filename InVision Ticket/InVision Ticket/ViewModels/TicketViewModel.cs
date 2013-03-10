@@ -45,6 +45,8 @@ namespace InVision_Ticket.ViewModels
 		public virtual TicketStatus TicketStatus { get; set; }
 		public virtual TicketType TicketType { get; set; }
 
+        public List<Customer> Customers { get; set; }
+
         public List<Update> Updates { get; set; }
         public List<Login> LoginList { get; set; }
 

@@ -12,6 +12,14 @@ nav,
 section {
     display: block;
 }
+#CustomerSelectDiv
+{
+    float:left;
+}
+.ClearBoth
+{
+    clear:both;
+}
 
 /* Styles for basic forms
 -----------------------------------------------------------*/
