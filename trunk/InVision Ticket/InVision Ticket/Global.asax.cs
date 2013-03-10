@@ -7,6 +7,7 @@ using System.Web.Routing;
 using AutoMapper;
 using InVision_Ticket.Models;
 using InVision_Ticket.ViewModels;
+using InVision_Ticket.Utilities;
 namespace InVision_Ticket
 {
 	// Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -63,6 +64,10 @@ namespace InVision_Ticket
                 .ForMember(d => d.Technician, o => o.MapFrom(s => s.Technician.DisplayName))
                 .ForMember(d => d.LastModifiedDateTime, o=> o.MapFrom(s => s.LastModifiedDateTime))
                 .ForMember(d => d.TicketStatus, o => o.MapFrom(s => s.TicketStatus.Status));
+            //Mapper.CreateMap<TicketViewModel, Ticket>()
+            //    .ForMember(d => d.BillRate.TicketBillRate, o => o.MapFrom(s => s.BillRate.TicketBillRate))
+            //    .ForMember(d => d.Customer.CustomerContacts.First().Phone, o => o.MapFrom(s => stringManipulation.CleanPhone(s.Phone)))
+            //    .ForMember(d => d.
                 
 
 
