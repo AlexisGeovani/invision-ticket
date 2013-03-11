@@ -4,7 +4,7 @@
 }
     
 <fieldset>
-    <legend>CustomerViewModel</legend>
+    <legend>Selected Customer</legend>
 
 @*    <div class="display-label">CustomerID</div>
     <div class="display-field">
@@ -81,8 +81,8 @@
         @Html.DisplayFor(model => model.CustomerNotes)
     </div>
 
-
+    <p>
+        @Html.ActionLink("Edit Customer", "Edit", new { id = Model.CustomerContactID }, new { target="_blank" })
+    </p>
 </fieldset>
-<p>
-    @Html.ActionLink("Edit Customer", "Edit", new { Model.CustomerContactID })
-</p>
+

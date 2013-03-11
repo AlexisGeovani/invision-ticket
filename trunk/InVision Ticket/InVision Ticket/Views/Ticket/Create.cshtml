@@ -13,13 +13,18 @@
     @Html.ValidationSummary(true)
     <fieldset>
         <legend>Create a Ticket</legend>
-
+        Customer Search: <input type="text" id="SearchBox"/>
+        <br />
         <div class="scrollable" id="CustomerSelectDiv">
             <select size=@Model.Customers.Count() class="scrollableinside" id="CustomerSelect">
                 @foreach (var customer in Model.Customers)
                 { 
-                    <option  value=@customer.CustomerContacts.First().CustomerContactID>@customer.CustomerName</option>
+                    <option  value=@customer.CustomerContacts.First().CustomerContactID>@customer.CustomerName &#09;&emsp;&#09; @customer.CustomerContacts.First().Phone</option>
                 }
+            </select>
+        </div>
+        <div style="display: none;">
+            <select id="CustomerSelectHidden">
             </select>
         </div>
         <div id="CustomerAjax"></div>
@@ -37,11 +42,13 @@
         </div>
             
         <div class="editor-field">
-            <div class="mdd_preview" id="details_preview">@Model.Details</div>
-            <a id="mdd_link" href="javascript:void(0)" onclick="toggleDetailsEdit();">+ Edit Details</a>
+            
             <div class="mdd_toolbar" id="details_toolbar"></div>
             @Html.TextAreaFor(model => model.DetailsMarkDown, new { @class = "mdd_editor", @id = "details_textarea"})
-		    <div class="mdd_resizer" id="details_resizer"></div>
+            <div class="mdd_resizer" id="details_resizer"></div>
+            <div class="mdd_preview" id="details_preview">@Model.Details</div>
+		    
+
         </div>
 
 
@@ -54,17 +61,13 @@
             @Html.ValidationMessageFor(model => model.Priority)
         </div>
 
-            @Html.HiddenFor(model => model.CustomerID)
-            @Html.ValidationMessageFor(model => model.CustomerID)
-
         <div class="editor-label">
-            @Html.LabelFor(model => model.TicketTypeID)
+            @Html.LabelFor(model => model.TicketType)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.TicketTypeID)
-            @Html.ValidationMessageFor(model => model.TicketTypeID)
+            @Html.DropDownListFor(model => model.TicketTypeID, new SelectList(Model.TicketTypeList, "TicketTypeID", "TicketType1"))
+            @Html.ValidationMessageFor(model => model.TicketType)
         </div>
-
 
 
         <p>
@@ -78,15 +81,49 @@
 </div>
 <script type="text/javascript">
    window.onload=function() {
-       document.getElementById("CustomerSelect").onchange = function () {
+       document.getElementById("CustomerSelect").onclick = function () {
            $('#CustomerAjax').html("<img src=\"/Content/Loading.gif\" alt=\"Loading\" >");
            var url = "/Customer/DetailsPartial/" + document.getElementById("CustomerSelect").value;
 
            $.post(url, function (data) {
                 $('#CustomerAjax').html(data);
            });
-        }
-     }
+       }
+       var $options = $('#CustomerSelect option');
+
+       document.getElementById("SearchBox").onkeyup = function () {
+           var $HiddenOptions = $('#CustomerSelectHidden option');
+           $HiddenOptions.each(function (index, value) {
+               document.getElementById('CustomerSelect').appendChild(this);
+           });
+           var search = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+           var element = $options.filter(function () {
+               var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+               return !~text.indexOf(search);
+
+           }).appendTo(document.getElementById('CustomerSelectHidden'));
+           $('#CustomerSelect option').sort(Sort).appendTo('#CustomerSelect');
+
+       }
+
+
+       document.getElementById("details_textarea").style.display = 'block';
+       document.getElementById("details_resizer").style.display = 'block';
+       document.getElementById("details_toolbar").style.display = 'block';
+       $('#CustomerSelect option').sort(Sort).appendTo('#CustomerSelect');
+   }
+   function Sort(a, b)
+   {
+       return (a.innerHTML > b.innerHTML) ? 1 : -1;
+   }
+   
+
+
+
+   $("textarea.mdd_editor").MarkdownDeep({
+       help_location: "~/Content/mdd_help.html",
+
+   });
 </script>
 <style type="text/css">
  .scrollable{
