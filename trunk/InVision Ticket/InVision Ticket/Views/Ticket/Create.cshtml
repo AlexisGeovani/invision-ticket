@@ -12,7 +12,7 @@
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
     <fieldset>
-        <legend>Create a Ticket</legend>
+        <legend>Ticket Information</legend>
         Customer Search: <input type="text" id="SearchBox"/>
         <br />
         <div class="scrollable" id="CustomerSelectDiv">
@@ -23,10 +23,7 @@
                 }
             </select>
         </div>
-        <div style="display: none;">
-            <select id="CustomerSelectHidden">
-            </select>
-        </div>
+
         <div id="CustomerAjax"></div>
         <div class="scrollable" id="SystemSelectDiv">
             <select size="30" class="scrollableinside" id="SystemSelect">
@@ -86,37 +83,52 @@
 </div>
 <script type="text/javascript">
    window.onload=function() {
+
+   }
+   $(function () {
        document.getElementById("CustomerSelect").onclick = function () {
            $('#CustomerAjax').html("<img src=\"/Content/Loading.gif\" alt=\"Loading\" >");
            var url = "/Customer/DetailsPartial/" + document.getElementById("CustomerSelect").value;
 
            $.post(url, function (data) {
-                $('#CustomerAjax').html(data);
+               $('#CustomerAjax').html(data);
            });
        }
-       var $options = $('#CustomerSelect option');
-
-       document.getElementById("SearchBox").onkeyup = function () {
-           var $HiddenOptions = $('#CustomerSelectHidden option');
-           $HiddenOptions.each(function (index, value) {
-               document.getElementById('CustomerSelect').appendChild(this);
-           });
-           var search = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
-           var element = $options.filter(function () {
-               var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-               return !~text.indexOf(search);
-
-           }).appendTo(document.getElementById('CustomerSelectHidden'));
-           $('#CustomerSelect option').sort(Sort).appendTo('#CustomerSelect');
-
-       }
-
-
-       document.getElementById("details_textarea").style.display = 'block';
-       document.getElementById("details_resizer").style.display = 'block';
-       document.getElementById("details_toolbar").style.display = 'block';
        $('#CustomerSelect option').sort(Sort).appendTo('#CustomerSelect');
-   }
+       var customerSelect = $("#CustomerSelect"),
+           searchField = $("#SearchBox"),
+           options = customerSelect.find("option").clone(); // clone into memory
+
+       // generic method to clean names
+       function sanitize(string) {
+           return $.trim(string).replace(/\s+/g, ' ').toLowerCase();
+       }
+
+       // prepare the options by storing the
+       // "searchable" name as data on the element
+       options.each(function () {
+           var option = $(this);
+           option.data("sanitized", sanitize(option.text()));
+       });
+
+       // handle keyup
+       searchField.keyup(function (event) {
+           var term = sanitize($(this).val()),
+               matches;
+
+           // just show all options, if there's no search term
+           if (!term) {
+               customerSelect.empty().append(options.clone());
+               return;
+           }
+
+           // otherwise, show the options that match
+           matches = options.filter(function () {
+               return $(this).data("sanitized").indexOf(term) != -1;
+           }).clone();
+           customerSelect.empty().append(matches);
+       });
+   });
    function Sort(a, b)
    {
        return (a.innerHTML > b.innerHTML) ? 1 : -1;
