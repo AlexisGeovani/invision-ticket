@@ -16,7 +16,7 @@
         Customer Search: <input type="text" id="SearchBox"/>
         <br />
         <div class="scrollable" id="CustomerSelectDiv">
-            <select size=@Model.Customers.Count() class="scrollableinside" id="CustomerSelect">
+            <select size="30" class="scrollableinside" id="CustomerSelect">
                 @foreach (var customer in Model.Customers)
                 { 
                     <option  value=@customer.CustomerContacts.First().CustomerContactID>@customer.CustomerName &#09;&emsp;&#09; @customer.CustomerContacts.First().Phone</option>
@@ -28,6 +28,11 @@
             </select>
         </div>
         <div id="CustomerAjax"></div>
+        <div class="scrollable" id="SystemSelectDiv">
+            <select size="30" class="scrollableinside" id="SystemSelect">
+            </select>
+        </div>
+        <div id="SystemAjax"></div>
 
         <div class="editor-label ClearBoth">
             @Html.LabelFor(model => model.Summary)
