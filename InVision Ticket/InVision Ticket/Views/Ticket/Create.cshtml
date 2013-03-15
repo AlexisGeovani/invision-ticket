@@ -88,11 +88,16 @@
    $(function () {
        document.getElementById("CustomerSelect").onclick = function () {
            $('#CustomerAjax').html("<img src=\"/Content/Loading.gif\" alt=\"Loading\" >");
-           var url = "/Customer/DetailsPartial/" + document.getElementById("CustomerSelect").value;
+           var CustomerURL = "/Customer/DetailsPartial/" + document.getElementById("CustomerSelect").value;
 
-           $.post(url, function (data) {
+           $.post(CustomerURL, function (data) {
                $('#CustomerAjax').html(data);
            });
+           var SystemURL = "/System/SystemsList/" + document.getElementById("CustomerSelect").value;
+           $.post(SystemURL, function (data){
+                $('#SystemSelect').html(data);
+           });
+           
        }
        $('#CustomerSelect option').sort(Sort).appendTo('#CustomerSelect');
        var customerSelect = $("#CustomerSelect"),
