@@ -113,6 +113,7 @@
     <Compile Include="Controllers\LogoutController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controllers\SystemController.cs" />
     <Compile Include="Controllers\TicketController.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -328,6 +329,12 @@
     <Content Include="Views\Ticket\Index.cshtml" />
     <Content Include="Views\Ticket\Create.cshtml" />
     <Content Include="Views\Customer\DetailsPartial.cshtml" />
+    <Content Include="Views\System\Index.cshtml" />
+    <Content Include="Views\System\Details.cshtml" />
+    <Content Include="Views\System\Create.cshtml" />
+    <Content Include="Views\System\Edit.cshtml" />
+    <Content Include="Views\System\Delete.cshtml" />
+    <Content Include="Views\System\SystemsList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Ticket\Edit.cshtml" />
