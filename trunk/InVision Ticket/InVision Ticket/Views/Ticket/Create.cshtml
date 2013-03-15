@@ -86,53 +86,62 @@
 
    }
    $(function () {
-       document.getElementById("CustomerSelect").onclick = function () {
-           $('#CustomerAjax').html("<img src=\"/Content/Loading.gif\" alt=\"Loading\" >");
-           var CustomerURL = "/Customer/DetailsPartial/" + document.getElementById("CustomerSelect").value;
+    document.getElementById("CustomerSelect").onclick = function () {
+        $('#CustomerAjax').html("<img src=\"/Content/Loading.gif\" alt=\"Loading\" >");
+        var CustomerURL = "/Customer/DetailsPartial/" + document.getElementById("CustomerSelect").value;
 
-           $.post(CustomerURL, function (data) {
-               $('#CustomerAjax').html(data);
-           });
-           var SystemURL = "/System/SystemsList/" + document.getElementById("CustomerSelect").value;
-           $.post(SystemURL, function (data){
-                $('#SystemSelect').html(data);
-           });
+        $.post(CustomerURL, function (data) {
+            $('#CustomerAjax').html(data);
+        });
+        var SystemURL = "/System/SystemsList/" + document.getElementById("CustomerSelect").value;
+        $.post(SystemURL, function (data){
+            $('#SystemSelect').html(data);
+        });
            
-       }
-       $('#CustomerSelect option').sort(Sort).appendTo('#CustomerSelect');
-       var customerSelect = $("#CustomerSelect"),
-           searchField = $("#SearchBox"),
-           options = customerSelect.find("option").clone(); // clone into memory
+    }
+    document.getElementById("SystemSelect").onclick = function ()
+    {
+        $('#SystemAjax').html("<img src=\"/Content/Loading.gif\" alt=\"Loading\" >");
+        var SystemURL = "/System/DetailsPartial/" + document.getElementById("SystemSelect").value;
+        $.post(SystemURL, function (data){
+            $('#SystemAjax').html(data);
+        });
+    }
 
-       // generic method to clean names
-       function sanitize(string) {
-           return $.trim(string).replace(/\s+/g, ' ').toLowerCase();
-       }
+    $('#CustomerSelect option').sort(Sort).appendTo('#CustomerSelect');
+    var customerSelect = $("#CustomerSelect"),
+        searchField = $("#SearchBox"),
+        options = customerSelect.find("option").clone(); // clone into memory
 
-       // prepare the options by storing the
-       // "searchable" name as data on the element
-       options.each(function () {
-           var option = $(this);
-           option.data("sanitized", sanitize(option.text()));
-       });
+    // generic method to clean names
+    function sanitize(string) {
+        return $.trim(string).replace(/\s+/g, ' ').toLowerCase();
+    }
 
-       // handle keyup
-       searchField.keyup(function (event) {
-           var term = sanitize($(this).val()),
-               matches;
+    // prepare the options by storing the
+    // "searchable" name as data on the element
+    options.each(function () {
+        var option = $(this);
+        option.data("sanitized", sanitize(option.text()));
+    });
 
-           // just show all options, if there's no search term
-           if (!term) {
-               customerSelect.empty().append(options.clone());
-               return;
-           }
+    // handle keyup
+    searchField.keyup(function (event) {
+        var term = sanitize($(this).val()),
+            matches;
 
-           // otherwise, show the options that match
-           matches = options.filter(function () {
-               return $(this).data("sanitized").indexOf(term) != -1;
-           }).clone();
-           customerSelect.empty().append(matches);
-       });
+        // just show all options, if there's no search term
+        if (!term) {
+            customerSelect.empty().append(options.clone());
+            return;
+        }
+
+        // otherwise, show the options that match
+        matches = options.filter(function () {
+            return $(this).data("sanitized").indexOf(term) != -1;
+        }).clone();
+        customerSelect.empty().append(matches);
+    });
    });
    function Sort(a, b)
    {

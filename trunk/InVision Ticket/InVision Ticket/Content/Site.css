@@ -12,7 +12,7 @@ nav,
 section {
     display: block;
 }
-#CustomerSelectDiv
+#CustomerSelectDiv, #SystemSelectDiv
 {
     float:left;
 }

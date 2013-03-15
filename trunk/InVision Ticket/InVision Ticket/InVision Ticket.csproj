@@ -335,6 +335,7 @@
     <Content Include="Views\System\Edit.cshtml" />
     <Content Include="Views\System\Delete.cshtml" />
     <Content Include="Views\System\SystemsList.cshtml" />
+    <Content Include="Views\System\DetailsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Ticket\Edit.cshtml" />
