@@ -20,6 +20,11 @@ namespace InVision_Ticket.Controllers
             var x = systems.ToList();
             return View(systems.ToList());
         }
+        public ActionResult DetailsPartial(long id)
+        {
+            Models.System system = db.Systems.Find(id);
+            return View(system);
+        }
         //
         // GET: /System/
 
