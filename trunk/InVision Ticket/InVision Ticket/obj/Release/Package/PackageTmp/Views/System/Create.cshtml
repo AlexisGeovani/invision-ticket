@@ -1,4 +1,4 @@
-﻿@model InVision_Ticket.Models.TicketStatus
+﻿@model InVision_Ticket.Models.System
 
 @{
     ViewBag.Title = "Create";
@@ -12,30 +12,30 @@
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
     <fieldset>
-        <legend>TicketStatus</legend>
+        <legend>System</legend>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Status)
+            @Html.LabelFor(model => model.Type)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Status)
-            @Html.ValidationMessageFor(model => model.Status)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Open)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Open)
-            @Html.ValidationMessageFor(model => model.Open)
+            @Html.EditorFor(model => model.Type)
+            @Html.ValidationMessageFor(model => model.Type)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.AttentionRequired)
+            @Html.LabelFor(model => model.CustomerID, "Customer")
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.AttentionRequired)
-            @Html.ValidationMessageFor(model => model.AttentionRequired)
+            @Html.DropDownList("CustomerID", String.Empty)
+            @Html.ValidationMessageFor(model => model.CustomerID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Desciption)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Desciption)
+            @Html.ValidationMessageFor(model => model.Desciption)
         </div>
 
         <p>

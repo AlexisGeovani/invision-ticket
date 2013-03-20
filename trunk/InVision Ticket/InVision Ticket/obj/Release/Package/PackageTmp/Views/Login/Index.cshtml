@@ -1,8 +1,7 @@
-﻿@model IEnumerable<InVision_Ticket.Models.Login>
+﻿@model IEnumerable<InVision_Ticket.ViewModels.LoginViewModel>
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Index</h2>
@@ -16,19 +15,17 @@
             Email
         </th>
         <th>
-            Password
+            Display Name
         </th>
+
         <th>
-            DisplayName
-        </th>
-        <th>
-            UserType
+            Theme
         </th>
         <th>
             Location
         </th>
         <th>
-            Theme
+            User Type
         </th>
         <th></th>
     </tr>
@@ -39,24 +36,22 @@
             @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Password)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.DisplayName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserType.UserType1)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Location.StoreLocation)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Theme)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.LoginID }) |
+            @Html.DisplayFor(modelItem => item.StoreLocation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserType)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.LoginID }) |
             @Html.ActionLink("Details", "Details", new { id=item.LoginID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.LoginID })
+            @Html.ActionLink("Delete", "Delete", new { id=item.LoginID }) |
+            @Html.ActionLink("Change Password", "ChangePassword", new {id=item.LoginID})
         </td>
     </tr>
 }
