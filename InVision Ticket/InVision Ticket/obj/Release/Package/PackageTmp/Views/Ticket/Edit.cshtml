@@ -1,16 +1,18 @@
-﻿@model InVision_Ticket.ViewModels.TicketView
+﻿ @model InVision_Ticket.ViewModels.TicketViewModel
 @using InVision_Ticket.Utilities
 @using System.Linq
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit Ticket: " + Model.TicketID;
 }
 
 <h2>Edit</h2>
 
+
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true)
     <fieldset>
         <legend>Ticket</legend>
@@ -33,9 +35,13 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.Details)
         </div>
+            
         <div class="editor-field">
-            @Html.TextAreaFor(model => model.Details)
-            @Html.ValidationMessageFor(model => model.Details)
+            <div class="mdd_preview" id="details_preview">@Model.Details</div>
+            <a id="mdd_link" href="javascript:void(0)" onclick="toggleDetailsEdit();">+ Edit Details</a>
+            <div class="mdd_toolbar" id="details_toolbar"></div>
+            @Html.TextAreaFor(model => model.DetailsMarkDown, new { @class = "mdd_editor", @id = "details_textarea"})
+		    <div class="mdd_resizer" id="details_resizer"></div>
         </div>
 
         <div class="editor-label">
@@ -66,86 +72,118 @@
             @Html.ValidationMessageFor(model => model.TicketType)
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.LastModifiedDateTime)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.LastModifiedDateTime)
-            @Html.ValidationMessageFor(model => model.LastModifiedDateTime)
-        </div>
+
+        @if (Model.LastModifiedDateTime.HasValue)
+        { 
+            <div class="editor-label">
+            Html.LabelFor(model => model.LastModifiedDateTime)
+            </div>
+            <div class="editor-field">
+            Html.DisplayFor(model => model.LastModifiedDateTime)
+            <br />
+            Html.Raw(TimeAgo.getStringTime(Model.LastModifiedDateTime.Value));
+            </div>
+        }
+
+        @if (Model.ResolvedDateTime.HasValue)
+        {
+            <div class="editor-label">
+                Html.LabelFor(model => model.ResolvedDateTime)
+            </div>
+            <div class="editor-field">
+                Html.DisplayFor(model => model.ResolvedDateTime)
+                Html.Raw(TimeAgo.getStringTime(Model.ResolvedDateTime.Value));
+            </div>
+        }
+        
+        @if (Model.LastModifiedBy.HasValue)
+        {
+            <div class="editor-label">
+                @Html.LabelFor(model => model.LastModifiedBy)
+            </div>
+            <div class="editor-field">
+                @Html.DisplayFor(model => model.LastModifiedBy)
+            </div>
+        }
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.ResolvedDateTime)
+            @Html.LabelFor(model => model.Location.StoreLocation)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.ResolvedDateTime)
-            @Html.ValidationMessageFor(model => model.ResolvedDateTime)
+            @Html.DropDownListFor(model => model.Location.LocationID, new SelectList(Model.LocationList, "LocationID", "StoreLocation"))
+            @Html.ValidationMessageFor(model => model.Location)
         </div>
 
+
+        <div class="system-info editor-field">
+            <div class="system-info-toggle-link">
+                <a id="system-info-toggle-link" href="javascript:void(0)" onclick="toggleSystemDiv();">+ System Info</a>
+            </div> 
+            <div id="system-info-toggle" class="system-info-toggle">
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.System.SystemID)
+                </div>
+                <div class="editor-field">
+                    @Html.DisplayFor(model => model.System.SystemID)
+                </div>
+                <div class="editor-field">
+                    @Html.DisplayFor(model => model.System.Desciption)
+                </div>
+            </div>
+        </div>
+     
         <div class="editor-label">
-            @Html.LabelFor(model => model.CurrentlyEditByLoginID)
+            @Html.LabelFor(model => model.SalesLogin.DisplayName)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.CurrentlyEditByLoginID)
-            @Html.ValidationMessageFor(model => model.CurrentlyEditByLoginID)
+            @Html.DropDownListFor(model => model.SalesLogin.LoginID, new SelectList(Model.LoginList, "LoginID", "DisplayName"))
+            @Html.ValidationMessageFor(model => model.SalesLogin)
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.LastModifiedBy)
+       <div class="editor-label">
+            @Html.LabelFor(model => model.TechLogin.DisplayName)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.LastModifiedBy)
-            @Html.ValidationMessageFor(model => model.LastModifiedBy)
+            @Html.DropDownListFor(model => model.TechLogin.LoginID, new SelectList(Model.LoginList, "LoginID", "DisplayName"))
+            @Html.ValidationMessageFor(model => model.TechLogin)
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CreatedByLoginID)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.CreatedByLoginID)
-            @Html.ValidationMessageFor(model => model.CreatedByLoginID)
-        </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CreatedByCustomerID)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.CreatedByCustomerID)
-            @Html.ValidationMessageFor(model => model.CreatedByCustomerID)
-        </div>
+        @{
+        if (Model.CreatedByCustomer)
+        {
+            Html.Raw("<div class=\"editor-field\"> Ticket created online by customer.</div>");
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.LocationID)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.LocationID)
-            @Html.ValidationMessageFor(model => model.LocationID)
-        </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.SystemID)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.SystemID)
-            @Html.ValidationMessageFor(model => model.SystemID)
-        </div>
+        }
+        else
+        { 
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.CreatedByLogin)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.CreatedByLogin)
+                    @Html.ValidationMessageFor(model => model.CreatedByLogin)
+                </div>
+        }
+        }
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.SalesmanName)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.SalesmanName)
-            @Html.ValidationMessageFor(model => model.SalesmanName)
-        </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.TechnicianName)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.TechnicianName)
-            @Html.ValidationMessageFor(model => model.TechnicianName)
-        </div>
-
+        @{
+        if (Model.BusinessCustomer)
+        { 
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.BusinessName)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.BusinessName)
+                    @Html.ValidationMessageFor(model => model.BusinessName)
+                </div>
+    
+        }    
+            
+        }
         <div class="editor-label">
             @Html.LabelFor(model => model.CustomerContactName)
         </div>
@@ -154,37 +192,7 @@
             @Html.ValidationMessageFor(model => model.CustomerContactName)
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CreatedByLogin)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.CreatedByLogin)
-            @Html.ValidationMessageFor(model => model.CreatedByLogin)
-        </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CreatedByCustomer)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.CreatedByCustomer)
-            @Html.ValidationMessageFor(model => model.CreatedByCustomer)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.BusinessName)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.BusinessName)
-            @Html.ValidationMessageFor(model => model.BusinessName)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.BusinessCustomer)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.BusinessCustomer)
-            @Html.ValidationMessageFor(model => model.BusinessCustomer)
-        </div>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Phone)
@@ -193,13 +201,74 @@
             @Html.EditorFor(model => model.Phone)
             @Html.ValidationMessageFor(model => model.Phone)
         </div>
-
+        @Html.ActionLink("Customer Information", "Details", "Customer", new { id = Model.CustomerContactID }, new { target = "_blank" })
         <p>
             <input type="submit" value="Save" />
         </p>
     </fieldset>
+   @* <fieldset>
+        <legend>Updates</legend>
+
+        @foreach (var update in Model.Updates)
+        { 
+            <div class ="editor-label">
+                @Html.Raw("<h3>" + update.Login.DisplayName + "</h3>");
+                @Html.Raw(update.Comment)
+            </div>       
+        }
+    </fieldset>*@
+    
 }
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+
+
+<script type="text/javascript">
+    function toggleSystemDiv()
+    {
+        var div = document.getElementById("system-info-toggle");
+        var link = document.getElementById("system-info-toggle-link");
+        if (div.style.display == "block") {
+            div.style.display = "none";
+            link.innerHTML = "+ System Info";
+        }
+        else
+        {
+            div.style.display = "block";
+            link.innerHTML = "- System Info";
+        }
+
+    }
+    function toggleDetailsEdit() {
+        var text = document.getElementById("details_textarea");
+        var resize = document.getElementById("details_resizer");
+        var toolbar = document.getElementById("details_toolbar");
+        var link = document.getElementById("mdd_link");
+
+        if (text.style.display == "block") {
+            text.style.display = "none";
+            resize.style.display = "none";
+            toolbar.style.display = "none";
+
+            link.innerHTML = "+ Edit Details";
+        }
+        else {
+            text.style.display = "block";
+            resize.style.display = "block";
+            toolbar.style.display = "block";
+            link.innerHTML = "- Edit Details";
+        }
+
+    }
+</script>
+
+
+<script type="text/javascript">
+    $("textarea.mdd_editor").MarkdownDeep({
+        help_location: "~/Content/mdd_help.html",
+
+    });
+</script>

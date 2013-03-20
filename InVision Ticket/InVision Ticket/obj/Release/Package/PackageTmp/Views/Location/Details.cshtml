@@ -1,0 +1,20 @@
+﻿@model InVision_Ticket.Models.Location
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Location</legend>
+
+    <div class="display-label">StoreLocation</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.StoreLocation)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.LocationID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
