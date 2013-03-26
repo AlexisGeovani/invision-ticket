@@ -59,6 +59,7 @@ namespace InVision_Ticket.Controllers
                 vm.LoginList = db.Logins.ToList();
                 vm.Updates = db.Updates.Where(x => x.TicketID == vm.TicketID).ToList();
                 vm.Customers = db.Customers.Include("CustomerContacts").Where(c => c.CustomerContacts.Count > 0).ToList();
+                
                 return View(vm);
             }
         } 
