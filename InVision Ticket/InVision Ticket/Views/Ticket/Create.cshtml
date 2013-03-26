@@ -45,21 +45,20 @@
             
         <div class="editor-field">
             
-            <div class="mdd_toolbar" id="details_toolbar"></div>
-            @Html.TextAreaFor(model => model.DetailsMarkDown, new { @class = "mdd_editor", @id = "details_textarea"})
-            <div class="mdd_resizer" id="details_resizer"></div>
-            <div class="mdd_preview" id="details_preview">@Model.Details</div>
-		    
-
+            <div class="mdd_toolbar mdd" id="details_toolbar"></div>
+            @Html.TextAreaFor(model => model.DetailsMarkDown, new { @class = "mdd_editor mdd", @id = "details_textarea"})
+            <div class="mdd_resizer mdd" id="details_resizer"></div>
+            <div class="mdd_preview mdd" id="details_preview"></div>
         </div>
 
 
 
         <div class="editor-label">
+            
             @Html.LabelFor(model => model.Priority)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Priority)
+            @Html.DropDownListFor(model => model.Priority, new SelectList(Model.TicketPriorities, "3"))
             @Html.ValidationMessageFor(model => model.Priority)
         </div>
 
@@ -70,7 +69,6 @@
             @Html.DropDownListFor(model => model.TicketTypeID, new SelectList(Model.TicketTypeList, "TicketTypeID", "TicketType1"))
             @Html.ValidationMessageFor(model => model.TicketType)
         </div>
-
 
         <p>
             <input type="submit" value="Create" />
@@ -147,7 +145,7 @@
    {
        return (a.innerHTML > b.innerHTML) ? 1 : -1;
    }
-   
+   $(".mdd").css("display", "block");
 
 
 

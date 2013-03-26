@@ -54,6 +54,8 @@ namespace InVision_Ticket.ViewModels
 		public List<BillRate> BillRateList { get; set; }
 		public List<TicketType> TicketTypeList { get; set; }
 		public List<TicketStatus> TicketStatusList { get; set; }
+        public List<string> TicketPriorities = new List<string>(new string[] { "1", "2", "3", "4"});
+        
 
 	}
 }
