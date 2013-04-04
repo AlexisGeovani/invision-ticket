@@ -14,12 +14,6 @@
         <th>
             Status
         </th>
-        <th>
-            Open
-        </th>
-        <th>
-            AttentionRequired
-        </th>
         <th></th>
     </tr>
 
@@ -27,12 +21,6 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Open)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AttentionRequired)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.TicketStatusID }) |

@@ -5,18 +5,21 @@
 }
 
 <h2>Create</h2>
-
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script src= "@Url.Content("~/Scripts/MarkdownDeepLib.min.js")" type="text/javascript"></script>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true)
     <fieldset>
-        <legend>Ticket Information</legend>
+        <legend>New Ticket</legend>
         Customer Search: <input type="text" id="SearchBox"/>
         <br />
+
         <div class="scrollable" id="CustomerSelectDiv">
             <select size="30" class="scrollableinside" id="CustomerSelect">
+
                 @foreach (var customer in Model.Customers)
                 { 
                     <option  value=@customer.CustomerContacts.First().CustomerContactID>@customer.CustomerName &#09;&emsp;&#09; @customer.CustomerContacts.First().Phone</option>
@@ -25,12 +28,39 @@
         </div>
 
         <div id="CustomerAjax"></div>
-        <div class="scrollable" id="SystemSelectDiv">
-            <select size="30" class="scrollableinside" id="SystemSelect">
-            </select>
+        
+        <a id="SystemToggleLink" href="javascript:void(0)" onclick="toggleSystemDiv();">New System</a>
+        <div id="ExistingSystem">
+            
+            <div class="scrollable" id="SystemSelectDiv">
+                <select size="30" class="scrollableinside" id="SystemSelect">
+                
+                </select>
+            </div>
+        
+            <div id="SystemAjax"></div>
         </div>
-        <div id="SystemAjax"></div>
+        <div id="NewSystemDiv">
+            <fieldset>
+                <legend>System Information</legend>
 
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.System.Type)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.System.Type)
+                    @Html.ValidationMessageFor(model => model.System.Type)
+                </div>       
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.System.Desciption)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.System.Desciption)
+                    @Html.ValidationMessageFor(model => model.System.Desciption)
+                </div>
+            </fieldset>
+        </div>
+        @Html.HiddenFor(model => model.NewSystem)
         <div class="editor-label ClearBoth">
             @Html.LabelFor(model => model.Summary)
         </div>
@@ -42,23 +72,19 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.Details)
         </div>
-            
-        <div class="editor-field">
-            
-            <div class="mdd_toolbar mdd" id="details_toolbar"></div>
-            @Html.TextAreaFor(model => model.DetailsMarkDown, new { @class = "mdd_editor mdd", @id = "details_textarea"})
-            <div class="mdd_resizer mdd" id="details_resizer"></div>
-            <div class="mdd_preview mdd" id="details_preview"></div>
-        </div>
 
-
+            <div class="editor-field">
+                <div class="mdd_toolbar" id="details_toolbar"></div>
+                @Html.TextAreaFor(model => model.DetailsMarkDown, new { @class = "mdd_editor", @id = "details_textarea"})
+		        <div class="mdd_resizer" id="details_resizer"></div>
+                <div class="mdd_preview" id="details_preview">@Model.Details</div>
+            </div>
 
         <div class="editor-label">
-            
             @Html.LabelFor(model => model.Priority)
         </div>
         <div class="editor-field">
-            @Html.DropDownListFor(model => model.Priority, new SelectList(Model.TicketPriorities, "3"))
+            @Html.EditorFor(model => model.Priority)
             @Html.ValidationMessageFor(model => model.Priority)
         </div>
 
@@ -69,6 +95,7 @@
             @Html.DropDownListFor(model => model.TicketTypeID, new SelectList(Model.TicketTypeList, "TicketTypeID", "TicketType1"))
             @Html.ValidationMessageFor(model => model.TicketType)
         </div>
+
 
         <p>
             <input type="submit" value="Create" />
@@ -81,8 +108,10 @@
 </div>
 <script type="text/javascript">
    window.onload=function() {
-
+        
    }
+   $("#SystemToggleLink").css("display", "none");
+   $("#NewSystemDiv").css("display", "none");
    $(function () {
     document.getElementById("CustomerSelect").onclick = function () {
         $('#CustomerAjax').html("<img src=\"/Content/Loading.gif\" alt=\"Loading\" >");
@@ -95,6 +124,9 @@
         $.post(SystemURL, function (data){
             $('#SystemSelect').html(data);
         });
+        $('#SystemAjax').html("");
+        $("#SystemToggleLink").css("display", "block");
+
            
     }
     document.getElementById("SystemSelect").onclick = function ()
@@ -104,6 +136,7 @@
         $.post(SystemURL, function (data){
             $('#SystemAjax').html(data);
         });
+
     }
 
     $('#CustomerSelect option').sort(Sort).appendTo('#CustomerSelect');
@@ -139,20 +172,71 @@
             return $(this).data("sanitized").indexOf(term) != -1;
         }).clone();
         customerSelect.empty().append(matches);
+        $('#SystemAjax').html("");
+        $('#SystemSelect').html("");
+        $('#CustomerAjax').html("");
+        $("#SystemToggleLink").css("display", "none");
     });
+
    });
+   
+   function toggleSystemDiv()
+   {
+        var existingSystem = $("#ExistingSystem");
+        if(existingSystem.css("display") == "block")
+        {
+            useNewSystem();
+        }
+        else
+        {
+            useExistingSystem();
+        }
+
+   
+   }
+   function useExistingSystem()
+   {
+        var link = $("#SystemToggleLink");
+        var existingSystem = $("#ExistingSystem");
+        var newSystem = $("#NewSystemDiv");
+        link.html("New System");
+        existingSystem.css("display", "block");
+        newSystem.css("display", "none");
+        link.html("New System");
+        $("#NewSystem").val("False");
+   }
+   function useNewSystem()
+   {
+        var link = $("#SystemToggleLink");
+        var existingSystem = $("#ExistingSystem");
+        var newSystem = $("#NewSystemDiv");
+        link.html("Use Existing System");
+        existingSystem.css("display", "none");
+        newSystem.css("display", "block");
+        $('#SystemSelectDiv :selected').attr('selected', '');
+        $("#SystemAjax").html("");
+        $("#NewSystem").val("True");
+
+  
+   }
    function Sort(a, b)
    {
        return (a.innerHTML > b.innerHTML) ? 1 : -1;
    }
-   $(".mdd").css("display", "block");
+
+   $("#details_textarea").css("display", "block");
+   $("#details_resizer").css("display", "block");
+   $("#details_toolbar").css("display", "block");
 
 
 
-   $("textarea.mdd_editor").MarkdownDeep({
-       help_location: "~/Content/mdd_help.html",
+   
+</script>
+<script type="text/javascript">
+    $("textarea.mdd_editor").MarkdownDeep({
+        help_location: "~/Content/mdd_help.html",
 
-   });
+    });
 </script>
 <style type="text/css">
  .scrollable{

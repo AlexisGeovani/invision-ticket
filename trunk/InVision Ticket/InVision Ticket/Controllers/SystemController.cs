@@ -54,6 +54,11 @@ namespace InVision_Ticket.Controllers
 
         //
         // POST: /System/Create
+        public ActionResult CreatePartial(int id)
+        {
+            ViewBag.CustomerID = id;
+            return View();
+        }
 
         [HttpPost]
         public ActionResult Create(Models.System system)
