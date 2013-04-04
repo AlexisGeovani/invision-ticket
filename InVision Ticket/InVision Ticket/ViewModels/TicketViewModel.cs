@@ -22,8 +22,8 @@ namespace InVision_Ticket.ViewModels
 		public Nullable<DateTime> ResolvedDateTime { get; set; }
 		public Nullable<long> CurrentlyEditByLoginID { get; set; }
 		public Nullable<long> LastModifiedBy { get; set; }
-		public long CreatedByLoginID { get; set; }
-		public long CreatedByCustomerID { get; set; }
+		public Nullable<int> CreatedByLoginID { get; set; }
+		public Nullable<long> CreatedByCustomerID { get; set; }
 		//public Nullable<long> SystemID { get; set; }
 		//public long StatusID { get; set; }
 		//public long BillRateID { get; set; }
@@ -33,6 +33,7 @@ namespace InVision_Ticket.ViewModels
 		public string CustomerContactName { get; set; }
 		public string CreatedByLogin { get; set; }
 		public bool CreatedByCustomer { get; set; }
+        public bool NewSystem { get; set; }
 		public string BusinessName { get; set; }
 		public bool BusinessCustomer { get; set; }
 		public string Phone { get; set; }
@@ -44,7 +45,7 @@ namespace InVision_Ticket.ViewModels
 		public virtual BillRate BillRate {get; set;}
 		public virtual TicketStatus TicketStatus { get; set; }
 		public virtual TicketType TicketType { get; set; }
-
+        
         public List<Customer> Customers { get; set; }
 
         public List<Update> Updates { get; set; }
@@ -54,8 +55,6 @@ namespace InVision_Ticket.ViewModels
 		public List<BillRate> BillRateList { get; set; }
 		public List<TicketType> TicketTypeList { get; set; }
 		public List<TicketStatus> TicketStatusList { get; set; }
-        public List<string> TicketPriorities = new List<string>(new string[] { "1", "2", "3", "4"});
-        
 
 	}
 }

@@ -64,10 +64,9 @@ namespace InVision_Ticket
                 .ForMember(d => d.Technician, o => o.MapFrom(s => s.Technician.DisplayName))
                 .ForMember(d => d.LastModifiedDateTime, o=> o.MapFrom(s => s.LastModifiedDateTime))
                 .ForMember(d => d.TicketStatus, o => o.MapFrom(s => s.TicketStatus.Status));
-            //Mapper.CreateMap<TicketViewModel, Ticket>()
-            //    .ForMember(d => d.BillRate.TicketBillRate, o => o.MapFrom(s => s.BillRate.TicketBillRate))
-            //    .ForMember(d => d.Customer.CustomerContacts.First().Phone, o => o.MapFrom(s => stringManipulation.CleanPhone(s.Phone)))
-            //    .ForMember(d => d.
+            Mapper.CreateMap<TicketViewModel, Ticket>()
+                .ForMember(d => d.CreatedByCustomer, o => o.Ignore());
+                //.ForMember(d => d.CreatedByLoginID.Value, o => o.MapFrom(s => s.CreatedByLoginID));
                 
 
 

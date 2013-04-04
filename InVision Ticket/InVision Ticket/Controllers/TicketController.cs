@@ -59,7 +59,6 @@ namespace InVision_Ticket.Controllers
                 vm.LoginList = db.Logins.ToList();
                 vm.Updates = db.Updates.Where(x => x.TicketID == vm.TicketID).ToList();
                 vm.Customers = db.Customers.Include("CustomerContacts").Where(c => c.CustomerContacts.Count > 0).ToList();
-                
                 return View(vm);
             }
         } 
@@ -68,12 +67,25 @@ namespace InVision_Ticket.Controllers
         // POST: /Ticket/Create
 
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(TicketViewModel vm)
         {
             try
             {
                 // TODO: Add insert logic here
-
+                Ticket ticket = Mapper.Map<TicketViewModel, Ticket>(vm);
+                ticket.CreatedDateTime = DateTime.Now;
+                ticket.CustomerID = vm.CustomerID;
+                Models.System system = new Models.System();
+                if (vm.NewSystem)
+                {
+                    system.Desciption = vm.System.Desciption;
+                    system.Type = vm.System.Type;
+                    system.CustomerID = ticket.CustomerID;
+                }
+                else 
+                {
+                    ticket.SystemID = vm.System.SystemID;
+                }
                 return RedirectToAction("Index");
             }
             catch

@@ -12,14 +12,6 @@ nav,
 section {
     display: block;
 }
-#CustomerSelectDiv, #SystemSelectDiv
-{
-    float:left;
-}
-.ClearBoth
-{
-    clear:both;
-}
 
 /* Styles for basic forms
 -----------------------------------------------------------*/
@@ -51,11 +43,6 @@ textarea
 {
     margin:0.5em 0 0 0;
 }
-.system-info-toggle 
-{
-    display:none;
-    padding-left:1.5em;
-}
 
 
 /* Styles for validation helpers
@@ -86,28 +73,3 @@ textarea
 {
     display: none;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

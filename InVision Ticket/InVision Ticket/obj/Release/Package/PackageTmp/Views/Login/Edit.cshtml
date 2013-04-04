@@ -1,7 +1,8 @@
-﻿@model InVision_Ticket.ViewModels.LoginViewModel
+﻿@model InVision_Ticket.Models.Login
 
 @{
     ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Edit</h2>
@@ -12,8 +13,7 @@
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
     <fieldset>
-        
-        <legend>Edit Login ID @Html.DisplayFor(model => model.LoginID)</legend>
+        <legend>Login</legend>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Email)
@@ -24,6 +24,14 @@
         </div>
 
         <div class="editor-label">
+            @Html.LabelFor(model => model.Password)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Password)
+            @Html.ValidationMessageFor(model => model.Password)
+        </div>
+
+        <div class="editor-label">
             @Html.LabelFor(model => model.DisplayName)
         </div>
         <div class="editor-field">
@@ -31,7 +39,23 @@
             @Html.ValidationMessageFor(model => model.DisplayName)
         </div>
 
-        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.UserTypeID, "UserType")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("UserTypeID", String.Empty)
+            @Html.ValidationMessageFor(model => model.UserTypeID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LocationID, "Location")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("LocationID", String.Empty)
+            @Html.ValidationMessageFor(model => model.LocationID)
+        </div>
+
+        @Html.HiddenFor(model => model.LoginID)
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Theme)
@@ -41,30 +65,12 @@
             @Html.ValidationMessageFor(model => model.Theme)
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.StoreLocation)
-        </div>
-        <div class="editor-field">
-            @Html.DropDownListFor(model => model.LocationID, new SelectList(Model.LocationList, "LocationID", "StoreLocation"))
-            @Html.ValidationMessageFor(model => model.StoreLocation)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.UserType)
-        </div>
-        <div class="editor-field">
-            @Html.DropDownListFor(model => model.UserTypeID, new SelectList(Model.UserTypeList, "UserTypeID", "UserType1"))
-            @Html.ValidationMessageFor(model => model.UserType)
-        </div>
         <p>
             <input type="submit" value="Save" />
         </p>
-        @Html.HiddenFor(model => model.LoginID)
     </fieldset>
 }
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
-
