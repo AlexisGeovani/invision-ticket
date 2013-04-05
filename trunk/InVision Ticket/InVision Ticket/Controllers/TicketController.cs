@@ -69,13 +69,16 @@ namespace InVision_Ticket.Controllers
         [HttpPost]
         public ActionResult Create(TicketViewModel vm)
         {
-            try
-            {
+            //try
+            //{
                 // TODO: Add insert logic here
                 Ticket ticket = Mapper.Map<TicketViewModel, Ticket>(vm);
                 ticket.CreatedDateTime = DateTime.Now;
                 ticket.CustomerID = vm.CustomerID;
                 Models.System system = new Models.System();
+                Markdown md = new Markdown();
+                ticket.Details = md.Transform(vm.DetailsMarkDown);
+
                 if (vm.NewSystem)
                 {
                     system.Desciption = vm.System.Desciption;
@@ -86,12 +89,23 @@ namespace InVision_Ticket.Controllers
                 {
                     ticket.SystemID = vm.System.SystemID;
                 }
+                using (InVisionTicketContext db = new InVisionTicketContext())
+                {
+                    if (vm.NewSystem)
+                    {
+                        db.Systems.Add(system);
+                        db.SaveChanges();
+                    }
+                    db.Tickets.Add(ticket);
+                    db.SaveChanges();
+                
+                }
                 return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            //}
+            //catch
+            //{
+            //    return View();
+            //}
         }
         
         //
