@@ -24,6 +24,22 @@
             @Html.ValidationMessageFor(model => model.Status)
         </div>
 
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Open)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Open)
+            @Html.ValidationMessageFor(model => model.Open)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AttentionRequired)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AttentionRequired)
+            @Html.ValidationMessageFor(model => model.AttentionRequired)
+        </div>
+
         <p>
             <input type="submit" value="Save" />
         </p>

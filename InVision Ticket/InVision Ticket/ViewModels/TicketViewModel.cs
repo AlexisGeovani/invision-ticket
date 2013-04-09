@@ -3,9 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using InVision_Ticket.Models;
+using System.Web.Mvc;
 
 namespace InVision_Ticket.ViewModels
 {
+    //public class CustomerSelect
+    //{
+    //    public string CustomerContactID { get; set; }
+    //    public string CustomerValue { get; set; }
+    //}
 	public class TicketViewModel
 	{
 		public long TicketID { get; set; }
@@ -45,8 +51,9 @@ namespace InVision_Ticket.ViewModels
 		public virtual BillRate BillRate {get; set;}
 		public virtual TicketStatus TicketStatus { get; set; }
 		public virtual TicketType TicketType { get; set; }
-        
-        public List<Customer> Customers { get; set; }
+        public SelectList Customers { get; set; }
+        public SelectList Systems { get; set; }
+        //public List<Customer> Customers { get; set; }
 
         public List<Update> Updates { get; set; }
         public List<Login> LoginList { get; set; }

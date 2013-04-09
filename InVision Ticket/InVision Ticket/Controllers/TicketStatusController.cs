@@ -59,6 +59,11 @@ namespace InVision_Ticket.Controllers
  
         public ActionResult Edit(long id)
         {
+            if (id == 103)
+            {
+                throw new HttpException(403, "This status cannot be modified.");
+            
+            }
             TicketStatus ticketstatus = db.TicketStatus.Find(id);
             return View(ticketstatus);
         }
@@ -69,6 +74,11 @@ namespace InVision_Ticket.Controllers
         [HttpPost]
         public ActionResult Edit(TicketStatus ticketstatus)
         {
+            if (ticketstatus.TicketStatusID == 103)
+            {
+                throw new HttpException(403, "This status cannot be modified.");
+
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(ticketstatus).State = EntityState.Modified;
@@ -83,6 +93,11 @@ namespace InVision_Ticket.Controllers
  
         public ActionResult Delete(long id)
         {
+            if (id == 103)
+            {
+                throw new HttpException(403, "This status cannot be modified.");
+
+            }
             TicketStatus ticketstatus = db.TicketStatus.Find(id);
             return View(ticketstatus);
         }
@@ -92,7 +107,12 @@ namespace InVision_Ticket.Controllers
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
-        {            
+        {
+            if (id == 103)
+            {
+                throw new HttpException(403, "This status cannot be modified.");
+
+            }
             TicketStatus ticketstatus = db.TicketStatus.Find(id);
             db.TicketStatus.Remove(ticketstatus);
             db.SaveChanges();

@@ -119,6 +119,7 @@
     </Compile>
     <Compile Include="Controllers\TicketStatusController.cs" />
     <Compile Include="Controllers\TicketTypeController.cs" />
+    <Compile Include="Controllers\UnAuthenticatedTicketController.cs" />
     <Compile Include="Controllers\UserTypeController.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -336,6 +337,9 @@
     <Content Include="Views\System\Delete.cshtml" />
     <Content Include="Views\System\SystemsList.cshtml" />
     <Content Include="Views\System\DetailsPartial.cshtml" />
+    <Content Include="Views\UnAuthenticatedTicket\GetPhone.cshtml" />
+    <Content Include="Views\UnAuthenticatedTicket\GetCustomerData.cshtml" />
+    <Content Include="Views\UnAuthenticatedTicket\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Ticket\Edit.cshtml" />
