@@ -1,4 +1,4 @@
-﻿@model InVision_Ticket.ViewModels.TicketView
+﻿ @model InVision_Ticket.ViewModels.TicketViewModel
 @using InVision_Ticket.Utilities
 @using System.Linq
 @{
@@ -7,10 +7,13 @@
 
 <h2>Edit</h2>
 
+
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script src= "@Url.Content("~/Scripts/MarkdownDeepLib.min.js")" type="text/javascript"></script>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true)
     <fieldset>
         <legend>Ticket</legend>
@@ -33,9 +36,13 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.Details)
         </div>
+            
         <div class="editor-field">
-            @Html.TextAreaFor(model => model.Details)
-            @Html.ValidationMessageFor(model => model.Details)
+            <div class="mdd_preview" id="details_preview">@Model.Details</div>
+            <a id="mdd_link" href="javascript:void(0)" onclick="toggleDetailsEdit();">+ Edit Details</a>
+            <div class="mdd_toolbar" id="details_toolbar"></div>
+            @Html.TextAreaFor(model => model.DetailsMarkDown, new { @class = "mdd_editor", @id = "details_textarea"})
+		    <div class="mdd_resizer" id="details_resizer"></div>
         </div>
 
         <div class="editor-label">
@@ -68,7 +75,7 @@
 
 
         @if (Model.LastModifiedDateTime.HasValue)
-        { //
+        { 
             <div class="editor-label">
             Html.LabelFor(model => model.LastModifiedDateTime)
             </div>
@@ -79,7 +86,7 @@
             </div>
         }
 
-        @if(Model.ResolvedDateTime.HasValue)
+        @if (Model.ResolvedDateTime.HasValue)
         {
             <div class="editor-label">
                 Html.LabelFor(model => model.ResolvedDateTime)
@@ -90,7 +97,7 @@
             </div>
         }
         
-        @if(Model.LastModifiedBy.HasValue)
+        @if (Model.LastModifiedBy.HasValue)
         {
             <div class="editor-label">
                 @Html.LabelFor(model => model.LastModifiedBy)
@@ -145,14 +152,14 @@
 
 
         @{
-            if (Model.CreatedByCustomer)
-            {
-                Html.Raw("<div class=\"editor-field\"> Ticket created online by customer.</div>");
+        if (Model.CreatedByCustomer)
+        {
+            Html.Raw("<div class=\"editor-field\"> Ticket created online by customer.</div>");
 
 
-            }
-            else 
-            { 
+        }
+        else
+        { 
                 <div class="editor-label">
                     @Html.LabelFor(model => model.CreatedByLogin)
                 </div>
@@ -160,13 +167,13 @@
                     @Html.EditorFor(model => model.CreatedByLogin)
                     @Html.ValidationMessageFor(model => model.CreatedByLogin)
                 </div>
-            }
+        }
         }
 
 
         @{
-            if (Model.BusinessCustomer)
-            { 
+        if (Model.BusinessCustomer)
+        { 
                 <div class="editor-label">
                     @Html.LabelFor(model => model.BusinessName)
                 </div>
@@ -175,7 +182,7 @@
                     @Html.ValidationMessageFor(model => model.BusinessName)
                 </div>
     
-            }    
+        }    
             
         }
         <div class="editor-label">
@@ -195,11 +202,23 @@
             @Html.EditorFor(model => model.Phone)
             @Html.ValidationMessageFor(model => model.Phone)
         </div>
-        @Html.ActionLink("Customer Information", "Details", "Customer", new { id = Model.CustomerContactID }, new { target="_blank" })
+        @Html.ActionLink("Customer Information", "Details", "Customer", new { id = Model.CustomerContactID }, new { target = "_blank" })
         <p>
             <input type="submit" value="Save" />
         </p>
     </fieldset>
+   @* <fieldset>
+        <legend>Updates</legend>
+
+        @foreach (var update in Model.Updates)
+        { 
+            <div class ="editor-label">
+                @Html.Raw("<h3>" + update.Login.DisplayName + "</h3>");
+                @Html.Raw(update.Comment)
+            </div>       
+        }
+    </fieldset>*@
+    
 }
 
 <div>
@@ -224,6 +243,33 @@
         }
 
     }
+    function toggleDetailsEdit() {
+        var text = document.getElementById("details_textarea");
+        var resize = document.getElementById("details_resizer");
+        var toolbar = document.getElementById("details_toolbar");
+        var link = document.getElementById("mdd_link");
+
+        if (text.style.display == "block") {
+            text.style.display = "none";
+            resize.style.display = "none";
+            toolbar.style.display = "none";
+
+            link.innerHTML = "+ Edit Details";
+        }
+        else {
+            text.style.display = "block";
+            resize.style.display = "block";
+            toolbar.style.display = "block";
+            link.innerHTML = "- Edit Details";
+        }
+
+    }
+</script>
 
 
+<script type="text/javascript">
+    $("textarea.mdd_editor").MarkdownDeep({
+        help_location: "~/Content/mdd_help.html",
+
+    });
 </script>

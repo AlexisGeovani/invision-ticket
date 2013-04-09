@@ -12,6 +12,14 @@ nav,
 section {
     display: block;
 }
+#CustomerSelectDiv, #SystemSelectDiv
+{
+    float:left;
+}
+.ClearBoth
+{
+    clear:both;
+}
 
 /* Styles for basic forms
 -----------------------------------------------------------*/
@@ -78,3 +86,28 @@ textarea
 {
     display: none;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

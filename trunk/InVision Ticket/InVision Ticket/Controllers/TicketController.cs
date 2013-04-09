@@ -10,6 +10,8 @@ using AutoMapper;
 using System.Security.Principal;
 using System.Web.Security;
 using MarkdownDeep;
+using System.Data.Objects.SqlClient;
+using System.Data.Entity.Validation;
 
 namespace InVision_Ticket.Controllers
 {
@@ -57,8 +59,25 @@ namespace InVision_Ticket.Controllers
                 vm.TicketStatusList = db.TicketStatus.ToList();
                 vm.TicketTypeList = db.TicketTypes.ToList();
                 vm.LoginList = db.Logins.ToList();
-                vm.Updates = db.Updates.Where(x => x.TicketID == vm.TicketID).ToList();
-                vm.Customers = db.Customers.Include("CustomerContacts").Where(c => c.CustomerContacts.Count > 0).ToList();
+                //vm.Updates = db.Updates.Where(x => x.TicketID == vm.TicketID).ToList();
+                var tempCustomers =
+                    from c in db.Customers
+                    let cc = db.CustomerContacts.FirstOrDefault(x => x.CustomerID == c.CustomerID)
+                    where cc.Phone != null && c.CustomerName != null
+                    select new { CustomerContactID = cc.CustomerContactID, CustomerValue = c.CustomerName + " | " + SqlFunctions.StringConvert((double)cc.Phone) };
+                vm.Customers = new SelectList(
+                        tempCustomers.ToList(),
+                        "CustomerContactID",
+                        "CustomerValue"
+                    );
+                List<SelectListItem> systems = new List<SelectListItem>();
+                var emptyItem = new SelectListItem(){
+                    Value = "1",
+                    Text = "Select A Customer"
+                };
+                systems.Add(emptyItem);
+                vm.Systems = new SelectList(systems);
+                
                 return View(vm);
             }
         } 
@@ -69,43 +88,63 @@ namespace InVision_Ticket.Controllers
         [HttpPost]
         public ActionResult Create(TicketViewModel vm)
         {
-            //try
-            //{
-                // TODO: Add insert logic here
-                Ticket ticket = Mapper.Map<TicketViewModel, Ticket>(vm);
-                ticket.CreatedDateTime = DateTime.Now;
-                ticket.CustomerID = vm.CustomerID;
-                Models.System system = new Models.System();
-                Markdown md = new Markdown();
-                ticket.Details = md.Transform(vm.DetailsMarkDown);
-
-                if (vm.NewSystem)
-                {
-                    system.Desciption = vm.System.Desciption;
-                    system.Type = vm.System.Type;
-                    system.CustomerID = ticket.CustomerID;
-                }
-                else 
-                {
-                    ticket.SystemID = vm.System.SystemID;
-                }
+            try
+            {
                 using (InVisionTicketContext db = new InVisionTicketContext())
+                //TODO: Add insert logic here
                 {
+                    var user = HttpContext.User.Identity;
+                    vm.CustomerID = db.CustomerContacts.Find(vm.CustomerContactID).CustomerID.Value;
+                    Ticket ticket = Mapper.Map<TicketViewModel, Ticket>(vm);
+                    ticket.CreatedDateTime = DateTime.Now;
+                    ticket.CustomerID = vm.CustomerID;
+                    Models.System system = new Models.System();
+                    Markdown md = new Markdown();
+                    ticket.Details = md.Transform(vm.DetailsMarkDown);
+
+                    if (vm.NewSystem)
+                    {
+                        system.Desciption = vm.System.Desciption;
+                        system.Type = vm.System.Type;
+                        system.CustomerID = ticket.CustomerID;
+                    }
+                    else
+                    {
+                        ticket.SystemID = vm.System.SystemID;
+                    }
+
+
                     if (vm.NewSystem)
                     {
                         db.Systems.Add(system);
                         db.SaveChanges();
+                        ticket.SystemID = system.SystemID;
                     }
+                    var username = HttpContext.User.Identity.Name;
+                    ticket.CreatedByLoginID = db.Logins.Single(u => u.Email == username).LoginID;
+                    ticket.LocationID = db.Logins.Single(u => u.Email == username).LocationID;
+                    ticket.System = null;
+                    ticket.StatusID = 103;
                     db.Tickets.Add(ticket);
                     db.SaveChanges();
-                
+
                 }
                 return RedirectToAction("Index");
-            //}
-            //catch
-            //{
-            //    return View();
-            //}
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    System.Diagnostics.Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        System.Diagnostics.Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
+            }
         }
         
         //
