@@ -8,6 +8,8 @@ using System.Web.Mvc;
 using InVision_Ticket.Models;
 using InVision_Ticket.Utilities;
 using InVision_Ticket.ViewModels;
+using MarkdownDeep;
+using System.Data.Entity.Validation;
 
 namespace InVision_Ticket.Controllers
 { 
@@ -19,6 +21,10 @@ namespace InVision_Ticket.Controllers
 
         //
         // GET: /UnAuthenticatedTicket/Create
+        public ActionResult Index()
+        {
+            return RedirectToAction("GetPhone");
+        }
         public ActionResult GetPhone()
         {
             return View();
@@ -36,10 +42,15 @@ namespace InVision_Ticket.Controllers
         //
         // POST: /UnAuthenticatedTicket/Create
 
-        public ActionResult Create(string CustomerID)
+        public ActionResult Create(int id)
         {
+            if (!db.CustomerContacts.Any(cc => cc.CustomerContactID == id))
+            { 
+                throw new HttpException(400, "No Such Customer");
+            }
             TicketViewModel vm = new TicketViewModel();
-
+            vm.CustomerID = id;
+            vm.CustomerContactID = db.Customers.Find(id).CustomerContacts.First().CustomerContactID;
             vm.BillRateList = db.BillRates.ToList();
             vm.LocationList = db.Locations.ToList();
             vm.TicketStatusList = db.TicketStatus.ToList();
@@ -50,14 +61,48 @@ namespace InVision_Ticket.Controllers
             return View(vm);
         }
         [HttpPost]
-        public ActionResult Create(TicketViewModel ticket)
+        public ActionResult Create(TicketViewModel TVM)
         {
-            if (ModelState.IsValid)
+            try
             {
+                Ticket ticket = new Ticket();
+                Models.System system = new Models.System();
+                ticket.Summary = TVM.Summary;
+                Markdown md = new Markdown();
+                ticket.CustomerID = TVM.CustomerID;
+
+                ticket.Details = md.Transform(TVM.DetailsMarkDown);
+                ticket.DetailsMarkDown = TVM.DetailsMarkDown;
+                ticket.Priority = TVM.Priority;
+                ticket.TicketTypeID = TVM.TicketTypeID;
+                system.Desciption = TVM.System.Desciption;
+                system.Type = TVM.System.Type;
+                system.CustomerID = TVM.CustomerID;
+                db.Systems.Add(system);
                 db.SaveChanges();
-                return RedirectToAction("Index");  
+                ticket.SystemID = system.SystemID;
+                ticket.StatusID = 103;
+                ticket.Priority = 4;
+                ticket.CreatedDateTime = System.DateTime.Now;
+                ticket.CreatedByCustomerID = ticket.CustomerID;
+                db.Tickets.Add(ticket);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            return View(ticket);
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
+            }
         }
         
 
