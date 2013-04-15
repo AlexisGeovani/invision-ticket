@@ -19,7 +19,7 @@ namespace InVision_Ticket.ViewModels
 		public string CustomerName { get; set; }
 		public string TicketType { get; set; }
 		public string CreatedBy { get; set; }
-		public Nullable<int> SalesmenLoginID { get; set; }
+		public Nullable<int> SalesmanLoginID { get; set; }
 		public string Salesman { get; set; }
 		public Nullable<int> TechnicianLoginID { get; set; }
 		public string Technician { get; set; }

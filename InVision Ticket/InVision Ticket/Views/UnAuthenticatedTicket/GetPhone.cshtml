@@ -51,8 +51,9 @@
         
 
     }
-    function Ticket() { 
-        
+    function Ticket() {
+        var customerID = $('#CustomerContactID').val();
+        window.location.replace('/unauthenticatedticket/create/' + customerID);
     
     }
     function reload() {

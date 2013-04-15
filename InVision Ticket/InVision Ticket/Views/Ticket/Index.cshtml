@@ -18,43 +18,34 @@
             Summary
         </th>
         <th>
-            CreatedDateTime
+            Created
         </th>
         <th>
             Priority
         </th>
         <th>
-            LastModifiedDateTime
+            Last Modified
         </th>
         <th>
-            ResolvedDateTime
+            Resolved
         </th>
         <th>
             Status
         </th>
         <th>
-            CustomerID
+            Phone
         </th>
         <th>
-            CustomerPhone
+            Customer
         </th>
         <th>
-            CustomerName
+            type
         </th>
         <th>
-            TicketType
-        </th>
-        <th>
-            CreatedBy
-        </th>
-        <th>
-            SalesmenLoginID
+            Created By
         </th>
         <th>
             Salesman
-        </th>
-        <th>
-            TechnicianLoginID
         </th>
         <th>
             Technician
@@ -74,11 +65,11 @@
         <th>
             TicketStatusAttentionRequired
         </th>
-        <th></th>
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
+    <tr class="@GetTRClass(item.TechnicianLoginID, item.SalesmanLoginID, item.TicketStatusAttentionRequired)" onclick="OpenTicket('@item.TicketID')">
+
         <td>
             @Html.DisplayFor(modelItem => item.TicketID)
         </td>
@@ -115,9 +106,6 @@
             @Html.DisplayFor(modelItem => item.TicketStatus)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CustomerID)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.CustomerPhone)
         </td>
         <td>
@@ -130,13 +118,7 @@
             @Html.DisplayFor(modelItem => item.CreatedBy)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.SalesmenLoginID)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Salesman)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TechnicianLoginID)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Technician)
@@ -156,10 +138,70 @@
         <td>
             @Html.DisplayFor(modelItem => item.TicketStatusAttentionRequired)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.TicketID }) 
-        </td>
+
     </tr>
 }
 
 </table>
+<script>
+    function OpenTicket(id) {
+        var url = "/Ticket/Edit/" + id;
+        var win = window.open(url, '_blank');
+        win.focus();
+    
+    }
+
+</script>
+
+<style>
+
+    .ticketListRow:hover
+    {
+        background-color:#B0C4DE;
+        border-bottom-width:0;
+    
+    }
+    .ticketListRow td
+    {
+        border:0 solid black;
+        border-left-width:0;
+        border-right-width:0;    
+    }
+    .attention
+    {
+        background-color:#FFE4C4;    
+    }
+</style>
+
+
+@functions{ 
+    public string GetTRClass(int? TechID, int? SalesID, bool? AttentionRequired) 
+    {
+        if(AttentionRequired.HasValue)
+        {
+            if(AttentionRequired.Value)
+            {
+                var userID = ViewBag.userID;
+                if(TechID.HasValue)
+                {
+                    if (TechID.Value == userID)
+                    {
+                        return "ticketListRow attention";
+                    }
+        
+                }
+                if(SalesID.HasValue)
+                {
+                    if (SalesID.Value == userID)
+                    {
+                        return "ticketListRow attention";
+                    }
+                }
+                return "ticketListRow";
+            }
+            return "ticketListRow";
+        }
+        return "ticketListRow";
+    }
+    
+}
