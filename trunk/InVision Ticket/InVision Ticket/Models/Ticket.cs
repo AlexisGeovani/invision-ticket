@@ -16,7 +16,7 @@ namespace InVision_Ticket.Models
         public string Details { get; set; }
         public string DetailsMarkDown { get; set; }
         public DateTime CreatedDateTime { get; set; }
-        public Nullable<int> SalesmenLoginID { get; set; }
+        public Nullable<int> SalesmanLoginID { get; set; }
         public Nullable<int> TechnicianLoginID { get; set; }
         public Nullable<int> Priority { get; set; }
         public long CustomerID { get; set; }
@@ -37,6 +37,7 @@ namespace InVision_Ticket.Models
         public virtual Location Location { get; set; }
         public virtual Login Login { get; set; }
         public virtual Login Technician { get; set; }
+        public virtual Login Salesman { get; set; }
         public virtual Login CreatedByLogin { get; set; }
         public virtual Login CurrentlyEditByLogin { get; set; }
         public virtual ICollection<Part> Parts { get; set; }
@@ -44,5 +45,6 @@ namespace InVision_Ticket.Models
         public virtual TicketStatus TicketStatus { get; set; }
         public virtual TicketType TicketType { get; set; }
         public virtual ICollection<Update> Updates { get; set; }
+        public virtual ICollection<Upload> Uploads { get; set; }
     }
 }

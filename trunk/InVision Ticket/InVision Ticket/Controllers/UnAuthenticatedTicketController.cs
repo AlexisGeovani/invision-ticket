@@ -70,7 +70,7 @@ namespace InVision_Ticket.Controllers
                 ticket.Summary = TVM.Summary;
                 Markdown md = new Markdown();
                 ticket.CustomerID = TVM.CustomerID;
-
+                ticket.LocationID = TVM.Location.LocationID;
                 ticket.Details = md.Transform(TVM.DetailsMarkDown);
                 ticket.DetailsMarkDown = TVM.DetailsMarkDown;
                 ticket.Priority = TVM.Priority;

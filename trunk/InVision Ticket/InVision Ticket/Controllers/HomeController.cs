@@ -15,6 +15,10 @@ namespace InVision_Ticket.Controllers
         {
             return View();
         }
+        public ActionResult CloseWindow()
+        {
 
+            return View();
+        }
     }
 }

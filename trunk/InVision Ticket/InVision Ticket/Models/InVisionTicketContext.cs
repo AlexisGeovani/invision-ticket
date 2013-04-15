@@ -29,6 +29,7 @@ namespace InVision_Ticket.Models
         public DbSet<TicketStatus> TicketStatus { get; set; }
         public DbSet<TicketType> TicketTypes { get; set; }
         public DbSet<Update> Updates { get; set; }
+        public DbSet<Upload> Uploads { get; set; }
         public DbSet<UserType> UserTypes { get; set; }
 	
 
@@ -47,6 +48,7 @@ namespace InVision_Ticket.Models
             modelBuilder.Configurations.Add(new TicketTypeMap());
             modelBuilder.Configurations.Add(new UpdateMap());
             modelBuilder.Configurations.Add(new UserTypeMap());
+            modelBuilder.Configurations.Add(new UploadMap());
         }
     }
 }

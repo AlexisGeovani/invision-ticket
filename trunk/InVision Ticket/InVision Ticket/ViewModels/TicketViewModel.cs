@@ -19,7 +19,7 @@ namespace InVision_Ticket.ViewModels
 		public string Details { get; set; }
         public string DetailsMarkDown { get; set; }
 		public DateTime CreatedDateTime { get; set; }
-        //public Nullable<long> SalesmenLoginID { get; set; }
+        //public Nullable<long> SalesmanLoginID { get; set; }
         //public Nullable<long> TechnicianLoginID { get; set; }
 		public Nullable<int> Priority { get; set; }
 		public long CustomerID { get; set; }
@@ -56,6 +56,7 @@ namespace InVision_Ticket.ViewModels
         //public List<Customer> Customers { get; set; }
 
         public List<Update> Updates { get; set; }
+        public List<Upload> Uploads { get; set; }
         public List<Login> LoginList { get; set; }
 
 		public List<Location> LocationList { get; set; }

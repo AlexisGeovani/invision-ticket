@@ -28,7 +28,7 @@ namespace InVision_Ticket.Models.Mapping
             this.Property(t => t.Summary).HasColumnName("Summary");
             this.Property(t => t.Details).HasColumnName("Details");
             this.Property(t => t.CreatedDateTime).HasColumnName("CreatedDateTime");
-            this.Property(t => t.SalesmenLoginID).HasColumnName("SalesmenLoginID");
+            this.Property(t => t.SalesmanLoginID).HasColumnName("SalesmanLoginID");
             this.Property(t => t.TechnicianLoginID).HasColumnName("TechnicianLoginID");
             this.Property(t => t.Priority).HasColumnName("Priority");
             this.Property(t => t.CustomerID).HasColumnName("CustomerID");
@@ -60,10 +60,11 @@ namespace InVision_Ticket.Models.Mapping
                 .HasForeignKey(d => d.LocationID);
             this.HasOptional(t => t.Login)
                 .WithMany(t => t.SalesmanTickets)
-                .HasForeignKey(d => d.SalesmenLoginID);
+                .HasForeignKey(d => d.SalesmanLoginID);
             this.HasOptional(t => t.Technician)
                 .WithMany(t => t.TechnicianTickets)
                 .HasForeignKey(d => d.TechnicianLoginID);
+            
             this.HasOptional(t => t.CreatedByLogin)
                 .WithMany(t => t.CreatedTickets)
                 .HasForeignKey(d => d.CreatedByLoginID);

@@ -8,6 +8,7 @@ using AutoMapper;
 using InVision_Ticket.Models;
 using InVision_Ticket.ViewModels;
 using InVision_Ticket.Utilities;
+using System.Net;
 namespace InVision_Ticket
 {
 	// Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -49,7 +50,7 @@ namespace InVision_Ticket
                 .ForMember(d => d.StoreLocation, o => o.MapFrom(s =>s.Location.StoreLocation));
             Mapper.CreateMap<Ticket, TicketViewModel>()
                 .ForMember(d => d.CreatedByLogin, o => o.MapFrom(s => s.CreatedByLogin.DisplayName))
-                .ForMember(d => d.CreatedByCustomer, o => o.MapFrom(s => s.CreatedByCustomer.CustomerName))
+                .ForMember(d => d.CreatedByCustomer, o => o.ResolveUsing<TicketCreatedByCustomer>())
                 .ForMember(d => d.CustomerContactID, o => o.MapFrom(s => s.Customer.CustomerContacts.FirstOrDefault().CustomerContactID))
                 .ForMember(d => d.CustomerContactName, o => o.ResolveUsing<CustomerContactResolver>())
                 .ForMember(d => d.BusinessName, o => o.ResolveUsing<BusinessNameResolver>())
@@ -62,20 +63,36 @@ namespace InVision_Ticket
                 .ForMember(d => d.TicketType, o => o.MapFrom(s => s.TicketType.TicketType1))
                 .ForMember(d => d.CreatedBy, o => o.ResolveUsing<TicketCreatedByTicketListResolver>())
                 .ForMember(d => d.Technician, o => o.MapFrom(s => s.Technician.DisplayName))
+                .ForMember(d => d.Salesman, o => o.MapFrom(s => s.Salesman.DisplayName))
                 .ForMember(d => d.LastModifiedDateTime, o=> o.MapFrom(s => s.LastModifiedDateTime))
                 .ForMember(d => d.TicketStatus, o => o.MapFrom(s => s.TicketStatus.Status));
             Mapper.CreateMap<TicketViewModel, Ticket>()
                 .ForMember(d => d.CreatedByCustomer, o => o.Ignore());
-                //.ForMember(d => d.CreatedByLoginID.Value, o => o.MapFrom(s => s.CreatedByLoginID));
+            //.ForMember(d => d.CreatedByLoginID.Value, o => o.MapFrom(s => s.CreatedByLoginID));
+            Mapper.CreateMap<LoginViewModel, Login>()
+                .ForMember(d => d.UserType, o => o.MapFrom(s => new UserType { UserType1 = s.UserType, UserTypeID = s.UserTypeID}))
+                .ForMember(d => d.Location, o => o.MapFrom(s => new Location {LocationID = s.LocationID.Value, StoreLocation = s.StoreLocation}));
                 
 
 
         }
 	}
+    public class TicketCreatedByCustomer : ValueResolver<Ticket, bool>
+    {
+        protected override bool ResolveCore(Ticket source)
+        {
+            if (source.CreatedByCustomer == null)
+                return false;
+            return true;
+
+        }
+    
+    }
     public class CustomerContactResolver : ValueResolver<Ticket, string>
     {
         protected override string ResolveCore(Ticket source)
         {
+
             if (source.Customer.BusinessCustomer.Value)
                 return source.Customer.CustomerContacts.FirstOrDefault().LastName + ", " + source.Customer.CustomerContacts.FirstOrDefault().FirstName;
             return source.Customer.CustomerName;
@@ -86,6 +103,7 @@ namespace InVision_Ticket
     {
         protected override string ResolveCore(Ticket source)
         {
+            
             if (source.CreatedByCustomer == null)
             {
                 return source.CreatedByLogin.DisplayName;
