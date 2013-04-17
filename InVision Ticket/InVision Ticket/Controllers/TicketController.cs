@@ -14,6 +14,7 @@ using System.Data.Objects.SqlClient;
 using System.Data.Entity.Validation;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 
 namespace InVision_Ticket.Controllers
 {
@@ -25,19 +26,77 @@ namespace InVision_Ticket.Controllers
         
         
         }
-        public ActionResult Upload(int id)
+        public ActionResult DownloadUpload(int id)
+        {
+            using (InVisionTicketContext db = new InVisionTicketContext())
+            {
+                Upload upload = db.Uploads.Find(id);
+                Byte[] data = upload.Data;
+                //FileStream fs = new FileStream(upload.FileName, FileMode.Create,FileAccess.Write);
+                //fs.Write(data,0,data.Length);
+                //fs.Close();
+                
+                var cd = new System.Net.Mime.ContentDisposition
+                {
+                    FileName = upload.FileName,
+                    Inline = false,
+
+                };
+                Response.AppendHeader("Content-Disposition", cd.ToString());
+                return (File(data, "application/octet-stream"));
+            }
+        
+        }
+        public ActionResult DeleteUpload(int id)
         { 
+            using(InVisionTicketContext db = new InVisionTicketContext())
+            {
+                Upload upload = db.Uploads.Find(id);
+                ViewBag.Description = upload.Description;
+                ViewBag.FileName = upload.FileName;
+                ViewBag.id = id;
+                return View();
+            }
             
-            Upload upload = new Upload();
+        }
+        [HttpPost]
+        public ActionResult DeleteUpload(FormCollection form)
+        {
+            using (InVisionTicketContext db = new InVisionTicketContext())
+            {
+                int id = int.Parse(form[0]);
+                db.Uploads.Remove(db.Uploads.Find(id));
+                db.SaveChanges();
+            }
+            return RedirectToAction("CloseWindow", "Home");
+        
+        }
+        public ActionResult Upload(int id)
+        {
+            
+
+            UploadViewModel upload = new UploadViewModel();
             upload.TicketID = id;
 
             return View(upload);
         }
         [HttpPost]
-        public ActionResult Upload(Upload upload)
+        public ActionResult Upload(UploadViewModel upload)
         {
-
-            return null;
+            using(InVisionTicketContext db = new InVisionTicketContext())
+            {
+                
+                var u = new Upload();
+                u.TicketID = upload.TicketID;
+                MemoryStream target = new MemoryStream();
+                upload.File.InputStream.CopyTo(target);
+                u.Data = target.ToArray();
+                u.Description = upload.Description;
+                u.FileName = upload.File.FileName;
+                db.Uploads.Add(u);
+                db.SaveChanges();
+            }
+            return RedirectToAction("CloseWindow", "Home");
         }
         public ActionResult UpdateTicket(int id)
         {
