@@ -4,12 +4,12 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
-namespace InVision_Ticket.Models
+namespace InVision_Ticket.ViewModels
 {
-    public class Upload
+    public class UploadViewModel
     {
         public int UploadID { get; set; }
- 
+
         public string Description { get; set; }
         [Required]
         public byte[] Data { get; set; }
@@ -17,6 +17,6 @@ namespace InVision_Ticket.Models
         public long TicketID { get; set; }
         [Required]
         public string FileName { get; set; }
-        public virtual Ticket Ticket { get; set; }
+        public HttpPostedFileBase File { get; set; }
     }
 }

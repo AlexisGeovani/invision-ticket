@@ -5,6 +5,11 @@ body
     color: #232323;
     background-color: #fff;
 }
+.editor-label img
+{
+    max-width: 500px;
+    max-height: 500px;
+}
 
 header,
 footer,

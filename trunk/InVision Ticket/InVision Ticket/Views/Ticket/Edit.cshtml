@@ -1,4 +1,4 @@
-﻿ @model InVision_Ticket.ViewModels.TicketViewModel
+﻿     @model InVision_Ticket.ViewModels.TicketViewModel
 @using InVision_Ticket.Utilities
 @using System.Linq
 @{
@@ -227,7 +227,8 @@
         @foreach (var upload in Model.Uploads)
         { 
             <div>
-                <span>@upload.FileName</span>
+                <span>@upload.Description</span>
+                <span>@Html.ActionLink("Delete", "DeleteUpload", "Ticket", new { id = upload.UploadID }, new { target = "_blank"})  @Html.ActionLink(upload.FileName, "DownloadUpload", "Ticket", new { id = upload.UploadID }, new { target = "_blank" })</span>
             </div>
         
         }

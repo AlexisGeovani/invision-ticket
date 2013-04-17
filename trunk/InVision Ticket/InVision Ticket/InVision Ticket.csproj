@@ -168,6 +168,7 @@
     <Compile Include="ViewModels\TicketListViewModel.cs" />
     <Compile Include="ViewModels\TicketViewModel.cs" />
     <Compile Include="ViewModels\UpdateListView.cs" />
+    <Compile Include="ViewModels\UploadViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Loading.gif" />
@@ -345,6 +346,7 @@
     <Content Include="Views\Home\CloseWindow.cshtml" />
     <Content Include="Views\Ticket\UpdateTicket.cshtml" />
     <Content Include="Views\Ticket\Upload.cshtml" />
+    <Content Include="Views\Ticket\DeleteUpload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Ticket\Edit.cshtml" />
