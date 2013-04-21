@@ -1,11 +1,15 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.ComponentModel.DataAnnotations;
+using InVision_Ticket.Models;
 
-namespace InVision_Ticket.Models
+namespace InVision_Ticket.ViewModels
 {
-    public class Update
+    public class UpdateViewModel
     {
+
         public long UpdateID { get; set; }
         [Required]
         public long TicketID { get; set; }
@@ -18,13 +22,15 @@ namespace InVision_Ticket.Models
         public DateTime ActivityDateTime { get; set; }
         public Nullable<bool> Urgent { get; set; }
         public int LoginID { get; set; }
-        public long BillRateID { get; set; }
+        public long? BillRateID { get; set; }
         public decimal? OtherCharges { get; set; }
         public string OtherChargesDescription { get; set; }
         public virtual Login Login { get; set; }
         public virtual Ticket Ticket { get; set; }
 
         public virtual BillRate BillRate { get; set; }
+
+        public List<BillRate> BillRateList { get; set; }
 
     }
 }

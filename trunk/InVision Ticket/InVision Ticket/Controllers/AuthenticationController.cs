@@ -37,7 +37,7 @@ namespace InVision_Ticket.Controllers
                                 DateTime.Now,
                                 DateTime.Now.AddHours(8),
                                 false,
-                                Login.Location.StoreLocation + ":" + Login.UserType.UserType1);
+                                Login.LocationID + ":" + Login.UserTypeID);
                             string encryptedTicket = FormsAuthentication.Encrypt(ticket);
                             HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
 							this.Response.Cookies.Add(cookie);

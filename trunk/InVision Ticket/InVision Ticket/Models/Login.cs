@@ -29,7 +29,6 @@ namespace InVision_Ticket.Models
         public int LoginID { get; set; }
         public string Theme { get; set; }
         public virtual Location Location { get; set; }
-		//[Required]
         public virtual UserType UserType { get; set; }
         public virtual ICollection<LoginHistory> LoginHistories { get; set; }
         public virtual ICollection<Ticket> SalesmanTickets { get; set; }
@@ -37,5 +36,6 @@ namespace InVision_Ticket.Models
         public virtual ICollection<Ticket> CreatedTickets { get; set; }
         public virtual ICollection<Ticket> EditingTickets { get; set; }
         public virtual ICollection<Update> Updates { get; set; }
+        public virtual ICollection<Announcement> Announcements { get; set; }
     }
 }

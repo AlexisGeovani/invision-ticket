@@ -32,7 +32,6 @@ namespace InVision_Ticket.ViewModels
 		public Nullable<long> CreatedByCustomerID { get; set; }
 		//public Nullable<long> SystemID { get; set; }
 		//public long StatusID { get; set; }
-		//public long BillRateID { get; set; }
 		//public long TicketTypeID { get; set; }
         //public string SalesmanName { get; set; }
         //public string TechnicianName { get; set; }
@@ -48,7 +47,6 @@ namespace InVision_Ticket.ViewModels
         public virtual Login TechLogin { get; set; }
         public virtual Models.System System { get; set; }
         public virtual Location Location { get; set; }
-		public virtual BillRate BillRate {get; set;}
 		public virtual TicketStatus TicketStatus { get; set; }
 		public virtual TicketType TicketType { get; set; }
         public SelectList Customers { get; set; }
@@ -60,9 +58,10 @@ namespace InVision_Ticket.ViewModels
         public List<Login> LoginList { get; set; }
 
 		public List<Location> LocationList { get; set; }
-		public List<BillRate> BillRateList { get; set; }
 		public List<TicketType> TicketTypeList { get; set; }
 		public List<TicketStatus> TicketStatusList { get; set; }
+
+
 
 	}
 }

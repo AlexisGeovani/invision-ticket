@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using InVision_Ticket.ViewModels;
+using InVision_Ticket.Models;
 
 namespace InVision_Ticket.Controllers
 {
@@ -13,7 +15,12 @@ namespace InVision_Ticket.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            using(InVisionTicketContext db = new InVisionTicketContext())
+            {
+                HomeViewModel HVM = new HomeViewModel();
+                HVM.Announcements = db.Announcement.ToList();
+                return View(HVM);
+            }
         }
         public ActionResult CloseWindow()
         {

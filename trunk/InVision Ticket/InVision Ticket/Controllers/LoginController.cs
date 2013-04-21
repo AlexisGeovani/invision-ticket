@@ -18,7 +18,10 @@ namespace InVision_Ticket.Controllers
 
         //
         // GET: /Login/
-
+        public ActionResult LoginTickets(int id)
+        {
+            return View("../Ticket/Index", SearchUtility.TicketSearch(null, null, null, null, null, null, id));
+        }
         public ViewResult Index()
         {
             var logins = db.Logins.Include(l => l.Location).Include(l => l.UserType).ToList();

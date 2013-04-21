@@ -13,8 +13,13 @@ namespace InVision_Ticket.ViewModels
 		public int BilledMinutes { get; set; }
 		public Nullable<int> ActualMinutes { get; set; }
 		public DateTime ActivityDateTime { get; set; }
+        public long? BillRateID { get; set; }
+        public decimal? OtherCharges { get; set; }
+        public string OtherChargesDescription { get; set; }
+
 		public Nullable<bool> Urgent { get; set; }
 		public int LoginID { get; set; }
-		public string Login {get; set;}
+		public string Login {get; set; }
 	}
 }
+

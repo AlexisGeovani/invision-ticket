@@ -42,13 +42,10 @@ namespace InVision_Ticket.Models.Mapping
             this.Property(t => t.CreatedByCustomerID).HasColumnName("CreatedByCustomerID");
             this.Property(t => t.LocationID).HasColumnName("LocationID");
             this.Property(t => t.SystemID).HasColumnName("SystemID");
-            this.Property(t => t.BillRateID).HasColumnName("BillRateID");
             this.Property(t => t.DetailsMarkDown).HasColumnName("DetailsMarkDown");
 
             // Relationships
-            this.HasOptional(t => t.BillRate)
-                .WithMany(t => t.BillRateTickets)
-                .HasForeignKey(d => d.BillRateID);
+
             this.HasOptional(t => t.CreatedByCustomer)
                 .WithMany(t => t.CreatedByCustomerTickets)
                 .HasForeignKey(d => d.CreatedByCustomerID);
