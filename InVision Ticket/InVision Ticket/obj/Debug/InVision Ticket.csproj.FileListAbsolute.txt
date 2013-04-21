@@ -46,3 +46,4 @@ C:\Users\Preston\Desktop\invision-ticket\trunk\InVision Ticket\InVision Ticket\b
 C:\Users\Preston\Desktop\invision-ticket\trunk\InVision Ticket\InVision Ticket\bin\MarkdownDeep.pdb
 C:\Users\Preston\Desktop\invision-ticket\trunk\InVision Ticket\InVision Ticket\bin\MarkdownSharp.pdb
 C:\Users\Preston\Desktop\invision-ticket\trunk\InVision Ticket\InVision Ticket\bin\MarkdownSharp.xml
+C:\Users\ptaylor\Desktop\invision-ticket\InVision Ticket\InVision Ticket\bin\LinqKit.dll

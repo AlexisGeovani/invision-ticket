@@ -5,7 +5,24 @@
 }
 
 <h2>Index</h2>
+@using (Html.BeginForm())
+{
+        <fieldset>
+        <legend>Search</legend>
+        <span>
+            <label>Search:</label>
+            <input type="text" id="SearchText" name="SearchText"/>&nbsp;
+            <label>Created After:</label>
+            <input type="date" id="StartDate" name="StartDate"/> &nbsp;
+            <label>Created Before:</label>
+            <input type="date" id="EndDate" name="EndDate"/>&nbsp;&nbsp;
+            My Location Only:<input type="checkbox" name="SearchLocation" value="True" checked/>
+            <input type="submit" id="submit" value="Search" />
 
+            
+       </span>
+    </fieldset>
+}
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -109,7 +126,8 @@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.CustomerContactID }) |
             @Html.ActionLink("Details", "Details", new { id = item.CustomerContactID }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.CustomerContactID })
+            @Html.ActionLink("Delete", "Delete", new { id = item.CustomerContactID }) |
+            @Html.ActionLink("Tickets", "CustomerTickets", new { id = item.CustomerID })
         </td>
     </tr>
 }

@@ -1,4 +1,4 @@
-﻿@model InVision_Ticket.Models.Update
+﻿@model InVision_Ticket.ViewModels.UpdateViewModel
 
 @{
     Layout = null;
@@ -44,10 +44,39 @@
                 @Html.EditorFor(model => model.ActualMinutes)
                 @Html.ValidationMessageFor(model => model.ActualMinutes)
             </div>
+
+
             
+            <div class="editor-label">
+                @Html.LabelFor(model => model.BillRate)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.BillRateID, new SelectList(Model.BillRateList, "BillRateID", "BillRateDescription"))
+                @Html.ValidationMessageFor(model => model.BillRate)
+            </div>
+
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.OtherCharges)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.OtherCharges)
+                @Html.ValidationMessageFor(model => model.OtherCharges)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.OtherChargesDescription)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.OtherChargesDescription)
+                @Html.ValidationMessageFor(model => model.OtherChargesDescription)
+            </div>
+
+
             <div class="editor-label">
                 @Html.LabelFor(model => model.Comment)
             </div>
+
 
             <div class="editor-field">
                 <div class="mdd_toolbar" id="comments_toolbar"></div>
@@ -57,24 +86,6 @@
             </div>
                  
 
-    
-@*            <div class="editor-label">
-                @Html.LabelFor(model => model.ActivityDateTime)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.ActivityDateTime)
-                @Html.ValidationMessageFor(model => model.ActivityDateTime)
-            </div>
-
-            <div class="editor-label">
-                @Html.LabelFor(model => model.Urgent)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.Urgent)
-                @Html.ValidationMessageFor(model => model.Urgent)
-            </div>*@
-    
-    
             <p>
                 <input type="submit" value="Create" />
             </p>

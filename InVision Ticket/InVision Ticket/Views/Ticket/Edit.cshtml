@@ -61,7 +61,7 @@
             <div class="mdd_preview" id="details_preview">@Model.Details</div>
             <a id="mdd_link" href="javascript:void(0)" onclick="toggleDetailsEdit();">+ Edit Details</a>
             <div class="mdd_toolbar" id="details_toolbar"></div>
-            @Html.TextAreaFor(model => model.DetailsMarkDown, new { @class = "mdd_editor", @id = "details_textarea"})
+            @Html.TextAreaFor(model => model.DetailsMarkDown, new { @class = "mdd_editor", @id = "details_textarea" })
 		    <div class="mdd_resizer" id="details_resizer"></div>
         </div>
 
@@ -174,7 +174,7 @@
         @{
         if (Model.CreatedByCustomer)
         {
-            @Html.Raw("<div class=\"editor-field\"> Ticket created online by customer.</div>");
+                @Html.Raw("<div class=\"editor-field\"> Ticket created online by customer.</div>");
 
 
         }
@@ -193,16 +193,38 @@
         @{
         if (Model.BusinessCustomer)
         { 
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.BusinessName)
-                </div>
-                <div class="editor-field">
-                    @Html.EditorFor(model => model.BusinessName)
-                    @Html.ValidationMessageFor(model => model.BusinessName)
-                </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.BusinessName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.BusinessName)
+                        @Html.ValidationMessageFor(model => model.BusinessName)
+                    </div>
     
         }    
             
+        }
+
+
+       
+        
+        <br />
+        @{
+            decimal charges = 0;
+            foreach(var update in Model.Updates)
+            {
+                if (update.OtherCharges.HasValue)
+                {
+                    charges = charges + (update.OtherCharges.Value);
+                }
+                if(update.BilledMinutes.HasValue)
+                {
+                    charges = charges + ((update.BilledMinutes.Value/(decimal)60.0) * update.BillRate.TicketBillRate);
+                }
+            }
+            <b>
+                @Html.Raw(String.Format("Total Charges: {0:C}", charges))
+            </b>
         }
         <p>
             <input type="submit" value="Save and Close" />
@@ -211,11 +233,14 @@
     <fieldset>
         <legend>Updates</legend>
         <input type="button" class="updateButon" onclick="Update(@Model.TicketID)" value="Update"/>
-        @foreach (var update in Model.Updates)
+        @foreach (var update in Model.Updates.OrderByDescending(u => u.ActivityDateTime))
         { 
             <div class ="editor-label">
-                <span>@Html.Raw("<h3>" + update.Login.DisplayName + " " + update.ActivityDateTime + "</h3>")</span>
-                <span>Billed Minutes:@update.BilledMinutes Actual Minutes:@update.ActualMinutes</span>
+                <span>@Html.Raw("<span class='UpdateHeader'>" + update.Login.DisplayName + " " + update.ActivityDateTime + "</span>" ) &nbsp;&nbsp; @Html.ActionLink("Delete", "DeleteUpdate", "Ticket", new { id = update.UpdateID }, new { target = "_blank" }) </span><br />
+                <span class="UpdateInformation">Billed Minutes:@update.BilledMinutes Actual Minutes:@update.ActualMinutes BillRate: @((update.BillRate == null) ? "$0" : update.BillRate.TicketBillRate.ToString("C")) </span> <br />
+                <span class="UpdateInformation">Other Charges: @((update.OtherCharges == null) ? "$0" : update.OtherCharges.Value.ToString("C"))  
+                    @((update.OtherCharges.HasValue) ? ("For:" + update.OtherChargesDescription) : "" )</span>
+                
                 <p>@Html.Raw(update.Comment)</p>
             </div>       
         }
@@ -297,7 +322,7 @@
 
 <script type="text/javascript">
     $("textarea.mdd_editor").MarkdownDeep({
-        help_location: "~/Content/mdd_help.html",
+        help_location: "~/Content/mdd_help.html"
 
     });
 </script>

@@ -25,8 +25,6 @@ namespace InVision_Ticket.ViewModels
 		public string Technician { get; set; }
 		public Nullable<long> LocationID { get; set; }
 		public Nullable<long> SystemID { get; set; }
-		public decimal BillRate { get; set; }
-        public string BillRateDescription { get; set; }
         public UpdateListView RecentUpdate { get; set; }
         public bool TicketStatusOpen { get; set; }
         public bool TicketStatusAttentionRequired { get; set; }

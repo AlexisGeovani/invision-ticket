@@ -7,6 +7,7 @@ using InVision_Ticket.Models;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using InVision_Ticket.Utilities;
+using System.Web.Security;
 
 namespace InVision_Ticket.Controllers
 {
@@ -30,6 +31,37 @@ namespace InVision_Ticket.Controllers
 				}
 				return View(CVML);
 			}
+        }
+        [HttpPost]
+        public ActionResult Index(FormCollection form)
+        {
+            using (InVisionTicketContext db = new InVisionTicketContext())
+            {
+
+                string Search = null;
+                if (!string.IsNullOrWhiteSpace(form["SearchText"]))
+                {
+                    Search = form["SearchText"];
+                }
+                DateTime? StartDate = null;
+                DateTime? EndDate = null;
+                if (!string.IsNullOrWhiteSpace(form["StartDate"]))
+                {
+                    StartDate = Convert.ToDateTime(form["StartDate"]);
+                }
+                if (!string.IsNullOrWhiteSpace(form["EndDate"]))
+                {
+                    EndDate = Convert.ToDateTime(form["EndDate"]);
+                }
+                int? LocationID = null;
+                if (!string.IsNullOrWhiteSpace(form["SearchLocation"]))
+                {
+                    var userData = ((FormsIdentity)User.Identity).Ticket.UserData.Split(':');
+                    LocationID = Convert.ToInt32(userData[0]);
+                }
+                
+                return View(SearchUtility.CustomerSearch(Search, LocationID, StartDate, EndDate));
+            }
         }
 
         //
@@ -55,6 +87,12 @@ namespace InVision_Ticket.Controllers
 				return View(CVM);
 			}
             
+        }
+        public ActionResult CustomerTickets(long id)
+        {
+            
+
+            return View("../Ticket/Index", SearchUtility.TicketSearch(null, null, null, null, null, id, null));
         }
 
         //

@@ -30,8 +30,6 @@ namespace InVision_Ticket.Models
         public Nullable<long> CreatedByCustomerID { get; set; }
         public Nullable<long> LocationID { get; set; }
         public Nullable<long> SystemID { get; set; }
-        public Nullable<long> BillRateID { get; set; }
-        public virtual BillRate BillRate { get; set; }
         public virtual Customer CreatedByCustomer { get; set; }
         public virtual Customer Customer { get; set; }
         public virtual Location Location { get; set; }

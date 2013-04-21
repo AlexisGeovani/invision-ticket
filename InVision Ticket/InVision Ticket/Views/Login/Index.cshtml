@@ -51,7 +51,8 @@
             @Html.ActionLink("Edit", "Edit", new { id = item.LoginID }) |
             @Html.ActionLink("Details", "Details", new { id=item.LoginID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.LoginID }) |
-            @Html.ActionLink("Change Password", "ChangePassword", new {id=item.LoginID})
+            @Html.ActionLink("Change Password", "ChangePassword", new {id=item.LoginID}) |
+            @Html.ActionLink("Tickets", "LoginTickets",  new {id=item.LoginID})
         </td>
     </tr>
 }

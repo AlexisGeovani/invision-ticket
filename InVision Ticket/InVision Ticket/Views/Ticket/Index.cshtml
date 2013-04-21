@@ -4,10 +4,33 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Ticket Search</h2>
+@using (Html.BeginForm())
+{
+        <fieldset>
+        <legend>Search</legend>
+        <span>
+            <label>Search:</label>
+            <input type="text" id="SearchText" name="SearchText"/>&nbsp;
+            <label>Created After:</label>
+            <input type="date" id="StartDate" name="StartDate"/> &nbsp;
+            <label>Created Before:</label>
+            <input type="date" id="EndDate" name="EndDate"/>&nbsp;&nbsp;
+            All:<input type="radio" name="StatusSearch" value=""  checked/>
+            Open:<input type="radio" name="StatusSearch" value="True" />
+            Closed:<input type="radio" name="StatusSearch" value="False" />&nbsp;&nbsp;
+            My Location Only:<input type="checkbox" name="SearcLocation" value="True" checked/>
+            <input type="submit" id="submit" value="Search" />
+
+            
+       </span>
+    </fieldset>
+}
+
+
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New Ticket", "Create")
 </p>
 <table>
     <tr>
@@ -49,21 +72,6 @@
         </th>
         <th>
             Technician
-        </th>
-        <th>
-            LocationID
-        </th>
-        <th>
-            SystemID
-        </th>
-        <th>
-            BillRate
-        </th>
-        <th>
-            TicketStatusOpen
-        </th>
-        <th>
-            TicketStatusAttentionRequired
         </th>
     </tr>
 
@@ -123,27 +131,12 @@
         <td>
             @Html.DisplayFor(modelItem => item.Technician)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LocationID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SystemID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BillRate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TicketStatusOpen)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TicketStatusAttentionRequired)
-        </td>
 
     </tr>
 }
 
 </table>
-<script>
+<script type="text/javascript">
     function OpenTicket(id) {
         var url = "/Ticket/Edit/" + id;
         var win = window.open(url, '_blank');
@@ -153,7 +146,7 @@
 
 </script>
 
-<style>
+<style type="text/css">
 
     .ticketListRow:hover
     {
@@ -175,22 +168,22 @@
 
 
 @functions{ 
-    public string GetTRClass(int? TechID, int? SalesID, bool? AttentionRequired) 
+    public string GetTRClass(int? TechID, int? SalesID, bool? AttentionRequired)
     {
-        if(AttentionRequired.HasValue)
+        if (AttentionRequired.HasValue)
         {
-            if(AttentionRequired.Value)
+            if (AttentionRequired.Value)
             {
                 var userID = ViewBag.userID;
-                if(TechID.HasValue)
+                if (TechID.HasValue)
                 {
                     if (TechID.Value == userID)
                     {
                         return "ticketListRow attention";
                     }
-        
+
                 }
-                if(SalesID.HasValue)
+                if (SalesID.HasValue)
                 {
                     if (SalesID.Value == userID)
                     {

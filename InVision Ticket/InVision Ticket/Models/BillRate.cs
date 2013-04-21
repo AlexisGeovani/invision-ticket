@@ -7,12 +7,12 @@ namespace InVision_Ticket.Models
     {
         public BillRate()
         {
-            this.BillRateTickets = new List<Ticket>();
+            this.BillRateUpdates = new List<Update>();
         }
 
         public long BillRateID { get; set; }
         public decimal TicketBillRate { get; set; }
         public string BillRateDescription { get; set; }
-        public virtual ICollection<Ticket> BillRateTickets { get; set; }
+        public virtual ICollection<Update> BillRateUpdates { get; set; }
     }
 }

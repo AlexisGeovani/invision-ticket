@@ -1,0 +1,72 @@
+﻿@model InVision_Ticket.Models.Update
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>DeleteUpdate</title>
+</head>
+<body>
+    <h3>Are you sure you want to delete this?</h3>
+    <fieldset>
+        <legend>Update</legend>
+
+    
+        <div class="display-label">Comment</div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Comment)
+        </div>
+    
+        <div class="display-label">CommentMarkDown</div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.CommentMarkDown)
+        </div>
+    
+        <div class="display-label">BilledMinutes</div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.BilledMinutes)
+        </div>
+    
+        <div class="display-label">ActualMinutes</div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.ActualMinutes)
+        </div>
+    
+        <div class="display-label">ActivityDateTime</div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.ActivityDateTime)
+        </div>
+    
+        <div class="display-label">LoginID</div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.LoginID)
+        </div>
+    
+        <div class="display-label">BillRateID</div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.BillRateID)
+        </div>
+    
+        <div class="display-label">OtherCharges</div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.OtherCharges)
+        </div>
+    
+        <div class="display-label">OtherChargesDescription</div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.OtherChargesDescription)
+        </div>
+    </fieldset>
+    @using (Html.BeginForm()) {
+        <p>
+            <input type="hidden" value="@ViewBag.id" name="id" id="id"/>
+
+            <input type="submit" value="Delete" /> 
+        </p>
+    }
+</body>
+</html>

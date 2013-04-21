@@ -51,6 +51,9 @@
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.4.1.10331.0\lib\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="LinqKit">
+      <HintPath>..\packages\LinqKit.1.0\lib\35\LinqKit.dll</HintPath>
+    </Reference>
     <Reference Include="MarkdownDeep, Version=1.5.4615.26275, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MarkdownDeep.Full.1.5\lib\.NetFramework 3.5\MarkdownDeep.dll</HintPath>
@@ -94,6 +97,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\AnnouncementController.cs" />
     <Compile Include="Controllers\AuthenticationController.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -127,6 +131,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\MarkdownHelper.cs" />
+    <Compile Include="Models\Announcement.cs" />
     <Compile Include="Models\BillRate.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerContact.cs" />
@@ -134,6 +139,7 @@
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\LoginHistory.cs" />
+    <Compile Include="Models\Mapping\AnnouncementMap.cs" />
     <Compile Include="Models\Mapping\BillRateMap.cs" />
     <Compile Include="Models\Mapping\CustomerContactMap.cs" />
     <Compile Include="Models\Mapping\CustomerMap.cs" />
@@ -160,14 +166,18 @@
     <Compile Include="Utilities\CustomerCustomerView.cs" />
     <Compile Include="Utilities\DebugTextWriter.cs" />
     <Compile Include="Utilities\PasswordHash.cs" />
+    <Compile Include="Utilities\PredicateBuilder.cs" />
     <Compile Include="Utilities\stringManipulation.cs" />
+    <Compile Include="Utilities\SearchUtility.cs" />
     <Compile Include="Utilities\TimeAgo.cs" />
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModel.cs" />
+    <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\TicketListViewModel.cs" />
     <Compile Include="ViewModels\TicketViewModel.cs" />
     <Compile Include="ViewModels\UpdateListView.cs" />
+    <Compile Include="ViewModels\UpdateViewModel.cs" />
     <Compile Include="ViewModels\UploadViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -347,6 +357,10 @@
     <Content Include="Views\Ticket\UpdateTicket.cshtml" />
     <Content Include="Views\Ticket\Upload.cshtml" />
     <Content Include="Views\Ticket\DeleteUpload.cshtml" />
+    <Content Include="Views\Announcement\Create.cshtml" />
+    <Content Include="Views\Announcement\Index.cshtml" />
+    <Content Include="Views\Announcement\Delete.cshtml" />
+    <Content Include="Views\Ticket\DeleteUpdate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Ticket\Edit.cshtml" />

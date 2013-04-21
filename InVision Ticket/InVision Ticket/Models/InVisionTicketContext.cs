@@ -31,6 +31,7 @@ namespace InVision_Ticket.Models
         public DbSet<Update> Updates { get; set; }
         public DbSet<Upload> Uploads { get; set; }
         public DbSet<UserType> UserTypes { get; set; }
+        public DbSet<Announcement> Announcement { get; set; }
 	
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -49,6 +50,7 @@ namespace InVision_Ticket.Models
             modelBuilder.Configurations.Add(new UpdateMap());
             modelBuilder.Configurations.Add(new UserTypeMap());
             modelBuilder.Configurations.Add(new UploadMap());
+            modelBuilder.Configurations.Add(new AnnouncementMap());
         }
     }
 }

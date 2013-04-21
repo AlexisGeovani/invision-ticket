@@ -25,6 +25,15 @@ section {
 {
     clear:both;
 }
+.UpdateHeader
+{
+    font-weight:900;
+    font-size:larger;    
+}
+.UpdateInformation
+{
+    font-weight:normal;
+}
 
 /* Styles for basic forms
 -----------------------------------------------------------*/

@@ -51,7 +51,6 @@ namespace InVision_Ticket.Controllers
             TicketViewModel vm = new TicketViewModel();
             vm.CustomerID = id;
             vm.CustomerContactID = db.Customers.Find(id).CustomerContacts.First().CustomerContactID;
-            vm.BillRateList = db.BillRates.ToList();
             vm.LocationList = db.Locations.ToList();
             vm.TicketStatusList = db.TicketStatus.ToList();
             vm.TicketTypeList = db.TicketTypes.ToList();

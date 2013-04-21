@@ -15,6 +15,7 @@ using System.Data.Entity.Validation;
 using System.Data;
 using System.Data.Entity;
 using System.IO;
+using InVision_Ticket.Utilities;
 
 namespace InVision_Ticket.Controllers
 {
@@ -22,9 +23,24 @@ namespace InVision_Ticket.Controllers
     {
         public ActionResult DeleteUpdate(int id)
         {
-            throw new NotImplementedException();
-        
-        
+            using (InVisionTicketContext db = new InVisionTicketContext())
+            {
+                ViewBag.id = id;
+                return View(db.Updates.Find(id));
+            }
+            
+        }
+        [HttpPost]
+        public ActionResult DeleteUpdate(FormCollection form)
+        {
+            using (InVisionTicketContext db = new InVisionTicketContext())
+            {
+                int id = int.Parse(form[0]);
+                db.Updates.Remove(db.Updates.Find(id));
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("CloseWindow", "Home");
         }
         public ActionResult DownloadUpload(int id)
         {
@@ -32,10 +48,6 @@ namespace InVision_Ticket.Controllers
             {
                 Upload upload = db.Uploads.Find(id);
                 Byte[] data = upload.Data;
-                //FileStream fs = new FileStream(upload.FileName, FileMode.Create,FileAccess.Write);
-                //fs.Write(data,0,data.Length);
-                //fs.Close();
-                
                 var cd = new System.Net.Mime.ContentDisposition
                 {
                     FileName = upload.FileName,
@@ -103,50 +115,101 @@ namespace InVision_Ticket.Controllers
             using(InVisionTicketContext db = new InVisionTicketContext())
             {
                 var userID = db.Logins.Single(l => l.Email == User.Identity.Name).LoginID;
-                Update update = new Update();
-                update.LoginID = userID;
-                update.TicketID = id;
-                return View(update);
+                UpdateViewModel UVM = new UpdateViewModel();
+                UVM.BillRateList = db.BillRates.ToList();
+                UVM.LoginID = userID;
+                UVM.TicketID = id;
+                return View(UVM);
             }
         }
         [HttpPost]
-        public ActionResult UpdateTicket(Update update)
+        public ActionResult UpdateTicket(UpdateViewModel UVM)
         {
             if (ModelState.IsValid)
             {
                 using (InVisionTicketContext db = new InVisionTicketContext())
                 {
+
+                    Update update = Mapper.Map<UpdateViewModel, Update>(UVM);
                     update.ActivityDateTime = System.DateTime.Now;
+
                     Markdown md = new Markdown();
-                    update.Comment = md.Transform(update.CommentMarkDown);
+                    update.Comment = md.Transform(UVM.CommentMarkDown);
                     db.Updates.Add(update);
                     db.SaveChanges();
                     return RedirectToAction("CloseWindow", "Home");
                 }
             }
 
-            return View(update);
+            return View(UVM);
         }
         //
         // GET: /Ticket/
 
         public ActionResult Index()
         {
-            var userData = ((FormsIdentity)User.Identity).Ticket.UserData.Split(':');
-            var role = userData[1];
-            var store = userData[0];
             
             using(InVisionTicketContext db = new InVisionTicketContext())
             {
                 var userID = db.Logins.Single(l => l.Email == User.Identity.Name).LoginID;
                 ViewBag.userID = db.Logins.Single(l => l.Email == User.Identity.Name).LoginID;
-                
-                var ticketsq = db.Tickets.Where(t => t.TicketStatus.Open == true);
-                return View(Mapper.Map<List<Ticket>, List<TicketListViewModel>>(ticketsq.ToList()));
+                var tickets = SearchUtility.TicketSearch(null, null, null, null, true, null, null);
+               
+                //var ticketsq = db.Tickets.Where(t => t.TicketStatus.Open == true);
+                return View(tickets);
             }
          //   return View();
         }
+        [HttpPost]
+        public ActionResult Index(FormCollection form)
+        {
+            string Search = null;
+            if(!string.IsNullOrWhiteSpace(form["SearchText"]))
+            {
+                Search = form["SearchText"];
+            }
+            DateTime? StartDate = null;
+            DateTime? EndDate = null;
+            if(!string.IsNullOrWhiteSpace(form["StartDate"]))
+            {
+                StartDate = Convert.ToDateTime(form["StartDate"]);
+            }
+            if (!string.IsNullOrWhiteSpace(form["EndDate"]))
+            {
+                EndDate = Convert.ToDateTime(form["EndDate"]);
+            }
+            bool? OpenStatusOnly = null;
+            if (!string.IsNullOrWhiteSpace(form["StatusSearch"]))
+            {
+                OpenStatusOnly = Convert.ToBoolean(form["StatusSearch"]);
+            }
+            int? LocationID = null;
+            if(!string.IsNullOrWhiteSpace(form["SearchLocation"]))
+            {
+                var userData = ((FormsIdentity)User.Identity).Ticket.UserData.Split(':');
+                LocationID = Convert.ToInt32(userData[0]);
+            }
+            long? CustomerID = null;
+            if(!string.IsNullOrWhiteSpace(form["CustomerID"]))
+            {
+                CustomerID = Convert.ToInt64(form["CustomerID"]);
+            }
+            int? LoginID = null;
+            if (!string.IsNullOrEmpty(form["LoginID"]))
+            {
+                LoginID = Convert.ToInt32(form["LoginID"]);
+            }
+            using (InVisionTicketContext db = new InVisionTicketContext())
+            {
+                var userID = db.Logins.Single(l => l.Email == User.Identity.Name).LoginID;
+                ViewBag.userID = db.Logins.Single(l => l.Email == User.Identity.Name).LoginID;
+                var tickets = SearchUtility.TicketSearch(Search, LocationID, StartDate, EndDate, OpenStatusOnly, CustomerID, LoginID);
 
+                //var ticketsq = db.Tickets.Where(t => t.TicketStatus.Open == true);
+                return View(tickets);
+            }
+           
+        }
 		////
 		//// GET: /Ticket/Details/5
 
@@ -164,7 +227,6 @@ namespace InVision_Ticket.Controllers
             {
                 TicketViewModel vm = new TicketViewModel();
 
-                vm.BillRateList = db.BillRates.ToList();
                 vm.LocationList = db.Locations.ToList();
                 vm.TicketStatusList = db.TicketStatus.ToList();
                 vm.TicketTypeList = db.TicketTypes.ToList();
@@ -274,12 +336,11 @@ namespace InVision_Ticket.Controllers
                 vm.TicketType = db.TicketTypes.Find(ticket.TicketTypeID);
                     
                     
-                vm.BillRateList = db.BillRates.ToList();
                 vm.LocationList = db.Locations.ToList();
                 vm.TicketStatusList = db.TicketStatus.ToList();
                 vm.TicketTypeList = db.TicketTypes.ToList();
                 vm.LoginList = db.Logins.Where(l => l.LocationID == vm.Location.LocationID).ToList();
-                vm.Updates = db.Updates.Include(u => u.Login).Where(x => x.TicketID == vm.TicketID).ToList();
+                vm.Updates = db.Updates.Include(u => u.Login).Include(u => u.BillRate).Where(x => x.TicketID == vm.TicketID).ToList();
                 vm.Uploads = db.Uploads.Where(u => u.TicketID == vm.TicketID).ToList();
                 return View(vm);
 			}
@@ -320,6 +381,7 @@ namespace InVision_Ticket.Controllers
                     ticket.SalesmanLoginID = null;
                     ticket.TechnicianLoginID = null;
                 }
+
                 db.SaveChanges();
                 return RedirectToAction("CloseWindow", "Home");
             }

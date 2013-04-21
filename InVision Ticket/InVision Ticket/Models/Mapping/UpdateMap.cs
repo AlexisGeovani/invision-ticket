@@ -26,6 +26,9 @@ namespace InVision_Ticket.Models.Mapping
             this.Property(t => t.ActivityDateTime).HasColumnName("ActivityDateTime");
             this.Property(t => t.Urgent).HasColumnName("Urgent");
             this.Property(t => t.LoginID).HasColumnName("LoginID");
+            this.Property(t => t.BillRateID).HasColumnName("BillRateID").IsRequired();
+            this.Property(t => t.OtherCharges).HasColumnName("OtherCharges");
+            this.Property(t => t.OtherChargesDescription).HasColumnName("OtherChargesDescription");
 
             // Relationships
             this.HasRequired(t => t.Login)
@@ -34,6 +37,9 @@ namespace InVision_Ticket.Models.Mapping
             this.HasRequired(t => t.Ticket)
                 .WithMany(t => t.Updates)
                 .HasForeignKey(d => d.TicketID);
+            this.HasRequired(t => t.BillRate)
+                .WithMany(t => t.BillRateUpdates)
+                .HasForeignKey(d => d.BillRateID);
 
         }
     }
