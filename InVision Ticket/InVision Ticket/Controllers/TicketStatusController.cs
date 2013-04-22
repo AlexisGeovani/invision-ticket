@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using InVision_Ticket.Models;
+using InVision_Ticket.Utilities;
 
 namespace InVision_Ticket.Controllers
 { 
@@ -18,7 +19,12 @@ namespace InVision_Ticket.Controllers
 
         public ViewResult Index()
         {
-            return View(db.TicketStatus.ToList());
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
+            {
+            
+                return View(db.TicketStatus.ToList());
+            }
+            throw new HttpException(401, "Access Denied");
         }
 
         //
@@ -26,8 +32,12 @@ namespace InVision_Ticket.Controllers
 
         public ViewResult Details(long id)
         {
-            TicketStatus ticketstatus = db.TicketStatus.Find(id);
-            return View(ticketstatus);
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
+            {
+                TicketStatus ticketstatus = db.TicketStatus.Find(id);
+                return View(ticketstatus);
+            }
+            throw new HttpException(401, "Access Denied");
         }
 
         //
@@ -35,7 +45,11 @@ namespace InVision_Ticket.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
+            {
+                return View();
+            }
+            throw new HttpException(401, "Access Denied");
         } 
 
         //
@@ -44,11 +58,15 @@ namespace InVision_Ticket.Controllers
         [HttpPost]
         public ActionResult Create(TicketStatus ticketstatus)
         {
-            if (ModelState.IsValid)
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
             {
-                db.TicketStatus.Add(ticketstatus);
-                db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    db.TicketStatus.Add(ticketstatus);
+                    db.SaveChanges();
                 return RedirectToAction("Index");  
+                }
+            throw new HttpException(401, "Access Denied");
             }
 
             return View(ticketstatus);
@@ -59,13 +77,17 @@ namespace InVision_Ticket.Controllers
  
         public ActionResult Edit(long id)
         {
-            if (id == 103)
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
             {
-                throw new HttpException(403, "This status cannot be modified.");
+                if (id == 103)
+                {
+                    throw new HttpException(403, "This status cannot be modified.");
             
+                }
+                TicketStatus ticketstatus = db.TicketStatus.Find(id);
+                return View(ticketstatus);
             }
-            TicketStatus ticketstatus = db.TicketStatus.Find(id);
-            return View(ticketstatus);
+            throw new HttpException(401, "Access Denied");
         }
 
         //
@@ -74,18 +96,22 @@ namespace InVision_Ticket.Controllers
         [HttpPost]
         public ActionResult Edit(TicketStatus ticketstatus)
         {
-            if (ticketstatus.TicketStatusID == 103)
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
             {
-                throw new HttpException(403, "This status cannot be modified.");
+                if (ticketstatus.TicketStatusID == 103)
+                {
+                    throw new HttpException(403, "This status cannot be modified.");
 
+                }
+                if (ModelState.IsValid)
+                {
+                    db.Entry(ticketstatus).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(ticketstatus);
             }
-            if (ModelState.IsValid)
-            {
-                db.Entry(ticketstatus).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(ticketstatus);
+            throw new HttpException(401, "Access Denied");
         }
 
         //
@@ -93,13 +119,18 @@ namespace InVision_Ticket.Controllers
  
         public ActionResult Delete(long id)
         {
-            if (id == 103)
-            {
-                throw new HttpException(403, "This status cannot be modified.");
 
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
+            {
+                if (id == 103)
+                {
+                    throw new HttpException(403, "This status cannot be modified.");
+
+                }
+                TicketStatus ticketstatus = db.TicketStatus.Find(id);
+                return View(ticketstatus);
             }
-            TicketStatus ticketstatus = db.TicketStatus.Find(id);
-            return View(ticketstatus);
+            throw new HttpException(401, "Access Denied");
         }
 
         //
@@ -108,15 +139,19 @@ namespace InVision_Ticket.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
         {
-            if (id == 103)
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
             {
-                throw new HttpException(403, "This status cannot be modified.");
+                if (id == 103)
+                {
+                    throw new HttpException(403, "This status cannot be modified.");
 
+                }
+                TicketStatus ticketstatus = db.TicketStatus.Find(id);
+                db.TicketStatus.Remove(ticketstatus);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            TicketStatus ticketstatus = db.TicketStatus.Find(id);
-            db.TicketStatus.Remove(ticketstatus);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            throw new HttpException(401, "Access Denied");
         }
 
         protected override void Dispose(bool disposing)

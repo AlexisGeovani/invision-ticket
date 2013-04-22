@@ -4,7 +4,13 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Customers</h2>
+@if (InVision_Ticket.Utilities.RoleCheck.IsAdministrator(User.Identity.Name))
+{ 
+    @Html.ActionLink("Customer Marketing CSV Download", "CustomerCSV")
+}
+
+
 @using (Html.BeginForm())
 {
         <fieldset>
@@ -76,7 +82,8 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
 @*        <td>
             @Html.DisplayFor(modelItem => item.CustomerID)
@@ -124,9 +131,8 @@
             @Html.DisplayFor(modelItem => item.CustomerNotes)
         </td>*@
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.CustomerContactID }) |
+            @Html.ActionLink("Edit", "Edit", new { id = item.CustomerContactID }) |
             @Html.ActionLink("Details", "Details", new { id = item.CustomerContactID }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.CustomerContactID }) |
             @Html.ActionLink("Tickets", "CustomerTickets", new { id = item.CustomerID })
         </td>
     </tr>

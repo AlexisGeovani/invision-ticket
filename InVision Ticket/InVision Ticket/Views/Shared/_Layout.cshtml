@@ -15,12 +15,18 @@
 <a href="/Logout">Logout</a>
 <a href="/Customer">Customer</a>
 <a href="/Login">Users</a>
-<a href="/UserType">User Types</a>
-<a href="/TicketType">Ticket Types</a>
-<a href="/TicketStatus">Ticket Statuses</a>
 <a href="/Ticket">Tickets</a>
-<a href="/BillRate">Bill Rates</a>
-<a href="/Location">Locations</a>
+
+@if (InVision_Ticket.Utilities.RoleCheck.IsAdministrator(User.Identity.Name))
+{
+    
+    <a href="/TicketType">Ticket Types</a>
+    <a href="/TicketStatus">Ticket Statuses</a>
+    <a href="/BillRate">Bill Rates</a>
+    <a href="/Location">Locations</a>
+    <a href="/Announcements">Locations</a>
+    
+}
 
 </div>
     @RenderBody()

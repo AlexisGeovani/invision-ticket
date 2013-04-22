@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using InVision_Ticket.Models;
+using InVision_Ticket.Utilities;
 
 namespace InVision_Ticket.Controllers
 { 
@@ -18,7 +19,11 @@ namespace InVision_Ticket.Controllers
 
         public ViewResult Index()
         {
-            return View(db.BillRates.ToList());
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
+            {
+                return View(db.BillRates.ToList());
+            }
+            throw new HttpException(401, "Access Denied");
         }
 
         //
@@ -26,8 +31,12 @@ namespace InVision_Ticket.Controllers
 
         public ViewResult Details(long id)
         {
-            BillRate billrate = db.BillRates.Find(id);
-            return View(billrate);
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
+            {
+                BillRate billrate = db.BillRates.Find(id);
+                return View(billrate);
+            }
+            throw new HttpException(401, "Access Denied");
         }
 
         //
@@ -35,7 +44,11 @@ namespace InVision_Ticket.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
+            {
+                return View();
+            }
+            throw new HttpException(401, "Access Denied");
         } 
 
         //
@@ -44,14 +57,18 @@ namespace InVision_Ticket.Controllers
         [HttpPost]
         public ActionResult Create(BillRate billrate)
         {
-            if (ModelState.IsValid)
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
             {
-                db.BillRates.Add(billrate);
-                db.SaveChanges();
-                return RedirectToAction("Index");  
-            }
+                if (ModelState.IsValid)
+                {
+                    db.BillRates.Add(billrate);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");  
+                }
 
-            return View(billrate);
+                return View(billrate);
+            }
+            throw new HttpException(401, "Access Denied");
         }
         
         //
@@ -59,8 +76,12 @@ namespace InVision_Ticket.Controllers
  
         public ActionResult Edit(long id)
         {
-            BillRate billrate = db.BillRates.Find(id);
-            return View(billrate);
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
+            {
+                BillRate billrate = db.BillRates.Find(id);
+                return View(billrate);
+            }
+            throw new HttpException(401, "Access Denied");
         }
 
         //
@@ -69,13 +90,17 @@ namespace InVision_Ticket.Controllers
         [HttpPost]
         public ActionResult Edit(BillRate billrate)
         {
-            if (ModelState.IsValid)
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
             {
-                db.Entry(billrate).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(billrate).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(billrate);
             }
-            return View(billrate);
+            throw new HttpException(401, "Access Denied");
         }
 
         //
@@ -83,8 +108,12 @@ namespace InVision_Ticket.Controllers
  
         public ActionResult Delete(long id)
         {
-            BillRate billrate = db.BillRates.Find(id);
-            return View(billrate);
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
+            {
+                BillRate billrate = db.BillRates.Find(id);
+                return View(billrate);
+            }
+            throw new HttpException(401, "Access Denied");
         }
 
         //
@@ -92,11 +121,15 @@ namespace InVision_Ticket.Controllers
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
-        {            
-            BillRate billrate = db.BillRates.Find(id);
-            db.BillRates.Remove(billrate);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+        {
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
+            {
+                BillRate billrate = db.BillRates.Find(id);
+                db.BillRates.Remove(billrate);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            throw new HttpException(401, "Access Denied");
         }
 
         protected override void Dispose(bool disposing)

@@ -5,9 +5,11 @@ using System.Web;
 using System.Web.Mvc;
 using InVision_Ticket.Models;
 using System.Data.Entity.Validation;
+using System.Data.Entity;
 using System.Diagnostics;
 using InVision_Ticket.Utilities;
 using System.Web.Security;
+using System.IO;
 
 namespace InVision_Ticket.Controllers
 {
@@ -90,9 +92,39 @@ namespace InVision_Ticket.Controllers
         }
         public ActionResult CustomerTickets(long id)
         {
-            
-
             return View("../Ticket/Index", SearchUtility.TicketSearch(null, null, null, null, null, id, null));
+        }
+        public ActionResult CustomerCSV()
+        {
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
+            {
+                using (InVisionTicketContext db = new InVisionTicketContext())
+                {
+                    var customers = db.CustomerContacts.Include(c => c.Customer).Where(c => c.PromotionalEmails == true);
+                    StringWriter sw = new StringWriter();
+                    sw.WriteLine(string.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\",\"{6}\",\"{7}\",\"{8}\", \"{9}\", \"{10}\", \"{11}\", \"{12}\", \"{13}\"",
+                        new string[] { "CustomerID", "CustomerContactID", "CustomerName", "FirstName", "LastName", "BusinessCustomer", "EmailAddress", "Address1", "Address2", "City", "State", "Zip", "Phone", "Notes" }));
+
+                    foreach (var customer in customers)
+                    {
+                        sw.WriteLine(string.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\",\"{6}\",\"{7}\",\"{8}\", \"{9}\", \"{10}\", \"{11}\", \"{12}\", \"{13}\"",
+                            new string[] {customer.CustomerID.Value.ToString(), customer.CustomerContactID.ToString(), customer.Customer.CustomerName, customer.FirstName, customer.LastName, customer.Customer.BusinessCustomer.Value.ToString(),
+                        customer.Email, customer.AddressLine1, customer.AddressLine2, customer.City, customer.State, customer.Zip.Value.ToString(), customer.Phone.ToString(), customer.Customer.CustomerNotes}));
+
+                    }
+                    //Byte[] data = upload.Data;
+                    //var cd = new System.Net.Mime.ContentDisposition
+                    //{
+                    //    FileName = upload.FileName,
+                    //    Inline = false,
+
+                    //};
+                    return File(new System.Text.UTF8Encoding().GetBytes(sw.ToString()), "text/csv", "Customers.csv");
+                }
+            }
+            throw new HttpException(401, "Access Denied");
+
+        
         }
 
         //
@@ -242,42 +274,42 @@ namespace InVision_Ticket.Controllers
         //
         // GET: /Customer/Delete/5
  
-        public ActionResult Delete(long id)
-        {
-			using (InVisionTicketContext db = new InVisionTicketContext())
-			{
-				CustomerContact CC = db.CustomerContacts.Find(id);
-				Customer C = db.Customers.Find(CC.CustomerID);
-				CustomerViewModel CVM = CustomerCustomerView.ConvertToCustomerViewModel(C, CC);
+        //public ActionResult Delete(long id)
+        //{
+        //    using (InVisionTicketContext db = new InVisionTicketContext())
+        //    {
+        //        CustomerContact CC = db.CustomerContacts.Find(id);
+        //        Customer C = db.Customers.Find(CC.CustomerID);
+        //        CustomerViewModel CVM = CustomerCustomerView.ConvertToCustomerViewModel(C, CC);
 
 				
-				return View(CVM);
-			}
-        }
+        //        return View(CVM);
+        //    }
+        //}
 
-        //
-        // POST: /Customer/Delete/5
+        ////
+        //// POST: /Customer/Delete/5
 
-		[HttpPost, ActionName("Delete")]
-		public ActionResult DeleteConfirmed(long id)
-        {
-			//try
-			//{
+        //[HttpPost, ActionName("Delete")]
+        //public ActionResult DeleteConfirmed(long id)
+        //{
+        //    //try
+        //    //{
 
-				using (InVisionTicketContext db = new InVisionTicketContext())
-				{
-					long CustomerID = db.CustomerContacts.Find(id).CustomerID.Value;
-					db.CustomerContacts.Remove(db.CustomerContacts.Find(id));
-					db.SaveChanges();
-					db.Customers.Remove(db.Customers.Find(CustomerID));
-					db.SaveChanges();
-					return RedirectToAction("Index");
-				}
-            //}
-			//catch
-			//{
-			//    return View();
-			//}
-        }
+        //        using (InVisionTicketContext db = new InVisionTicketContext())
+        //        {
+        //            long CustomerID = db.CustomerContacts.Find(id).CustomerID.Value;
+        //            db.CustomerContacts.Remove(db.CustomerContacts.Find(id));
+        //            db.SaveChanges();
+        //            db.Customers.Remove(db.Customers.Find(CustomerID));
+        //            db.SaveChanges();
+        //            return RedirectToAction("Index");
+        //        }
+        //    //}
+        //    //catch
+        //    //{
+        //    //    return View();
+        //    //}
+        //}
     }
 }

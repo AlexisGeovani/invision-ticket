@@ -6,55 +6,64 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
-    <tr>
-        <th>
-            Email
-        </th>
-        <th>
-            Display Name
-        </th>
 
-        <th>
-            Theme
-        </th>
-        <th>
-            Location
-        </th>
-        <th>
-            User Type
-        </th>
-        <th></th>
-    </tr>
+@if (InVision_Ticket.Utilities.RoleCheck.IsAdministrator(User.Identity.Name))
+{ 
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table>
+        <tr>
+            <th>
+                Email
+            </th>
+            <th>
+                Display Name
+            </th>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DisplayName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Theme)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StoreLocation)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserType)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.LoginID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.LoginID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.LoginID }) |
-            @Html.ActionLink("Change Password", "ChangePassword", new {id=item.LoginID}) |
-            @Html.ActionLink("Tickets", "LoginTickets",  new {id=item.LoginID})
-        </td>
-    </tr>
+            <th>
+                Theme
+            </th>
+            <th>
+                Location
+            </th>
+            <th>
+                User Type
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DisplayName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Theme)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StoreLocation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserType)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.LoginID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.LoginID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.LoginID }) |
+                @Html.ActionLink("Change Password", "ChangePassword", new { id = item.LoginID }) |
+                @Html.ActionLink("Tickets", "LoginTickets", new { id = item.LoginID })
+            </td>
+        </tr>
+    }
+
+    </table>
 }
-
-</table>
+else
+{ 
+    @Html.ActionLink("Change Password", "ChangePassword", new { id = ViewBag.LoginID })
+}

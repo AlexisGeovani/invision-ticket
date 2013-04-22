@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using InVision_Ticket.Models;
+using InVision_Ticket.Utilities;
 
 namespace InVision_Ticket.Controllers
 { 
@@ -18,7 +19,11 @@ namespace InVision_Ticket.Controllers
 
         public ViewResult Index()
         {
-            return View(db.Locations.ToList());
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
+            {
+                return View(db.Locations.ToList()); 
+            }
+            throw new HttpException(401, "Access Denied");
         }
 
         //
@@ -26,8 +31,12 @@ namespace InVision_Ticket.Controllers
 
         public ViewResult Details(long id)
         {
-            Location location = db.Locations.Find(id);
-            return View(location);
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
+            {
+                Location location = db.Locations.Find(id);
+                return View(location);
+            }
+            throw new HttpException(401, "Access Denied");
         }
 
         //
@@ -35,7 +44,11 @@ namespace InVision_Ticket.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
+            {
+                return View();
+            }
+            throw new HttpException(401, "Access Denied");
         } 
 
         //
@@ -44,14 +57,18 @@ namespace InVision_Ticket.Controllers
         [HttpPost]
         public ActionResult Create(Location location)
         {
-            if (ModelState.IsValid)
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
             {
-                db.Locations.Add(location);
-                db.SaveChanges();
-                return RedirectToAction("Index");  
-            }
+                if (ModelState.IsValid)
+                {
+                    db.Locations.Add(location);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");  
+                }
 
-            return View(location);
+                return View(location);
+            }
+            throw new HttpException(401, "Access Denied");
         }
         
         //
@@ -59,8 +76,12 @@ namespace InVision_Ticket.Controllers
  
         public ActionResult Edit(long id)
         {
-            Location location = db.Locations.Find(id);
-            return View(location);
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
+            {
+                Location location = db.Locations.Find(id);
+                return View(location);
+            }
+            throw new HttpException(401, "Access Denied");
         }
 
         //
@@ -69,14 +90,17 @@ namespace InVision_Ticket.Controllers
         [HttpPost]
         public ActionResult Edit(Location location)
         {
-            if (ModelState.IsValid)
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
             {
-                
-                db.Entry(location).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(location).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(location);
             }
-            return View(location);
+            throw new HttpException(401, "Access Denied");
         }
 
         //
@@ -84,8 +108,12 @@ namespace InVision_Ticket.Controllers
  
         public ActionResult Delete(long id)
         {
-            Location location = db.Locations.Find(id);
-            return View(location);
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
+            {
+                Location location = db.Locations.Find(id);
+                return View(location);
+            }
+            throw new HttpException(401, "Access Denied");
         }
 
         //
@@ -93,17 +121,25 @@ namespace InVision_Ticket.Controllers
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
-        {            
-            Location location = db.Locations.Find(id);
-            db.Locations.Remove(location);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+        {
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
+            {
+                Location location = db.Locations.Find(id);
+                db.Locations.Remove(location);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            throw new HttpException(401, "Access Denied");
         }
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
-            base.Dispose(disposing);
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
+            {
+                db.Dispose();
+                base.Dispose(disposing);
+            }
+            throw new HttpException(401, "Access Denied");
         }
     }
 }
