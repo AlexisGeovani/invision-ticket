@@ -29,6 +29,13 @@ namespace InVision_Ticket.Controllers
 					if (data.Logins.Count(l => l.Email == login.Email) == 1)
 					{
                         var Login = data.Logins.SingleOrDefault(l => l.Email.ToLower() == login.Email.ToLower());
+                        if(string.IsNullOrWhiteSpace(Login.Password))
+                        {
+                            ModelState.AddModelError("", "Invalid username or password.");
+			                return View();
+                        }
+
+
 						if (PasswordHash.ValidatePassword(login.Password, Login.Password))
 						{
                             FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(

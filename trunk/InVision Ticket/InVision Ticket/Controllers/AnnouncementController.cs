@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using InVision_Ticket.Models;
 using MarkdownDeep;
 using System.Data.Entity;
+using InVision_Ticket.Utilities;
 
 namespace InVision_Ticket.Controllers
 {
@@ -16,10 +17,14 @@ namespace InVision_Ticket.Controllers
 
         public ActionResult Index()
         {
-            using (InVisionTicketContext db = new InVisionTicketContext())
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
             {
-                return View(db.Announcement.Include(a => a.Login).ToList());
+                using (InVisionTicketContext db = new InVisionTicketContext())
+                {
+                    return View(db.Announcement.Include(a => a.Login).ToList());
+                }
             }
+            throw new HttpException(401, "Access Denied");
         }
 
         //
@@ -27,7 +32,11 @@ namespace InVision_Ticket.Controllers
 
         public ActionResult Details(int id)
         {
-            return View();
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
+            {
+                return View();
+            }
+            throw new HttpException(401, "Access Denied");
         }
 
         //
@@ -35,8 +44,11 @@ namespace InVision_Ticket.Controllers
 
         public ActionResult Create()
         {
-
-            return View();
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
+            {
+                return View();
+            }
+            throw new HttpException(401, "Access Denied");
         } 
 
         //
@@ -45,34 +57,38 @@ namespace InVision_Ticket.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult Create(Announcement announcement)
         {
-            using (InVisionTicketContext db = new InVisionTicketContext())
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
             {
-                announcement.CreatedDateTime = System.DateTime.Now;
-                announcement.CreatedByLoginID = db.Logins.Single(l => l.Email == User.Identity.Name).LoginID;
+                using (InVisionTicketContext db = new InVisionTicketContext())
+                {
+                    announcement.CreatedDateTime = System.DateTime.Now;
+                    announcement.CreatedByLoginID = db.Logins.Single(l => l.Email == User.Identity.Name).LoginID;
                 
-                //try
-                //{
+                    //try
+                    //{
 
-                    if (announcement.DirectHTML)
-                    {
-                        announcement.Markup = "";
-                    }
-                    else
-                    { 
-                        Markdown md = new Markdown();
-                        announcement.HTML = md.Transform(announcement.Markup);
-                    }
-                    db.Announcement.Add(announcement);
-                    db.SaveChanges();
+                        if (announcement.DirectHTML)
+                        {
+                            announcement.Markup = "";
+                        }
+                        else
+                        { 
+                            Markdown md = new Markdown();
+                            announcement.HTML = md.Transform(announcement.Markup);
+                        }
+                        db.Announcement.Add(announcement);
+                        db.SaveChanges();
 
 
-                    return RedirectToAction("Index");
-                //}
-                //catch
-                //{
-                //    return View();
-                //}
+                        return RedirectToAction("Index");
+                    //}
+                    //catch
+                    //{
+                    //    return View();
+                    //}
+                }
             }
+            throw new HttpException(401, "Access Denied");
         }
         
         //
@@ -80,7 +96,11 @@ namespace InVision_Ticket.Controllers
  
         public ActionResult Edit(int id)
         {
-            return View();
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
+            {
+                return View();
+            }
+            throw new HttpException(401, "Access Denied");
         }
 
         //
@@ -89,16 +109,20 @@ namespace InVision_Ticket.Controllers
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
-            try
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
             {
-                // TODO: Add update logic here
+                try
+                {
+                    // TODO: Add update logic here
  
-                return RedirectToAction("Index");
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return View();
+                }
             }
-            catch
-            {
-                return View();
-            }
+            throw new HttpException(401, "Access Denied");
         }
 
         //
@@ -106,11 +130,15 @@ namespace InVision_Ticket.Controllers
  
         public ActionResult Delete(int id)
         {
-            using (InVisionTicketContext db = new InVisionTicketContext())
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
             {
-                Announcement a = db.Announcement.Find(id);
-                return View(a);
+                using (InVisionTicketContext db = new InVisionTicketContext())
+                {
+                    Announcement a = db.Announcement.Find(id);
+                    return View(a);
+                }
             }
+            throw new HttpException(401, "Access Denied");
         }
 
         //
@@ -119,20 +147,24 @@ namespace InVision_Ticket.Controllers
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
-            try
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
             {
-                using (InVisionTicketContext db = new InVisionTicketContext())
+                try
                 {
-                    db.Announcement.Remove(db.Announcement.Find(id));
-                    db.SaveChanges();
-                }
+                    using (InVisionTicketContext db = new InVisionTicketContext())
+                    {
+                        db.Announcement.Remove(db.Announcement.Find(id));
+                        db.SaveChanges();
+                    }
  
-                return RedirectToAction("Index");
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return View();
+                }
             }
-            catch
-            {
-                return View();
-            }
+            throw new HttpException(401, "Access Denied");
         }
     }
 }

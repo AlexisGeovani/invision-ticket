@@ -24,6 +24,7 @@ namespace InVision_Ticket.Controllers
         }
         public ViewResult Index()
         {
+            ViewBag.LoginID = db.Logins.Single(l => l.Email == User.Identity.Name).LoginID;
             var logins = db.Logins.Include(l => l.Location).Include(l => l.UserType).ToList();
             List<LoginViewModel> LoginViews = Mapper.Map<List<Login>, List<LoginViewModel>>(logins);
 
@@ -35,8 +36,14 @@ namespace InVision_Ticket.Controllers
 
         public ViewResult Details(long id)
         {
-            Login login = db.Logins.Find(id);
-            return View(login);
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
+            {
+
+                Login login = db.Logins.Find(id);
+                return View(login);
+            } 
+
+            throw new HttpException(401, "Access Denied");
         }
 
         //
@@ -44,11 +51,15 @@ namespace InVision_Ticket.Controllers
 
         public ActionResult Create()
         {
-
-            LoginViewModel login = new LoginViewModel();
-            login.LocationList = db.Locations.ToList();
-            login.UserTypeList = db.UserTypes.ToList();
-            return View(login);
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
+            {
+            
+                LoginViewModel login = new LoginViewModel();
+                login.LocationList = db.Locations.ToList();
+                login.UserTypeList = db.UserTypes.ToList();
+                return View(login);
+            }
+            throw new HttpException(401, "Access Denied");
         } 
 
         //
@@ -57,18 +68,23 @@ namespace InVision_Ticket.Controllers
         [HttpPost]
         public ActionResult Create(LoginViewModel login)
         {
-			if (ModelState.IsValid)
-			{
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
+            {
+            
+			    if (ModelState.IsValid)
+			    {
 
-                Login newLogin = Mapper.Map<LoginViewModel, Login>(login);
-                newLogin.Password = PasswordHash.CreateHash(login.Email);
+                    Login newLogin = Mapper.Map<LoginViewModel, Login>(login);
+                    newLogin.Password = PasswordHash.CreateHash(login.Email);
 
-				db.Logins.Add(newLogin);
-				db.SaveChanges();
-				return RedirectToAction("Index");
-			}
+				    db.Logins.Add(newLogin);
+				    db.SaveChanges();
+				    return RedirectToAction("Index");
+			    }
 
-            return View(login);
+                return View(login);
+            }
+            throw new HttpException(401, "Access Denied");
         }
         
         //
@@ -76,14 +92,20 @@ namespace InVision_Ticket.Controllers
  
         public ActionResult Edit(long id)
         {
-            Login login = db.Logins.Find(id);
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
+            {
+           
+                Login login = db.Logins.Find(id);
 			
             
-            LoginViewModel loginView = Mapper.Map<Login, LoginViewModel>(login);
+                LoginViewModel loginView = Mapper.Map<Login, LoginViewModel>(login);
 
-            loginView.UserTypeList = db.UserTypes.ToList();
-            loginView.LocationList = db.Locations.ToList();
-            return View(loginView);
+                loginView.UserTypeList = db.UserTypes.ToList();
+                loginView.LocationList = db.Locations.ToList();
+                return View(loginView);
+            }
+            throw new HttpException(401, "Access Denied");
+
         }
 
         //
@@ -92,38 +114,48 @@ namespace InVision_Ticket.Controllers
         [HttpPost]
         public ActionResult Edit(LoginViewModel login)
         {
-
-            if (ModelState.IsValid)
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
             {
-				Login dbLogin = db.Logins.Find(login.LoginID);
+            
+                if (ModelState.IsValid)
+                {
+				    Login dbLogin = db.Logins.Find(login.LoginID);
 
-                dbLogin.LocationID = login.LocationID;
-				dbLogin.Email = login.Email;
-				dbLogin.DisplayName = login.DisplayName;
-				dbLogin.UserTypeID = login.UserTypeID;
-				dbLogin.Theme = login.Theme;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                    dbLogin.LocationID = login.LocationID;
+				    dbLogin.Email = login.Email;
+				    dbLogin.DisplayName = login.DisplayName;
+				    dbLogin.UserTypeID = login.UserTypeID;
+				    dbLogin.Theme = login.Theme;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(login);
             }
-            return View(login);
+            throw new HttpException(401, "Access Denied");
         }
 
         public ActionResult ChangePassword(int id)
         {
             //Login login = db.Logins.Find(id);
-
-            ChangePasswordViewModel vm = new ChangePasswordViewModel();
-            vm.LoginID = id;
-
-            return View(vm);
+            if (RoleCheck.IsAdministrator(User.Identity.Name) || (db.Logins.Single(l => l.Email == User.Identity.Name).LoginID == id))
+            {
+                ChangePasswordViewModel vm = new ChangePasswordViewModel();
+                vm.LoginID = id;
+                return View(vm);
+            }
+            throw new HttpException(401, "Access Denied");
         
         }
         [HttpPost]
         public ActionResult ChangePassword(ChangePasswordViewModel vm)
         {
-            db.Logins.Find(vm.LoginID).Password = PasswordHash.CreateHash(vm.Password);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (RoleCheck.IsAdministrator(User.Identity.Name) || (db.Logins.Single(l => l.Email == User.Identity.Name).LoginID == vm.LoginID))
+            {
+                db.Logins.Find(vm.LoginID).Password = PasswordHash.CreateHash(vm.Password);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            throw new HttpException(401, "Access Denied");
             
         }
 
@@ -132,11 +164,13 @@ namespace InVision_Ticket.Controllers
  
         public ActionResult Delete(long id)
         {
-            Login login = db.Logins.Find(id);
-            LoginViewModel loginView = Mapper.Map<Login, LoginViewModel>(login);
-            
-
-            return View(loginView);
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
+            {
+                Login login = db.Logins.Find(id);
+                LoginViewModel loginView = Mapper.Map<Login, LoginViewModel>(login);
+                return View(loginView);
+            }
+            throw new HttpException(401, "Access Denied");
         }
 
         //
@@ -144,10 +178,14 @@ namespace InVision_Ticket.Controllers
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
-        {            
-            db.Logins.Remove(db.Logins.Find(id));
-            db.SaveChanges();
-            return RedirectToAction("Index");
+        {
+            if (RoleCheck.IsAdministrator(User.Identity.Name))
+            {
+                db.Logins.Remove(db.Logins.Find(id));
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            throw new HttpException(401, "Access Denied");
         }
 
         protected override void Dispose(bool disposing)
