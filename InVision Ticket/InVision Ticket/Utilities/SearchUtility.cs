@@ -16,7 +16,7 @@ namespace InVision_Ticket.Utilities
         {
             using (InVisionTicketContext db = new InVisionTicketContext())
             {
-                var predicate = PredicateBuilder.True<Customer>();
+                var predicate = PredicateBuilder.False<Customer>();
                 if (LocationID.HasValue)
                 {
                     predicate = predicate.And(c => c.CustomerTickets.Any(t => t.LocationID == LocationID.Value));
