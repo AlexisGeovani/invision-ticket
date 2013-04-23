@@ -134,12 +134,8 @@ namespace InVision_Ticket.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            if (RoleCheck.IsAdministrator(User.Identity.Name))
-            {
                 db.Dispose();
                 base.Dispose(disposing);
-            }
-            throw new HttpException(401, "Access Denied");
         }
     }
 }

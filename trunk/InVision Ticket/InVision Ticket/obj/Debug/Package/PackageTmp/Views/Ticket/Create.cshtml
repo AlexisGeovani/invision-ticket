@@ -1,0 +1,250 @@
+﻿@model InVision_Ticket.ViewModels.TicketViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script src= "@Url.Content("~/Scripts/MarkdownDeepLib.min.js")" type="text/javascript"></script>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>New Ticket</legend>
+        Customer Search: <input type="text" id="SearchBox"/>
+        <br />
+
+        <div class="scrollable" id="CustomerSelectDiv">
+            @Html.DropDownListFor(model => model.CustomerContactID, Model.Customers, new { @class = "scrollableinside", @id = "CustomerSelect", @size="30" })
+            
+        </div>
+
+        <div id="CustomerAjax"></div>
+        
+        <a id="SystemToggleLink" href="javascript:void(0)" onclick="toggleSystemDiv();">New System</a>
+        <div id="ExistingSystem">
+            
+            <div class="scrollable" id="SystemSelectDiv">
+                @Html.DropDownListFor(model => model.System.SystemID, Model.Systems, new { @class = "scrollableinside", @id = "SystemSelect", @size = "30" })
+            </div>
+        
+            <div id="SystemAjax"></div>
+        </div>
+        <div id="NewSystemDiv">
+            <fieldset>
+                <legend>System Information</legend>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.System.Type)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.System.Type)
+                    @Html.ValidationMessageFor(model => model.System.Type)
+                </div>       
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.System.Desciption)
+                </div>
+                <div class="editor-field">
+                    @Html.TextAreaFor(model => model.System.Desciption)
+                    @Html.ValidationMessageFor(model => model.System.Desciption)
+                </div>
+            </fieldset>
+        </div>
+        @Html.HiddenFor(model => model.NewSystem)
+        <div class="editor-label ClearBoth">
+            @Html.LabelFor(model => model.Summary)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Summary)
+            @Html.ValidationMessageFor(model => model.Summary)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Details)
+        </div>
+
+            <div class="editor-field">
+                <div class="mdd_toolbar" id="details_toolbar"></div>
+                @Html.TextAreaFor(model => model.DetailsMarkDown, new { @class = "mdd_editor", @id = "details_textarea"})
+		        <div class="mdd_resizer" id="details_resizer"></div>
+                <div class="mdd_preview" id="details_preview">@Model.Details</div>
+            </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Priority)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Priority)
+            @Html.ValidationMessageFor(model => model.Priority)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TicketType)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.TicketTypeID, new SelectList(Model.TicketTypeList, "TicketTypeID", "TicketType1"))
+            @Html.ValidationMessageFor(model => model.TicketType)
+        </div>
+
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<script type="text/javascript">
+   window.onload=function() {
+        
+   }
+   $("#SystemToggleLink").css("display", "none");
+   $("#NewSystemDiv").css("display", "none");
+   $(function () {
+    document.getElementById("CustomerSelect").onclick = function () {
+        $('#CustomerAjax').html("<img src=\"/Content/Loading.gif\" alt=\"Loading\" >");
+        var CustomerURL = "/Customer/DetailsPartial/" + document.getElementById("CustomerSelect").value;
+
+        $.post(CustomerURL, function (data) {
+            $('#CustomerAjax').html(data);
+        });
+        var SystemURL = "/System/SystemsList/" + document.getElementById("CustomerSelect").value;
+        $.post(SystemURL, function (data){
+            $('#SystemSelect').html(data);
+        });
+        $('#SystemAjax').html("");
+        $("#SystemToggleLink").css("display", "block");
+
+           
+    }
+    document.getElementById("SystemSelect").onclick = function ()
+    {
+        $('#SystemAjax').html("<img src=\"/Content/Loading.gif\" alt=\"Loading\" >");
+        var SystemURL = "/System/DetailsPartial/" + document.getElementById("SystemSelect").value;
+        $.post(SystemURL, function (data){
+            $('#SystemAjax').html(data);
+        });
+
+    }
+
+    $('#CustomerSelect option').sort(Sort).appendTo('#CustomerSelect');
+    var customerSelect = $("#CustomerSelect"),
+        searchField = $("#SearchBox"),
+        options = customerSelect.find("option").clone(); // clone into memory
+
+    // generic method to clean names
+    function sanitize(string) {
+        return $.trim(string).replace(/\s+/g, ' ').toLowerCase();
+    }
+
+    // prepare the options by storing the
+    // "searchable" name as data on the element
+    options.each(function () {
+        var option = $(this);
+        option.data("sanitized", sanitize(option.text()));
+    });
+
+    // handle keyup
+    searchField.keyup(function (event) {
+        var term = sanitize($(this).val()),
+            matches;
+
+        // just show all options, if there's no search term
+        if (!term) {
+            customerSelect.empty().append(options.clone());
+            return;
+        }
+
+        // otherwise, show the options that match
+        matches = options.filter(function () {
+            return $(this).data("sanitized").indexOf(term) != -1;
+        }).clone();
+        customerSelect.empty().append(matches);
+        $('#SystemAjax').html("");
+        $('#SystemSelect').html("");
+        $('#CustomerAjax').html("");
+        $("#SystemToggleLink").css("display", "none");
+    });
+
+   });
+   
+   function toggleSystemDiv()
+   {
+        var existingSystem = $("#ExistingSystem");
+        if(existingSystem.css("display") == "block")
+        {
+            useNewSystem();
+        }
+        else
+        {
+            useExistingSystem();
+        }
+
+   
+   }
+   function useExistingSystem()
+   {
+        var link = $("#SystemToggleLink");
+        var existingSystem = $("#ExistingSystem");
+        var newSystem = $("#NewSystemDiv");
+        link.html("New System");
+        existingSystem.css("display", "block");
+        newSystem.css("display", "none");
+        link.html("New System");
+        $("#NewSystem").val("False");
+   }
+   function useNewSystem()
+   {
+        var link = $("#SystemToggleLink");
+        var existingSystem = $("#ExistingSystem");
+        var newSystem = $("#NewSystemDiv");
+        link.html("Use Existing System");
+        existingSystem.css("display", "none");
+        newSystem.css("display", "block");
+        $('#SystemSelectDiv :selected').attr('selected', '');
+        $("#SystemAjax").html("");
+        $("#NewSystem").val("True");
+
+  
+   }
+   function Sort(a, b)
+   {
+       return (a.innerHTML > b.innerHTML) ? 1 : -1;
+   }
+
+   $("#details_textarea").css("display", "block");
+   $("#details_resizer").css("display", "block");
+   $("#details_toolbar").css("display", "block");
+   $('#SystemSelect').html("");
+
+
+   
+</script>
+<script type="text/javascript">
+    $("textarea.mdd_editor").MarkdownDeep({
+        help_location: "~/Content/mdd_help.html",
+
+    });
+</script>
+<style type="text/css">
+ .scrollable{
+   overflow: auto;
+   width: 200px; /* adjust this width depending to amount of text to display */
+   height: 300px; /* adjust height depending on number of options to display */
+   border: 1px silver solid;
+ }
+ .scrollable select{
+   border: none;
+ }
+ .scrollableinside
+ {
+     width: 200px;
+     height: 300px;
+ }
+     
+</style>

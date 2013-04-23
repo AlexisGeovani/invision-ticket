@@ -1,0 +1,25 @@
+﻿@model InVision_Ticket.Models.UserType
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>UserType</legend>
+
+    <div class="display-label">UserType1</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UserType1)
+    </div>
+
+    <div class="display-label">Description</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Description)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.UserTypeID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

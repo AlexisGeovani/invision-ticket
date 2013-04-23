@@ -1,0 +1,30 @@
+﻿@model InVision_Ticket.Models.TicketStatus
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>TicketStatus</legend>
+
+    <div class="display-label">Status</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Status)
+    </div>
+
+    <div class="display-label">Open</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Open)
+    </div>
+
+    <div class="display-label">AttentionRequired</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.AttentionRequired)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.TicketStatusID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

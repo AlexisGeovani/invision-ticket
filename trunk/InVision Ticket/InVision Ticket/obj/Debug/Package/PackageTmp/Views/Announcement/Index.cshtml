@@ -1,0 +1,56 @@
+﻿@model IEnumerable<InVision_Ticket.Models.Announcement>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            HTML
+        </th>
+        <th>
+            Markup
+        </th>
+        <th>
+            CreatedDateTime
+        </th>
+        <th>
+            Created By
+        </th>
+        <th>
+            Raw HTML
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.HTML)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Markup)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedDateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Login.DisplayName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DirectHTML)
+        </td>
+        <td>
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.AnnouncementID }) |*@
+            @Html.ActionLink("Delete", "Delete", new { id=item.AnnouncementID })
+        </td>
+    </tr>
+}
+
+</table>

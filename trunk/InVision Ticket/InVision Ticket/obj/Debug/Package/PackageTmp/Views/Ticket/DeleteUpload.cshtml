@@ -1,0 +1,24 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>DeleteUpload</title>
+</head>
+<body>
+    <div>
+        @using (Html.BeginForm())
+        { 
+            <input type="hidden" value="@ViewBag.id" name="id" id="id"/>
+            <h2>Are you sure you want to delete this file?</h2>
+            <span>File Name: @ViewBag.FileName</span><br />
+            <span>Description: @ViewBag.Description</span><br />
+            <input type="submit" value="Click to Delete" />
+        
+        }
+    </div>
+</body>
+</html>
