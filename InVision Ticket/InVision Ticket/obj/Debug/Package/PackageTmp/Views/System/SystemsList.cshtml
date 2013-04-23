@@ -1,0 +1,11 @@
+﻿@model List<InVision_Ticket.Models.System>
+@{
+    Layout = null;
+}
+    
+
+@foreach(var sys in Model)
+{
+    <option value=@sys.SystemID>@sys.SystemID</option>
+
+}

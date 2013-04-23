@@ -1,0 +1,29 @@
+﻿@model InVision_Ticket.Models.Login
+@{
+	ViewBag.Title = "Index";
+	Layout = "";
+}
+
+<h2>Please Login</h2>
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")"></script>
+
+@using (Html.BeginForm())
+{
+	<table>
+		<tr>
+			<td align="right">@Html.LabelFor(m => m.Email)</td>
+			<td>@Html.TextBoxFor(m => m.Email)</td>
+		</tr>
+		<tr>
+			<td align="right">@Html.LabelFor(m => m.Password)</td>
+			<td>@Html.PasswordFor(m => m.Password)</td>
+		</tr>
+		<tr>
+		<td></td>
+			<td><input type="submit" /></td>
+		</tr>
+	</table>
+	@Html.ValidationSummary()
+}
