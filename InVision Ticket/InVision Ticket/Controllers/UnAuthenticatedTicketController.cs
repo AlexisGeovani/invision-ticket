@@ -49,8 +49,8 @@ namespace InVision_Ticket.Controllers
                 throw new HttpException(400, "No Such Customer");
             }
             TicketViewModel vm = new TicketViewModel();
-            vm.CustomerID = id;
-            vm.CustomerContactID = db.Customers.Find(id).CustomerContacts.First().CustomerContactID;
+            vm.CustomerContactID = id;
+            vm.CustomerID = db.CustomerContacts.Find(id).CustomerID.Value;
             vm.LocationList = db.Locations.ToList();
             vm.TicketStatusList = db.TicketStatus.ToList();
             vm.TicketTypeList = db.TicketTypes.ToList();
