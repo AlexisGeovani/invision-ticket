@@ -34,6 +34,7 @@ namespace InVision_Ticket.Models.Mapping
             this.Property(t => t.LocationID).HasColumnName("LocationID");
             this.Property(t => t.LoginID).HasColumnName("LoginID");
             this.Property(t => t.Theme).HasColumnName("Theme");
+            this.Property(t => t.Deleted).HasColumnName("Deleted");
 
             // Relationships
             this.HasOptional(t => t.Location)

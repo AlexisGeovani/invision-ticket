@@ -171,6 +171,15 @@
         </div>
 
 
+        <div class="editor-label">
+            @Html.Label("Status")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.TicketStatus.TicketStatusID, new SelectList(Model.TicketStatusList, "TicketStatusID",  "Status", Model.TicketStatus))
+            @Html.ValidationMessageFor(model => model.TicketStatus)
+        
+        </div>
+
         @{
         if (Model.CreatedByCustomer)
         {

@@ -28,6 +28,7 @@ namespace InVision_Ticket.Models
         public Nullable<long> LocationID { get; set; }
         public int LoginID { get; set; }
         public string Theme { get; set; }
+        public bool Deleted { get; set; }
         public virtual Location Location { get; set; }
         public virtual UserType UserType { get; set; }
         public virtual ICollection<LoginHistory> LoginHistories { get; set; }
