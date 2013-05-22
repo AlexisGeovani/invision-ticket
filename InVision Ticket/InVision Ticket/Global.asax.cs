@@ -91,8 +91,9 @@ namespace InVision_Ticket
         protected override string ResolveCore(Ticket source)
         {
 
-            if (source.Customer.BusinessCustomer.Value)
-                return source.Customer.CustomerContacts.FirstOrDefault().LastName + ", " + source.Customer.CustomerContacts.FirstOrDefault().FirstName;
+            if (source.Customer.BusinessCustomer.HasValue)
+                if (source.Customer.BusinessCustomer.Value)
+                    return source.Customer.CustomerContacts.FirstOrDefault().LastName + ", " + source.Customer.CustomerContacts.FirstOrDefault().FirstName;
             return source.Customer.CustomerName;
         
         }
@@ -114,8 +115,9 @@ namespace InVision_Ticket
     {
         protected override string ResolveCore(Ticket source)
         {
-            if (source.Customer.BusinessCustomer.Value)
-                return source.Customer.CustomerName;
+            if (source.Customer.BusinessCustomer.HasValue)
+                if (source.Customer.BusinessCustomer.Value)
+                    return source.Customer.CustomerName;
             return null;
         }
     

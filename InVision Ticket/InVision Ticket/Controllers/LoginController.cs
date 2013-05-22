@@ -9,6 +9,7 @@ using InVision_Ticket.Models;
 using InVision_Ticket.Utilities;
 using AutoMapper;
 using InVision_Ticket.ViewModels;
+using System.Data.Entity.Validation;
 
 namespace InVision_Ticket.Controllers
 { 
@@ -25,7 +26,7 @@ namespace InVision_Ticket.Controllers
         public ViewResult Index()
         {
             ViewBag.LoginID = db.Logins.Single(l => l.Email == User.Identity.Name).LoginID;
-            var logins = db.Logins.Include(l => l.Location).Include(l => l.UserType).ToList();
+            var logins = db.Logins.Include(l => l.Location).Include(l => l.UserType).Where(l => l.Deleted != true).ToList();
             List<LoginViewModel> LoginViews = Mapper.Map<List<Login>, List<LoginViewModel>>(logins);
 
             return View(LoginViews);
@@ -73,14 +74,33 @@ namespace InVision_Ticket.Controllers
             
 			    if (ModelState.IsValid)
 			    {
-
-                    Login newLogin = Mapper.Map<LoginViewModel, Login>(login);
-                    newLogin.Password = PasswordHash.CreateHash(login.Email);
-
-				    db.Logins.Add(newLogin);
-				    db.SaveChanges();
-				    return RedirectToAction("Index");
+                    try
+                    {
+                        Login newLogin = Mapper.Map<LoginViewModel, Login>(login);
+                        newLogin.Password = PasswordHash.CreateHash(login.Email);
+                        newLogin.Location = null;
+                        newLogin.UserType = null;
+                        newLogin.Deleted = false;
+                        db.Logins.Add(newLogin);
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                    catch (DbEntityValidationException e)
+                    {
+                        foreach (var eve in e.EntityValidationErrors)
+                        {
+                            Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                                eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                            foreach (var ve in eve.ValidationErrors)
+                            {
+                                Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                                    ve.PropertyName, ve.ErrorMessage);
+                            }
+                        }
+                        throw;
+                    }
 			    }
+
 
                 return View(login);
             }
@@ -181,7 +201,7 @@ namespace InVision_Ticket.Controllers
         {
             if (RoleCheck.IsAdministrator(User.Identity.Name))
             {
-                db.Logins.Remove(db.Logins.Find(id));
+                db.Logins.Find(id).Deleted = true;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

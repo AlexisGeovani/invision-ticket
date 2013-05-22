@@ -230,7 +230,7 @@ namespace InVision_Ticket.Controllers
                 vm.LocationList = db.Locations.ToList();
                 vm.TicketStatusList = db.TicketStatus.ToList();
                 vm.TicketTypeList = db.TicketTypes.ToList();
-                vm.LoginList = db.Logins.ToList();
+                vm.LoginList = db.Logins.Where(l=>l.Deleted == false).ToList();
                 //vm.Updates = db.Updates.Where(x => x.TicketID == vm.TicketID).ToList();
                 var tempCustomers =
                     from c in db.Customers
@@ -339,7 +339,7 @@ namespace InVision_Ticket.Controllers
                 vm.LocationList = db.Locations.ToList();
                 vm.TicketStatusList = db.TicketStatus.ToList();
                 vm.TicketTypeList = db.TicketTypes.ToList();
-                vm.LoginList = db.Logins.Where(l => l.LocationID == vm.Location.LocationID).ToList();
+                vm.LoginList = db.Logins.Where(l => l.LocationID == vm.Location.LocationID).Where(l => l.Deleted == false).ToList();
                 vm.Updates = db.Updates.Include(u => u.Login).Include(u => u.BillRate).Where(x => x.TicketID == vm.TicketID).ToList();
                 vm.Uploads = db.Uploads.Where(u => u.TicketID == vm.TicketID).ToList();
                 return View(vm);
@@ -381,7 +381,8 @@ namespace InVision_Ticket.Controllers
                     ticket.SalesmanLoginID = null;
                     ticket.TechnicianLoginID = null;
                 }
-
+                if (ticket.TicketStatus.TicketStatusID != vm.TicketStatus.TicketStatusID)
+                    ticket.StatusID = vm.TicketStatus.TicketStatusID;
                 db.SaveChanges();
                 return RedirectToAction("CloseWindow", "Home");
             }
