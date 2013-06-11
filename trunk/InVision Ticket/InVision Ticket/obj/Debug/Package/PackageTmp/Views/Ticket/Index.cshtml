@@ -1,30 +1,32 @@
 ﻿@model IEnumerable<InVision_Ticket.ViewModels.TicketListViewModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Tickets";
 }
+<button id="TicketSearchButton" onclick="ToggleSearch()"> Search For a Ticket</button>
+<div class="HeaderWrapper">Tickets</div>
 
-<h2>Ticket Search</h2>
 @using (Html.BeginForm())
 {
+    
+    <br />
+    <div id="TicketSearchDiv">
         <fieldset>
         <legend>Search</legend>
-        <span>
             <label>Search:</label>
             <input type="text" id="SearchText" name="SearchText"/>&nbsp;
             <label>Created After:</label>
             <input type="date" id="StartDate" name="StartDate"/> &nbsp;
             <label>Created Before:</label>
             <input type="date" id="EndDate" name="EndDate"/>&nbsp;&nbsp;
+            <br />
             All:<input type="radio" name="StatusSearch" value=""  checked/>
             Open:<input type="radio" name="StatusSearch" value="True" />
             Closed:<input type="radio" name="StatusSearch" value="False" />&nbsp;&nbsp;
             My Location Only:<input type="checkbox" name="SearcLocation" value="True" checked/>
-            <input type="submit" id="submit" value="Search" />
-
-            
-       </span>
-    </fieldset>
+            <input type="submit" id="submit" value="Search" /> 
+        </fieldset>
+    </div>
 }
 
 
@@ -32,10 +34,10 @@
 <p>
     @Html.ActionLink("Create New Ticket", "Create")
 </p>
-<table>
+<table class="TicketListTable">
     <tr>
         <th>
-            TicketID
+            ID
         </th>
         <th>
             Summary
@@ -44,13 +46,10 @@
             Created
         </th>
         <th>
-            Priority
-        </th>
-        <th>
             Last Modified
         </th>
         <th>
-            Resolved
+            Store
         </th>
         <th>
             Status
@@ -75,7 +74,8 @@
         </th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr class="@GetTRClass(item.TechnicianLoginID, item.SalesmanLoginID, item.TicketStatusAttentionRequired)" onclick="OpenTicket('@item.TicketID')">
 
         <td>
@@ -88,9 +88,6 @@
             @Html.DisplayFor(modelItem => item.CreatedDateTime)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Priority)
-        </td>
-        <td>
             @if (item.LastModifiedDateTime.HasValue)
             {
                 @Html.DisplayFor(modelItem => item.LastModifiedDateTime.Value)
@@ -101,14 +98,7 @@
             }
         </td>
         <td>
-             @if (item.ResolvedDateTime.HasValue)
-            {
-                @Html.DisplayFor(modelItem => item.ResolvedDateTime.Value)
-            }
-            else
-            {
-                @Html.Raw("-");
-            }
+            @Html.DisplayFor(modelItem => item.Location)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.TicketStatus)
@@ -141,6 +131,16 @@
         var url = "/Ticket/Edit/" + id;
         var win = window.open(url, '_blank');
         win.focus();
+
+    }
+    function ToggleSearch() {
+        var div = document.getElementById("TicketSearchDiv");
+        if (div.style.display == "block") {
+            div.style.display = "none";
+        }
+        else {
+            div.style.display = "block";
+        }
     
     }
 
@@ -168,6 +168,7 @@
 
 
 @functions{ 
+
     public string GetTRClass(int? TechID, int? SalesID, bool? AttentionRequired)
     {
         if (AttentionRequired.HasValue)

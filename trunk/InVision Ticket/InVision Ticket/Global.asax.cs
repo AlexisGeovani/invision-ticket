@@ -20,6 +20,11 @@ namespace InVision_Ticket
 		{
 			filters.Add(new HandleErrorAttribute());
 		}
+        protected void Application_BeginRequest()
+        {
+            //if (!Context.Request.IsSecureConnection)
+            //    Response.Redirect(Context.Request.Url.ToString().Replace("http:", "https:"));
+        }
 
 		public static void RegisterRoutes(RouteCollection routes)
 		{
@@ -54,7 +59,8 @@ namespace InVision_Ticket
                 .ForMember(d => d.CustomerContactID, o => o.MapFrom(s => s.Customer.CustomerContacts.FirstOrDefault().CustomerContactID))
                 .ForMember(d => d.CustomerContactName, o => o.ResolveUsing<CustomerContactResolver>())
                 .ForMember(d => d.BusinessName, o => o.ResolveUsing<BusinessNameResolver>())
-                .ForMember(d => d.Phone, o => o.MapFrom(s=>s.Customer.CustomerContacts.FirstOrDefault().Phone.ToString().Insert(0, "(").Insert(4, ") ").Insert(9, "-")));
+                .ForMember(d => d.Phone, o => o.MapFrom(s => s.Customer.CustomerContacts.FirstOrDefault().Phone.ToString().Insert(0, "(").Insert(4, ") ").Insert(9, "-")))
+                .ForMember(d => d.LastModifiedBy, o => o.MapFrom(s => s.LastModifiedBy.DisplayName));
             Mapper.CreateMap<Ticket, TicketListViewModel>()
                 .ForMember(d => d.CustomerPhone, o => o.MapFrom(s => s.Customer.CustomerContacts.First().Phone))
                 .ForMember(d => d.CustomerName, o => o.MapFrom(s => s.Customer.CustomerName))
@@ -62,8 +68,9 @@ namespace InVision_Ticket
                 .ForMember(d => d.CreatedBy, o => o.ResolveUsing<TicketCreatedByTicketListResolver>())
                 .ForMember(d => d.Technician, o => o.MapFrom(s => s.Technician.DisplayName))
                 .ForMember(d => d.Salesman, o => o.MapFrom(s => s.Salesman.DisplayName))
-                .ForMember(d => d.LastModifiedDateTime, o=> o.MapFrom(s => s.LastModifiedDateTime))
-                .ForMember(d => d.TicketStatus, o => o.MapFrom(s => s.TicketStatus.Status));
+                //.ForMember(d => d.LastModifiedDateTime, o => o.MapFrom(s => s.LastModifiedDateTime))
+                .ForMember(d => d.TicketStatus, o => o.MapFrom(s => s.TicketStatus.Status))
+                .ForMember(d => d.Location, o => o.MapFrom(s => s.Location.StoreLocation));
             Mapper.CreateMap<TicketViewModel, Ticket>()
                 .ForMember(d => d.CreatedByCustomer, o => o.Ignore());
             //.ForMember(d => d.CreatedByLoginID.Value, o => o.MapFrom(s => s.CreatedByLoginID));

@@ -36,7 +36,7 @@ namespace InVision_Ticket.Models.Mapping
             this.Property(t => t.LastModifiedDateTime).HasColumnName("LastModifiedDateTime");
             this.Property(t => t.StatusID).HasColumnName("StatusID");
             this.Property(t => t.ResolvedDateTime).HasColumnName("ResolvedDateTime");
-            this.Property(t => t.LastModifiedBy).HasColumnName("LastModifiedID");
+            this.Property(t => t.LastModifiedByID).HasColumnName("LastModifiedID");
             this.Property(t => t.CurrentlyEditByLoginID).HasColumnName("CurrentlyEditByLoginID");
             this.Property(t => t.CreatedByLoginID).HasColumnName("CreatedByLoginID");
             this.Property(t => t.CreatedByCustomerID).HasColumnName("CreatedByCustomerID");
@@ -77,6 +77,10 @@ namespace InVision_Ticket.Models.Mapping
             this.HasRequired(t => t.TicketType)
                 .WithMany(t => t.TypeTickets)
                 .HasForeignKey(d => d.TicketTypeID);
+
+            this.HasOptional(t => t.LastModifiedBy)
+                .WithMany(t => t.LastModifiedTickets)
+                .HasForeignKey(d => d.LastModifiedByID);
 
         }
     }

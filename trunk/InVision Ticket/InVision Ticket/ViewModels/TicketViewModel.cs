@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using InVision_Ticket.Models;
 using System.Web.Mvc;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace InVision_Ticket.ViewModels
 {
@@ -18,16 +20,25 @@ namespace InVision_Ticket.ViewModels
 		public string Summary { get; set; }
 		public string Details { get; set; }
         public string DetailsMarkDown { get; set; }
-		public DateTime CreatedDateTime { get; set; }
+        
+
         //public Nullable<long> SalesmanLoginID { get; set; }
         //public Nullable<long> TechnicianLoginID { get; set; }
 		public Nullable<int> Priority { get; set; }
 		public long CustomerID { get; set; }
 		public long TicketTypeID { get; set; }
-		public Nullable<DateTime> LastModifiedDateTime { get; set; }
-		public Nullable<DateTime> ResolvedDateTime { get; set; }
+        [DisplayName("Created On")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yy hh:mm:ss tt}")]
+        public DateTime CreatedDateTime { get; set; }
+        [DisplayName("Last Modified On")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yy hh:mm:ss tt}")]
+        public Nullable<DateTime> LastModifiedDateTime { get; set; }
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yy hh:mm:ss tt}")]
+        public Nullable<DateTime> ResolvedDateTime { get; set; }
+
 		public Nullable<long> CurrentlyEditByLoginID { get; set; }
-		public Nullable<long> LastModifiedBy { get; set; }
+		public string LastModifiedBy { get; set; }
 		public Nullable<int> CreatedByLoginID { get; set; }
 		public Nullable<long> CreatedByCustomerID { get; set; }
 		//public Nullable<long> SystemID { get; set; }

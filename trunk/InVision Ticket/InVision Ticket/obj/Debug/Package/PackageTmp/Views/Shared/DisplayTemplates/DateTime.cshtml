@@ -1,0 +1,4 @@
+﻿@model System.DateTime?
+
+
+@Html.Raw(Model.HasValue ? Model.Value.ToString("MM/dd hh:mm tt") : string.Empty)  

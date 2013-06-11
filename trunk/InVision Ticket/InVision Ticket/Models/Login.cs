@@ -38,5 +38,6 @@ namespace InVision_Ticket.Models
         public virtual ICollection<Ticket> EditingTickets { get; set; }
         public virtual ICollection<Update> Updates { get; set; }
         public virtual ICollection<Announcement> Announcements { get; set; }
+        public virtual ICollection<Ticket> LastModifiedTickets { get; set; }
     }
 }

@@ -362,7 +362,7 @@ namespace InVision_Ticket.Controllers
                 ticket.SalesmanLoginID = vm.SalesLogin.LoginID;
 
                 ticket.LastModifiedDateTime = System.DateTime.Now;
-                ticket.LastModifiedBy = userID;
+                ticket.LastModifiedByID = (int)userID;
                 if (!vm.Summary.Equals(ticket.Summary))
                     ticket.Summary = vm.Summary;
                 if (!vm.DetailsMarkDown.Equals(ticket.DetailsMarkDown))
