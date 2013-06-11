@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace InVision_Ticket.ViewModels
 {
@@ -9,10 +10,14 @@ namespace InVision_Ticket.ViewModels
 	{
 		public long TicketID { get; set; }
 		public string Summary { get; set; }
-		public DateTime CreatedDateTime { get; set; }
+        //[DisplayFormat(DataFormatString = "{0:MM/dd hh:mm tt}")]
+        public DateTime CreatedDateTime { get; set; }
+        //[DisplayFormat(DataFormatString = "{0:MM/dd hh:mm tt}")]
+        public Nullable<DateTime> LastModifiedDateTime { get; set; }
 		public Nullable<int> Priority { get; set; }
-		public Nullable<DateTime> LastModifiedDateTime { get; set; }
-		public Nullable<DateTime> ResolvedDateTime { get; set; }
+
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd hh:mm tt}")]
+        //public Nullable<DateTime> ResolvedDateTime { get; set; }
 		public string TicketStatus { get; set; }
 		public long CustomerID { get; set; }
 		public string CustomerPhone { get; set; }
@@ -24,6 +29,7 @@ namespace InVision_Ticket.ViewModels
 		public Nullable<int> TechnicianLoginID { get; set; }
 		public string Technician { get; set; }
 		public Nullable<long> LocationID { get; set; }
+        public string Location { get; set; }
 		public Nullable<long> SystemID { get; set; }
         public UpdateListView RecentUpdate { get; set; }
         public bool TicketStatusOpen { get; set; }

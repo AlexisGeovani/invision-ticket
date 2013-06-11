@@ -24,7 +24,7 @@ namespace InVision_Ticket.Models
         public Nullable<DateTime> LastModifiedDateTime { get; set; }
         public long StatusID { get; set; }
         public Nullable<DateTime> ResolvedDateTime { get; set; }
-        public Nullable<long> LastModifiedBy { get; set; }
+        public Nullable<int> LastModifiedByID { get; set; }
         public Nullable<int> CurrentlyEditByLoginID { get; set; }
         public Nullable<int> CreatedByLoginID { get; set; }
         public Nullable<long> CreatedByCustomerID { get; set; }
@@ -38,6 +38,7 @@ namespace InVision_Ticket.Models
         public virtual Login Salesman { get; set; }
         public virtual Login CreatedByLogin { get; set; }
         public virtual Login CurrentlyEditByLogin { get; set; }
+        public virtual Login LastModifiedBy { get; set; }
         public virtual ICollection<Part> Parts { get; set; }
         public virtual System System { get; set; }
         public virtual TicketStatus TicketStatus { get; set; }

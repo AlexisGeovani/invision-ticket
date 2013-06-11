@@ -15,6 +15,10 @@ namespace InVision_Ticket.Utilities
             {
                 if (span.TotalHours < 2)
                 {
+                    if(span.TotalMinutes < 3)
+                    {
+                        return ((int)span.TotalSeconds + " Seconds Ago");
+                    }
                     return ((int)span.TotalMinutes + " Minutes Ago");
                     
                 }
