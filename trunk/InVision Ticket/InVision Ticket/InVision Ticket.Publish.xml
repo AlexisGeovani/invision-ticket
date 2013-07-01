@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <publishData>
   <publishProfile publishUrl="ftp://prestontaylor.info" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Profile1" publishMethod="FTP" replaceMatchingFiles="True" userName="preston5234" savePWD="True" userPWD="AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAT5wb34MfGEmOr08xx3c9JQAAAAACAAAAAAADZgAAwAAAABAAAABbOiVpxTixpS1M8QGu6HkkAAAAAASAAACgAAAAEAAAAGngfUyf+9S/Gm1a8mwBKhMgAAAA24G6GlpkTKIlTilQYJTkDHVapb9/YnfotQEuMnluCBMUAAAAkGofyyOnHGiZFr3T1Tk+Drwbp30=" SelectedForPublish="True">
+    <file relUrl="Scripts/jquery-ui-1.8.24.min.js" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Views/TicketType/Create.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Content/themes/base/minified/jquery.ui.slider.min.css" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Views/Ticket/DeleteUpdate.cshtml" publishTime="05/16/2013 17:01:27" />
@@ -15,9 +16,8 @@
     <file relUrl="Views/Announcement/Create.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Views/System/SystemsList.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Content/themes/base/images/ui-bg_highlight-soft_75_cccccc_1x100.png" publishTime="06/03/2013 17:52:05" />
-    <file relUrl="Scripts/jquery-1.9.1-vsdoc.js" publishTime="06/03/2013 17:52:06" />
+    <file relUrl="Content/themes/base/jquery.ui.slider.css" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Views/System/Details.cshtml" publishTime="05/16/2013 17:01:27" />
-    <file relUrl="Views/Location/Delete.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Views/Web.config" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Content/themes/base/jquery.ui.selectable.css" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Content/themes/base/minified/images/ui-icons_222222_256x240.png" publishTime="06/03/2013 17:52:05" />
@@ -33,11 +33,10 @@
     <file relUrl="Views/UserType/Details.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Views/Shared/Error.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Views/Ticket/UpdateTicket.cshtml" publishTime="05/16/2013 17:01:27" />
-    <file relUrl="Content/themes/base/minified/jquery.ui.progressbar.min.css" publishTime="06/03/2013 17:52:05" />
+    <file relUrl="Views/Customer/DetailsPartial.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Views/Ticket/DeleteUpload.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Views/UnAuthenticatedTicket/GetCustomerData.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Views/System/Delete.cshtml" publishTime="05/16/2013 17:01:27" />
-    <file relUrl="Views/TicketType/Delete.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="README.jQuery.vsdoc.txt" publishTime="06/03/2013 17:52:06" />
     <file relUrl="Web.config" publishTime="05/16/2013 17:01:25" />
     <file relUrl="Views/UserType/Edit.cshtml" publishTime="05/16/2013 17:01:27" />
@@ -47,25 +46,28 @@
     <file relUrl="Content/themes/base/images/ui-bg_glass_55_fbf9ee_1x400.png" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Views/Location/Details.cshtml" publishTime="05/16/2013 17:01:28" />
     <file relUrl="Content/themes/base/jquery-ui.css" publishTime="06/03/2013 17:52:05" />
-    <file relUrl="Views/Customer/DetailsPartial.cshtml" publishTime="05/16/2013 17:01:27" />
+    <file relUrl="Content/themes/base/jquery.ui.resizable.css" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Scripts/MicrosoftMvcAjax.debug.js" publishTime="05/16/2013 17:01:25" />
     <file relUrl="Content/themes/base/jquery.ui.tabs.css" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Views/Ticket/Create.cshtml" publishTime="06/05/2013 11:16:54" />
+    <file relUrl="bin/LinqKit.dll" publishTime="05/16/2013 17:01:30" />
     <file relUrl="Content/themes/base/images/ui-icons_2e83ff_256x240.png" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Content/themes/base/minified/jquery.ui.tabs.min.css" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Scripts/bootstrap.js" publishTime="06/03/2013 18:31:22" />
     <file relUrl="Scripts/MicrosoftMvcAjax.js" publishTime="05/16/2013 17:01:25" />
     <file relUrl="Views/Home/CloseWindow.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Content/images/glyphicons-halflings.png" publishTime="06/03/2013 18:31:22" />
+    <file relUrl="Views/Login/Delete.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Views/Customer/Delete.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Views/TicketStatus/Details.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Views/TicketStatus/Index.cshtml" publishTime="05/16/2013 17:01:27" />
-    <file relUrl="bin/InVision Ticket.pdb" publishTime="06/05/2013 11:22:54" />
+    <file relUrl="bin/InVision Ticket.pdb" publishTime="07/01/2013 13:22:04" />
     <file relUrl="Content/bootstrap.min.css" publishTime="06/03/2013 18:31:22" />
     <file relUrl="Scripts/MicrosoftAjax.js" publishTime="05/16/2013 17:01:25" />
     <file relUrl="Views/Location/Create.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Content/mdd_help.htm" publishTime="05/16/2013 17:01:27" />
     <file relUrl="bin/EntityFramework.xml" publishTime="05/16/2013 17:01:29" />
+    <file relUrl="Scripts/jquery-1.9.1-vsdoc.js" publishTime="06/03/2013 17:52:06" />
     <file relUrl="Scripts/jquery-1.9.1.min.js" publishTime="06/03/2013 17:52:06" />
     <file relUrl="Scripts/bootstrap.min.js" publishTime="06/03/2013 18:31:22" />
     <file relUrl="Scripts/MicrosoftMvcValidation.js" publishTime="05/16/2013 17:01:25" />
@@ -73,9 +75,11 @@
     <file relUrl="bin/MarkdownDeep.pdb" publishTime="05/16/2013 17:01:30" />
     <file relUrl="Content/themes/base/minified/jquery.ui.theme.min.css" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Global.asax" publishTime="05/16/2013 17:01:27" />
-    <file relUrl="Scripts/MicrosoftMvcValidation.debug.js" publishTime="05/16/2013 17:01:25" />
-    <file relUrl="Content/themes/base/minified/images/ui-bg_glass_65_ffffff_1x400.png" publishTime="06/03/2013 17:52:05" />
     <file relUrl="packages.config" publishTime="06/03/2013 18:31:22" />
+    <file relUrl="Scripts/MicrosoftMvcValidation.debug.js" publishTime="05/16/2013 17:01:25" />
+    <file relUrl="Scripts/jquery.unobtrusive-ajax.min.js" publishTime="05/16/2013 17:01:25" />
+    <file relUrl="Content/themes/base/minified/images/ui-bg_glass_65_ffffff_1x400.png" publishTime="06/03/2013 17:52:05" />
+    <file relUrl="bin/System.Web.Mvc.xml" publishTime="05/16/2013 17:01:26" />
     <file relUrl="Content/themes/base/jquery.ui.dialog.css" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Content/themes/base/minified/images/ui-icons_2e83ff_256x240.png" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Views/TicketStatus/Edit.cshtml" publishTime="05/16/2013 17:01:27" />
@@ -83,36 +87,33 @@
     <file relUrl="Content/themes/base/minified/images/ui-bg_glass_55_fbf9ee_1x400.png" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Content/themes/base/images/ui-icons_222222_256x240.png" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Content/themes/base/minified/images/ui-icons_cd0a0a_256x240.png" publishTime="06/03/2013 17:52:05" />
-    <file relUrl="Views/BillRate/Index.cshtml" publishTime="05/16/2013 17:01:27" />
+    <file relUrl="Content/themes/base/minified/images/ui-bg_highlight-soft_75_cccccc_1x100.png" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Scripts/jquery-1.9.1.js" publishTime="06/03/2013 17:52:06" />
     <file relUrl="Views/System/DetailsPartial.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Content/themes/base/minified/jquery.ui.dialog.min.css" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Scripts/jquery.validate.unobtrusive.min.js" publishTime="05/16/2013 17:01:25" />
-    <file relUrl="bin/System.Web.Mvc.xml" publishTime="05/16/2013 17:01:26" />
     <file relUrl="Content/themes/base/minified/images/ui-bg_glass_75_e6e6e6_1x400.png" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Views/_ViewStart.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="bin/MarkdownSharp.dll" publishTime="05/16/2013 17:01:30" />
     <file relUrl="Content/themes/base/jquery.ui.autocomplete.css" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Scripts/MarkdownDeepLib.min.js" publishTime="05/16/2013 17:01:25" />
-    <file relUrl="Scripts/jquery-ui-1.8.24.min.js" publishTime="06/03/2013 17:52:05" />
+    <file relUrl="Views/BillRate/Index.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Scripts/jquery-ui-1.8.24.js" publishTime="06/03/2013 17:52:05" />
-    <file relUrl="Scripts/jquery.validate.min.js" publishTime="06/03/2013 17:52:06" />
+    <file relUrl="Content/themes/base/minified/jquery.ui.progressbar.min.css" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Views/BillRate/Details.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Views/Announcement/Index.cshtml" publishTime="05/16/2013 17:01:27" />
-    <file relUrl="Content/themes/base/jquery.ui.resizable.css" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Content/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png" publishTime="06/03/2013 17:52:05" />
-    <file relUrl="Views/BillRate/Edit.cshtml" publishTime="05/16/2013 17:01:27" />
-    <file relUrl="Content/mdd_gripper.png" publishTime="05/16/2013 17:01:27" />
+    <file relUrl="Scripts/jquery.validate-vsdoc.js" publishTime="06/03/2013 17:52:06" />
     <file relUrl="Content/images/glyphicons-halflings-white.png" publishTime="06/03/2013 18:31:22" />
     <file relUrl="Content/themes/base/jquery.ui.theme.css" publishTime="06/03/2013 17:52:05" />
-    <file relUrl="Content/themes/base/minified/images/ui-icons_454545_256x240.png" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Content/themes/base/images/ui-bg_glass_95_fef1ec_1x400.png" publishTime="06/03/2013 17:52:05" />
-    <file relUrl="Content/themes/base/minified/images/ui-bg_glass_75_dadada_1x400.png" publishTime="06/03/2013 17:52:05" />
+    <file relUrl="Views/Location/Delete.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Content/themes/base/minified/images/ui-bg_flat_75_ffffff_40x100.png" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Views/Ticket/Upload.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Content/themes/base/images/ui-bg_glass_75_dadada_1x400.png" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Content/themes/base/images/ui-icons_454545_256x240.png" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Content/themes/base/jquery.ui.button.css" publishTime="06/03/2013 17:52:05" />
+    <file relUrl="bin/System.Web.Routing.dll" publishTime="03/18/2010 20:31:26" />
     <file relUrl="Content/themes/base/minified/images/ui-icons_888888_256x240.png" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Views/System/Index.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Views/UnAuthenticatedTicket/GetPhone.cshtml" publishTime="05/16/2013 17:01:27" />
@@ -122,27 +123,26 @@
     <file relUrl="Views/Announcement/Delete.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Content/themes/base/images/ui-bg_glass_65_ffffff_1x400.png" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Content/themes/base/minified/jquery.ui.selectable.min.css" publishTime="06/03/2013 17:52:05" />
+    <file relUrl="Content/mdd_gripper.png" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Views/Shared/_Layout.cshtml" publishTime="06/04/2013 18:49:41" />
     <file relUrl="Content/themes/base/minified/images/ui-bg_glass_95_fef1ec_1x400.png" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Content/themes/base/images/ui-icons_cd0a0a_256x240.png" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Views/Login/Edit.cshtml" publishTime="05/16/2013 17:01:27" />
+    <file relUrl="Content/themes/base/minified/images/ui-bg_glass_75_dadada_1x400.png" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Content/themes/base/jquery.ui.accordion.css" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Views/Login/Create.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Views/BillRate/Create.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Views/System/Create.cshtml" publishTime="05/16/2013 17:01:27" />
-    <file relUrl="Views/Customer/Index.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Views/UnAuthenticatedTicket/Create.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Content/themes/base/minified/jquery.ui.autocomplete.min.css" publishTime="06/03/2013 17:52:05" />
-    <file relUrl="Content/mdd_styles.css" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Views/Customer/Create.cshtml" publishTime="05/16/2013 17:01:27" />
-    <file relUrl="Content/themes/base/jquery.ui.slider.css" publishTime="06/03/2013 17:52:05" />
+    <file relUrl="Content/themes/base/minified/images/ui-icons_454545_256x240.png" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Content/themes/base/minified/jquery.ui.resizable.min.css" publishTime="06/03/2013 17:52:05" />
     <file relUrl="bin/WebActivator.dll" publishTime="05/16/2013 17:01:30" />
     <file relUrl="Views/Authentication/Index.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Content/themes/base/images/ui-bg_flat_75_ffffff_40x100.png" publishTime="06/03/2013 17:52:05" />
-    <file relUrl="Scripts/jquery.validate-vsdoc.js" publishTime="06/03/2013 17:52:06" />
-    <file relUrl="Content/themes/base/images/ui-icons_888888_256x240.png" publishTime="06/03/2013 17:52:05" />
+    <file relUrl="Content/bootstrap.css" publishTime="06/03/2013 18:31:22" />
     <file relUrl="Views/Ticket/Index.cshtml" publishTime="06/04/2013 18:58:06" />
     <file relUrl="Content/Site.css" publishTime="06/04/2013 18:50:05" />
     <file relUrl="Scripts/jquery.validate.unobtrusive.js" publishTime="05/16/2013 17:01:25" />
@@ -155,30 +155,30 @@
     <file relUrl="Content/themes/base/minified/jquery.ui.accordion.min.css" publishTime="06/03/2013 17:52:05" />
     <file relUrl="bin/MarkdownSharp.pdb" publishTime="05/16/2013 17:01:30" />
     <file relUrl="bin/MarkdownDeep.dll" publishTime="05/16/2013 17:01:30" />
-    <file relUrl="bin/InVision Ticket.dll" publishTime="06/05/2013 11:22:54" />
+    <file relUrl="bin/InVision Ticket.dll" publishTime="07/01/2013 13:22:04" />
     <file relUrl="Content/Loading.gif" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Views/Shared/DisplayTemplates/DateTime.cshtml" publishTime="06/04/2013 18:01:11" />
     <file relUrl="Views/Customer/Edit.cshtml" publishTime="05/16/2013 17:01:27" />
-    <file relUrl="Views/Login/Delete.cshtml" publishTime="05/16/2013 17:01:27" />
+    <file relUrl="Content/themes/base/images/ui-icons_888888_256x240.png" publishTime="06/03/2013 17:52:05" />
     <file relUrl="bin/AutoMapper.xml" publishTime="05/16/2013 17:01:30" />
     <file relUrl="Content/themes/base/jquery.ui.progressbar.css" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Views/UserType/Delete.cshtml" publishTime="05/16/2013 17:01:27" />
-    <file relUrl="bin/System.Web.Routing.dll" publishTime="03/18/2010 20:31:26" />
-    <file relUrl="Content/bootstrap.css" publishTime="06/03/2013 18:31:22" />
+    <file relUrl="Views/Customer/Index.cshtml" publishTime="05/16/2013 17:01:27" />
+    <file relUrl="Views/TicketType/Delete.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Views/TicketType/Details.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="bin/AutoMapper.dll" publishTime="05/16/2013 17:01:30" />
     <file relUrl="Content/bootstrap-responsive.css" publishTime="06/03/2013 18:31:22" />
     <file relUrl="Content/mdd_toolbar.png" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Content/themes/base/minified/images/ui-bg_flat_0_aaaaaa_40x100.png" publishTime="06/03/2013 17:52:05" />
-    <file relUrl="bin/LinqKit.dll" publishTime="05/16/2013 17:01:30" />
+    <file relUrl="Scripts/jquery.validate.min.js" publishTime="06/03/2013 17:52:06" />
     <file relUrl="Views/TicketStatus/Delete.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Views/BillRate/Delete.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Content/themes/base/minified/jquery.ui.button.min.css" publishTime="06/03/2013 17:52:05" />
-    <file relUrl="Scripts/jquery.unobtrusive-ajax.min.js" publishTime="05/16/2013 17:01:25" />
+    <file relUrl="Content/mdd_styles.css" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Views/Login/Index.cshtml" publishTime="05/16/2013 17:01:27" />
     <file relUrl="Content/themes/base/jquery.ui.base.css" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Content/themes/base/minified/jquery.ui.datepicker.min.css" publishTime="06/03/2013 17:52:05" />
     <file relUrl="Views/Login/ChangePassword.cshtml" publishTime="05/16/2013 17:01:27" />
-    <file relUrl="Content/themes/base/minified/images/ui-bg_highlight-soft_75_cccccc_1x100.png" publishTime="06/03/2013 17:52:05" />
+    <file relUrl="Views/BillRate/Edit.cshtml" publishTime="05/16/2013 17:01:27" />
   </publishProfile>
 </publishData>

@@ -114,7 +114,7 @@ namespace InVision_Ticket.Controllers
         {
             using(InVisionTicketContext db = new InVisionTicketContext())
             {
-                var userID = db.Logins.Single(l => l.Email == User.Identity.Name).LoginID;
+                var userID = db.Logins.Where(l => l.Deleted == false).SingleOrDefault(l => l.Email == User.Identity.Name).LoginID;
                 UpdateViewModel UVM = new UpdateViewModel();
                 UVM.BillRateList = db.BillRates.ToList();
                 UVM.LoginID = userID;
@@ -151,9 +151,11 @@ namespace InVision_Ticket.Controllers
             
             using(InVisionTicketContext db = new InVisionTicketContext())
             {
-                var userID = db.Logins.Single(l => l.Email == User.Identity.Name).LoginID;
-                ViewBag.userID = db.Logins.Single(l => l.Email == User.Identity.Name).LoginID;
-                var tickets = SearchUtility.TicketSearch(null, null, null, null, true, null, null);
+                var login = db.Logins.Where(l => l.Deleted == false).SingleOrDefault(l => l.Email == User.Identity.Name);
+
+                var userID = login.LoginID;
+                ViewBag.userID = login.LoginID;
+                var tickets = SearchUtility.TicketSearch(null, (int)login.LocationID.Value, null, null, true, null, null);
                
                 //var ticketsq = db.Tickets.Where(t => t.TicketStatus.Open == true);
                 return View(tickets);
@@ -201,8 +203,8 @@ namespace InVision_Ticket.Controllers
             }
             using (InVisionTicketContext db = new InVisionTicketContext())
             {
-                var userID = db.Logins.Single(l => l.Email == User.Identity.Name).LoginID;
-                ViewBag.userID = db.Logins.Single(l => l.Email == User.Identity.Name).LoginID;
+                var userID = db.Logins.Where(l => l.Deleted == false).SingleOrDefault(l => l.Email == User.Identity.Name).LoginID;
+                ViewBag.userID = db.Logins.Where(l => l.Deleted == false).SingleOrDefault(l => l.Email == User.Identity.Name).LoginID;
                 var tickets = SearchUtility.TicketSearch(Search, LocationID, StartDate, EndDate, OpenStatusOnly, CustomerID, LoginID);
 
                 //var ticketsq = db.Tickets.Where(t => t.TicketStatus.Open == true);
@@ -293,8 +295,8 @@ namespace InVision_Ticket.Controllers
                         ticket.SystemID = system.SystemID;
                     }
                     var username = HttpContext.User.Identity.Name;
-                    ticket.CreatedByLoginID = db.Logins.Single(u => u.Email == username).LoginID;
-                    ticket.LocationID = db.Logins.Single(u => u.Email == username).LocationID;
+                    ticket.CreatedByLoginID = db.Logins.Where(l => l.Deleted == false).SingleOrDefault(u => u.Email == username).LoginID;
+                    ticket.LocationID = db.Logins.Where(l => l.Deleted == false).SingleOrDefault(u => u.Email == username).LocationID;
                     ticket.System = null;
                     ticket.StatusID = 103;
                     db.Tickets.Add(ticket);
@@ -355,7 +357,7 @@ namespace InVision_Ticket.Controllers
         {
             using (InVisionTicketContext db = new InVisionTicketContext())
             {
-                long userID = db.Logins.Single(l => l.Email == User.Identity.Name).LoginID;
+                long userID = db.Logins.Where(l => l.Deleted == false).SingleOrDefault(l => l.Email == User.Identity.Name).LoginID;
 
                 var ticket = db.Tickets.Find(vm.TicketID);
                 ticket.TechnicianLoginID = vm.TechLogin.LoginID;

@@ -12,7 +12,7 @@ namespace InVision_Ticket.Utilities
         {
             using (InVisionTicketContext db = new InVisionTicketContext())
             {
-                if (db.Logins.Single(l => l.Email == Email).UserTypeID == 100)
+                if (db.Logins.Where(l => l.Deleted == false).SingleOrDefault(l => l.Email == Email).UserTypeID == 100)
                     return true;
                 return false;
             }
