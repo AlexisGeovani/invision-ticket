@@ -21,7 +21,7 @@ namespace InVision_Ticket.Controllers
             {
                 using (InVisionTicketContext db = new InVisionTicketContext())
                 {
-                    return View(db.Announcement.Include(a => a.Login).ToList());
+                    return View(db.Announcement.Include(a => a.Login).OrderByDescending(l => l.CreatedDateTime).ToList());
                 }
             }
             throw new HttpException(401, "Access Denied");
@@ -62,7 +62,7 @@ namespace InVision_Ticket.Controllers
                 using (InVisionTicketContext db = new InVisionTicketContext())
                 {
                     announcement.CreatedDateTime = System.DateTime.Now;
-                    announcement.CreatedByLoginID = db.Logins.Single(l => l.Email == User.Identity.Name).LoginID;
+                    announcement.CreatedByLoginID = db.Logins.Where(l => l.Deleted == false).SingleOrDefault(l => l.Email == User.Identity.Name).LoginID;
                 
                     //try
                     //{

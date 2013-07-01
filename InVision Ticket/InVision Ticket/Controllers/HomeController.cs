@@ -18,7 +18,7 @@ namespace InVision_Ticket.Controllers
             using(InVisionTicketContext db = new InVisionTicketContext())
             {
                 HomeViewModel HVM = new HomeViewModel();
-                HVM.Announcements = db.Announcement.ToList();
+                HVM.Announcements = db.Announcement.OrderByDescending(l => l.CreatedDateTime).ToList();
                 return View(HVM);
             }
         }

@@ -26,9 +26,9 @@ namespace InVision_Ticket.Controllers
 				using (InVisionTicketContext data = new InVisionTicketContext())
 				{
                     
-					if (data.Logins.Count(l => l.Email == login.Email) == 1)
+					if (data.Logins.Count(l => l.Email == login.Email) >= 1)
 					{
-                        var Login = data.Logins.SingleOrDefault(l => l.Email.ToLower() == login.Email.ToLower());
+                        var Login = data.Logins.Where(l => l.Deleted == false).SingleOrDefault(l => l.Email.ToLower() == login.Email.ToLower());
                         if(string.IsNullOrWhiteSpace(Login.Password))
                         {
                             ModelState.AddModelError("", "Invalid username or password.");

@@ -25,7 +25,7 @@ namespace InVision_Ticket.Controllers
         }
         public ViewResult Index()
         {
-            ViewBag.LoginID = db.Logins.Single(l => l.Email == User.Identity.Name).LoginID;
+            ViewBag.LoginID = db.Logins.Where(l => l.Deleted == false).SingleOrDefault(l => l.Email == User.Identity.Name).LoginID;
             var logins = db.Logins.Include(l => l.Location).Include(l => l.UserType).Where(l => l.Deleted != true).ToList();
             List<LoginViewModel> LoginViews = Mapper.Map<List<Login>, List<LoginViewModel>>(logins);
 
@@ -157,7 +157,7 @@ namespace InVision_Ticket.Controllers
         public ActionResult ChangePassword(int id)
         {
             //Login login = db.Logins.Find(id);
-            if (RoleCheck.IsAdministrator(User.Identity.Name) || (db.Logins.Single(l => l.Email == User.Identity.Name).LoginID == id))
+            if (RoleCheck.IsAdministrator(User.Identity.Name) || (db.Logins.Where(l => l.Deleted == false).SingleOrDefault(l => l.Email == User.Identity.Name).LoginID == id))
             {
                 ChangePasswordViewModel vm = new ChangePasswordViewModel();
                 vm.LoginID = id;
@@ -169,7 +169,7 @@ namespace InVision_Ticket.Controllers
         [HttpPost]
         public ActionResult ChangePassword(ChangePasswordViewModel vm)
         {
-            if (RoleCheck.IsAdministrator(User.Identity.Name) || (db.Logins.Single(l => l.Email == User.Identity.Name).LoginID == vm.LoginID))
+            if (RoleCheck.IsAdministrator(User.Identity.Name) || (db.Logins.Where(l => l.Deleted == false).SingleOrDefault(l => l.Email == User.Identity.Name).LoginID == vm.LoginID))
             {
                 db.Logins.Find(vm.LoginID).Password = PasswordHash.CreateHash(vm.Password);
                 db.SaveChanges();
