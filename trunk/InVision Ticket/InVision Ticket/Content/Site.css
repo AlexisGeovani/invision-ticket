@@ -5,11 +5,35 @@ body
     color: #232323;
     background-color: #fff;
 }
+.lastModifiedWrapper {
+	width:200px;
+	height: 80px;
+}
+.system-info 
+{
+    display: inline-block;
+}
+.ticketTypeWrapper {
+	clear:both;
+}
+.ticketEditWrapper {
+	margin-right:40px;
+	display: inline-block;
+}
+.createdWrapper {
+	float:left;
+}
 fieldset {
 	text-align: left;
 }
 .TicketListTable {
 	width:100%;
+	font-size: smaller;
+	border-left: 1px solid black;
+}
+.TicketListTable tr th
+{
+    border-left: 1px solid black;
 }
 table
 {

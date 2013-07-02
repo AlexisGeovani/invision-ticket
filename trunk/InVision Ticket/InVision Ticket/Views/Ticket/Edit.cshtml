@@ -21,16 +21,52 @@
         <div class="editor-label">
             Customer
         </div>
-        <div class="editor-field bold">
-            @Html.DisplayFor(model => model.CustomerContactName)
-            @Html.ValidationMessageFor(model => model.CustomerContactName)
+        <div class="customerInfoWrapper">
+            @{
+            if (Model.BusinessCustomer)
+            { 
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.BusinessName)
+                        </div>
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.BusinessName)
+                            @Html.ValidationMessageFor(model => model.BusinessName)
+                        </div>
+    
+            }    
+            
+            }
+
+
+       
+            <div class="editor-field bold">
+                @Html.DisplayFor(model => model.CustomerContactName)
+                @Html.ValidationMessageFor(model => model.CustomerContactName)
+            </div>
+            <div class="editor-field bold">
+                @Html.DisplayFor(model => model.Phone)
+                @Html.ValidationMessageFor(model => model.Phone)
+            </div>
+            @Html.ActionLink("Customer Information", "Details", "Customer", new { id = Model.CustomerContactID }, new { target = "_blank" })
         </div>
-        <div class="editor-field bold">
-            @Html.DisplayFor(model => model.Phone)
-            @Html.ValidationMessageFor(model => model.Phone)
+
+        <div class="system-info editor-field">
+            <div class="system-info-toggle-link">
+                <a id="system-info-toggle-link" href="javascript:void(0)" onclick="toggleSystemDiv();">+ System Info</a>
+            </div> 
+            <div id="system-info-toggle" class="system-info-toggle">
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.System.SystemID)
+                </div>
+                <div class="editor-field">
+                    @Html.DisplayFor(model => model.System.SystemID)
+                </div>
+                <div class="editor-field">
+                    @Html.DisplayFor(model => model.System.Desciption)
+                </div>
+            </div>
         </div>
-        @Html.ActionLink("Customer Information", "Details", "Customer", new { id = Model.CustomerContactID }, new { target = "_blank" })
-        
         <div class="editor-label">
             @Html.LabelFor(model => model.Summary)
         </div>
@@ -50,42 +86,47 @@
             @Html.TextAreaFor(model => model.DetailsMarkDown, new { @class = "mdd_editor", @id = "details_textarea" })
 		    <div class="mdd_resizer" id="details_resizer"></div>
         </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CreatedDateTime)
-
-        </div>
-        <div class="editor-field">
-            @Html.DisplayFor(model => model.CreatedDateTime)
-            <br />
-            @Html.Raw(TimeAgo.getStringTime(Model.CreatedDateTime))
-            By:
-            @{
-                if (Model.CreatedByCustomer)
-                {
-                        @Html.Raw("<div class=\"editor-field\"> The Customer.</div>");
-
-
-                }
-                else
-                { 
-                            @Html.DisplayFor(model => model.CreatedByLogin)
-                }
-            }
-        </div>
-        @if (Model.LastModifiedDateTime.HasValue)
-        { 
+        <div class="createdWrapper ticketEditWrapper">
             <div class="editor-label">
-                @Html.LabelFor(model => model.LastModifiedDateTime)
+                @Html.LabelFor(model => model.CreatedDateTime)
+
             </div>
             <div class="editor-field">
-                @Html.DisplayFor(model => model.LastModifiedDateTime)
-            <br />
-                @Html.Raw(TimeAgo.getStringTime(Model.LastModifiedDateTime.Value)) By: @Html.DisplayFor(model => model.LastModifiedBy)
-            </div>
+                @Html.DisplayFor(model => model.CreatedDateTime)
+                <br />
+                @Html.Raw(TimeAgo.getStringTime(Model.CreatedDateTime))
+                By:
+                @{
+                    if (Model.CreatedByCustomer)
+                    {
+                            @Html.Raw("<div class=\"editor-field\"> The Customer.</div>");
 
-        }
-        @if (Model.ResolvedDateTime.HasValue)
+
+                    }
+                    else
+                    { 
+                                @Html.DisplayFor(model => model.CreatedByLogin)
+                    }
+                }
+            </div>
+        </div>
+        <div class="lastModifiedWrapper ticketEditWrapper">
+            @if (Model.LastModifiedDateTime.HasValue)
+            { 
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.LastModifiedDateTime)
+                </div>
+                <div class="editor-field">
+                    @Html.DisplayFor(model => model.LastModifiedDateTime)
+                <br />
+                    @Html.Raw(TimeAgo.getStringTime(Model.LastModifiedDateTime.Value)) By: @Html.DisplayFor(model => model.LastModifiedBy)
+                </div>
+
+            }
+        </div>
+
+        <br />
+@*        @if (Model.ResolvedDateTime.HasValue)
         {
             <div class="editor-label">
                 @Html.LabelFor(model => model.ResolvedDateTime)
@@ -95,103 +136,74 @@
                 @Html.Raw(TimeAgo.getStringTime(Model.ResolvedDateTime.Value));
             </div>
         }
-        
+        *@
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Priority)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Priority)
-            @Html.ValidationMessageFor(model => model.Priority)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.TicketType)
-        </div>
-        <div class="editor-field">
-            @Html.DropDownListFor(model => model.TicketTypeID, new SelectList(Model.TicketTypeList, "TicketTypeID", "TicketType1", Model.TicketType))
-            @Html.ValidationMessageFor(model => model.TicketType)
-        </div>
-
-
-        
-
-
-
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Location.StoreLocation)
-        </div>
-        <div class="editor-field">
-            @Html.DropDownListFor(model => model.Location.LocationID, new SelectList(Model.LocationList, "LocationID", "StoreLocation", Model.Location))
-            @Html.ValidationMessageFor(model => model.Location)
-        </div>
-
-
-        <div class="system-info editor-field">
-            <div class="system-info-toggle-link">
-                <a id="system-info-toggle-link" href="javascript:void(0)" onclick="toggleSystemDiv();">+ System Info</a>
-            </div> 
-            <div id="system-info-toggle" class="system-info-toggle">
-
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.System.SystemID)
-                </div>
-                <div class="editor-field">
-                    @Html.DisplayFor(model => model.System.SystemID)
-                </div>
-                <div class="editor-field">
-                    @Html.DisplayFor(model => model.System.Desciption)
-                </div>
+        <div class="storeLocationWrapper ticketEditWrapper">
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Location.StoreLocation)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.Location.LocationID, new SelectList(Model.LocationList, "LocationID", "StoreLocation", Model.Location))
+                @Html.ValidationMessageFor(model => model.Location)
             </div>
         </div>
-     
-        <div class="editor-label">
-            @Html.Label("SalesMan")
-        </div>
-        <div class="editor-field">
-            @Html.DropDownListFor(model => model.SalesLogin.LoginID, new SelectList(Model.LoginList, "LoginID", "DisplayName", Model.SalesLogin))
-            @Html.ValidationMessageFor(model => model.SalesLogin)
+
+        <div class="salesLoginWrapper ticketEditWrapper">
+            <div class="editor-label">
+                @Html.Label("SalesMan")
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.SalesLogin.LoginID, new SelectList(Model.LoginList, "LoginID", "DisplayName", Model.SalesLogin))
+                @Html.ValidationMessageFor(model => model.SalesLogin)
+            </div>
         </div>
 
-       <div class="editor-label">
-            @Html.Label("Technician")
-        </div>
-        <div class="editor-field">
-            @Html.DropDownListFor(model => model.TechLogin.LoginID, new SelectList(Model.LoginList, "LoginID", "DisplayName", Model.TechLogin))
-            @Html.ValidationMessageFor(model => model.TechLogin)
+        <div class="techLoginWrapper ticketEditWrapper">
+            <div class="editor-label" >
+                @Html.Label("Technician")
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.TechLogin.LoginID, new SelectList(Model.LoginList, "LoginID", "DisplayName", Model.TechLogin))
+                @Html.ValidationMessageFor(model => model.TechLogin)
+            </div>
         </div>
 
-
-        <div class="editor-label">
-            @Html.Label("Status")
-        </div>
-        <div class="editor-field">
-            @Html.DropDownListFor(model => model.TicketStatus.TicketStatusID, new SelectList(Model.TicketStatusList, "TicketStatusID",  "Status", Model.TicketStatus))
-            @Html.ValidationMessageFor(model => model.TicketStatus)
+        <div class="statusWrapper ticketEditWrapper">
+            <div class="editor-label">
+                @Html.Label("Status")
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.TicketStatus.TicketStatusID, new SelectList(Model.TicketStatusList, "TicketStatusID",  "Status", Model.TicketStatus))
+                @Html.ValidationMessageFor(model => model.TicketStatus)
         
+            </div>
+        </div>
+        <div class="ticketTypeWrapper ticketEditWrapper">
+            <div class="editor-label">
+                @Html.LabelFor(model => model.TicketType)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.TicketTypeID, new SelectList(Model.TicketTypeList, "TicketTypeID", "TicketType1", Model.TicketType))
+                @Html.ValidationMessageFor(model => model.TicketType)
+            </div>
+        </div>
+
+
+        
+
+        <div class="priorityWrapper ticketEditWrapper">
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Priority)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Priority)
+                @Html.ValidationMessageFor(model => model.Priority)
+            </div>
         </div>
 
 
 
 
-        @{
-        if (Model.BusinessCustomer)
-        { 
-                    <div class="editor-label">
-                        @Html.LabelFor(model => model.BusinessName)
-                    </div>
-                    <div class="editor-field">
-                        @Html.EditorFor(model => model.BusinessName)
-                        @Html.ValidationMessageFor(model => model.BusinessName)
-                    </div>
-    
-        }    
-            
-        }
-
-
-       
         
         <br />
         @{
@@ -211,6 +223,7 @@
                 @Html.Raw(String.Format("Total Charges: {0:C}", charges))
             </b>
         }
+        <br />
         <p>
             <input type="submit" value="Save and Close" />
         </p>
