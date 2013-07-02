@@ -34,7 +34,7 @@
 <p>
     @Html.ActionLink("Create New Ticket", "Create")
 </p>
-<table class="TicketListTable">
+<table class="TicketListTable sortable">
     <tr>
         <th>
             ID
@@ -61,7 +61,7 @@
             Customer
         </th>
         <th>
-            type
+            Type
         </th>
         <th>
             Created By
@@ -126,6 +126,7 @@
 }
 
 </table>
+<script src="Scripts/sorttable.js"></script>
 <script type="text/javascript">
     function OpenTicket(id) {
         var url = "/Ticket/Edit/" + id;
@@ -151,14 +152,11 @@
     .ticketListRow:hover
     {
         background-color:#B0C4DE;
-        border-bottom-width:0;
     
     }
     .ticketListRow td
     {
-        border:0 solid black;
-        border-left-width:0;
-        border-right-width:0;    
+        border-left:1px solid LightGray;
     }
     .attention
     {
