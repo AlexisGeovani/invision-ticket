@@ -43,9 +43,6 @@
             Summary
         </th>
         <th>
-            Created
-        </th>
-        <th>
             Last Modified
         </th>
         <th>
@@ -70,13 +67,13 @@
             Salesman
         </th>
         <th>
-            Technician
+            Tech
         </th>
     </tr>
 
 @foreach (var item in Model)
 {
-    <tr class="@GetTRClass(item.TechnicianLoginID, item.SalesmanLoginID, item.TicketStatusAttentionRequired)" onclick="OpenTicket('@item.TicketID')">
+    <tr title=Created&nbsp;On:&nbsp;@item.CreatedDateTime.ToUniversalTime() class="@GetTRClass(item.TechnicianLoginID, item.SalesmanLoginID, item.TicketStatusAttentionRequired)" onclick="OpenTicket('@item.TicketID')">
 
         <td>
             @Html.DisplayFor(modelItem => item.TicketID)
@@ -85,16 +82,13 @@
             @Html.DisplayFor(modelItem => item.Summary)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CreatedDateTime)
-        </td>
-        <td>
             @if (item.LastModifiedDateTime.HasValue)
             {
                 @Html.DisplayFor(modelItem => item.LastModifiedDateTime.Value)
             }
             else
             {
-                @Html.Raw("-");
+                @Html.DisplayFor(modelItem => item.CreatedDateTime)
             }
         </td>
         <td>
@@ -160,7 +154,7 @@
     }
     .attention
     {
-        background-color:#FFE4C4;    
+        background-color:#FFA9A9;    
     }
 </style>
 
