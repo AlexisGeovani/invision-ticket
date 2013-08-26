@@ -234,12 +234,19 @@
         @foreach (var update in Model.Updates.OrderByDescending(u => u.ActivityDateTime))
         { 
             <div class ="editor-label">
-                <span>@Html.Raw("<span class='UpdateHeader'>" + update.Login.DisplayName + " " + update.ActivityDateTime + "</span>" ) &nbsp;&nbsp; @Html.ActionLink("Delete", "DeleteUpdate", "Ticket", new { id = update.UpdateID }, new { target = "_blank" }) </span><br />
-                <span class="UpdateInformation">Billed Minutes:@update.BilledMinutes Actual Minutes:@update.ActualMinutes BillRate: @((update.BillRate == null) ? "$0" : update.BillRate.TicketBillRate.ToString("C")) </span> <br />
-                <span class="UpdateInformation">Other Charges: @((update.OtherCharges == null) ? "$0" : update.OtherCharges.Value.ToString("C"))  
-                    @((update.OtherCharges.HasValue) ? ("For:" + update.OtherChargesDescription) : "" )</span>
+                <span>@Html.Raw("<span class='UpdateHeader'>" + update.Login.DisplayName + " " + update.ActivityDateTime + "</span>") &nbsp;&nbsp; @Html.ActionLink("Delete", "DeleteUpdate", "Ticket", new { id = update.UpdateID }, new { target = "_blank" }) </span><br />
+                <div class="updateText">
+                    @if (update.BilledMinutes.HasValue || update.ActualMinutes.HasValue || update.OtherCharges.HasValue)
+                    {
                 
-                <p>@Html.Raw(update.Comment)</p>
+                        <span class="UpdateInformation">Billed Minutes:@update.BilledMinutes Actual Minutes:@update.ActualMinutes BillRate: @((update.BillRate == null) ? "$0" : update.BillRate.TicketBillRate.ToString("C")) </span> <br />
+                        <span class="UpdateInformation">Other Charges: @((update.OtherCharges == null) ? "$0" : update.OtherCharges.Value.ToString("C"))  
+                            @((update.OtherCharges.HasValue) ? ("For:" + update.OtherChargesDescription) : "")</span>
+                        <p></p>
+                    }
+                
+                    @Html.Raw(update.Comment)
+                </div>
             </div>       
         }
         <input type="button" class="updateButon" onclick="Update(@Model.TicketID)" value="Update"/>
