@@ -131,10 +131,10 @@
     function ToggleSearch() {
         var div = document.getElementById("TicketSearchDiv");
         if (div.style.display == "block") {
-            div.style.display = "none";
+            $(div).slideUp(2000);
         }
         else {
-            div.style.display = "block";
+            $(div).slideDown(2000);
         }
     
     }
