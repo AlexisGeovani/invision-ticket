@@ -46,8 +46,10 @@ namespace InVision_Ticket.Controllers
                                 false,
                                 Login.LocationID + ":" + Login.UserTypeID);
                             string encryptedTicket = FormsAuthentication.Encrypt(ticket);
+                            var x = FormsAuthentication.Timeout;
+                            FormsAuthentication.SetAuthCookie(Login.Email, true);
                             HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
-							this.Response.Cookies.Add(cookie);
+							//this.Response.Cookies.Add(cookie);
                             //FormsAuthentication.SetAuthCookie(login.Email, false);
 							return RedirectToAction("Index", "Home");
 						}
