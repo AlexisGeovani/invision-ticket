@@ -38,19 +38,8 @@ namespace InVision_Ticket.Controllers
 
 						if (PasswordHash.ValidatePassword(login.Password, Login.Password))
 						{
-                            //FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
-                                //2,
-                                //Login.Email,
-                                //DateTime.Now,
-                                //DateTime.Now.AddHours(8),
-                                //false,
-                                //Login.LocationID + ":" + Login.UserTypeID);
-                            //string encryptedTicket = FormsAuthentication.Encrypt(ticket);
-                            //var x = FormsAuthentication.Timeout;
+
                             FormsAuthentication.SetAuthCookie(Login.Email, true);
-                            //HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
-							//this.Response.Cookies.Add(cookie);
-                            //FormsAuthentication.SetAuthCookie(login.Email, false);
 							return RedirectToAction("Index", "Home");
 						}
 					}
@@ -61,3 +50,15 @@ namespace InVision_Ticket.Controllers
 		}
 	}
 }
+//FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
+//2,
+//Login.Email,
+//DateTime.Now,
+//DateTime.Now.AddHours(8),
+//false,
+//Login.LocationID + ":" + Login.UserTypeID);
+//string encryptedTicket = FormsAuthentication.Encrypt(ticket);
+//var x = FormsAuthentication.Timeout;
+//HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+//this.Response.Cookies.Add(cookie);
+//FormsAuthentication.SetAuthCookie(login.Email, false);
