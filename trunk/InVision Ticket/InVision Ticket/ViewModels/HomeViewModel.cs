@@ -9,5 +9,6 @@ namespace InVision_Ticket.ViewModels
     public class HomeViewModel
     {
         public List<Announcement> Announcements { get; set; }
+        public List<TicketListViewModel> StagnantTickets { get; set; }
     }
 }

@@ -9,13 +9,170 @@
     <legend>Announcements</legend>
     @foreach (var a in Model.Announcements)
     { 
-        <fieldset>
-            <legend>@a.CreatedDateTime</legend>
+            <b>@a.CreatedDateTime</b>
             @Html.Raw(a.HTML)
-        </fieldset>
+    }
+</fieldset>
+<br />
+
+<fieldset>
+    <legend>Stagnant Tickets</legend>
+    (Tickets open and not modified in last 7 days at this shop)
+    <table class="TicketListTable sortable">
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            Summary
+        </th>
+        <th>
+            Last Modified
+        </th>
+        <th>
+            Store
+        </th>
+        <th>
+            Status
+        </th>
+        <th>
+            Phone
+        </th>
+        <th>
+            Customer
+        </th>
+        <th>
+            Type
+        </th>
+        <th>
+            Created By
+        </th>
+        <th>
+            Salesman
+        </th>
+        <th>
+            Tech
+        </th>
+    </tr>
+    @foreach (var t in Model.StagnantTickets)
+    { 
         
+         <tr title=Created&nbsp;On:&nbsp;@t.CreatedDateTime.ToUniversalTime() class="@GetTRClass(t.TechnicianLoginID, t.SalesmanLoginID, t.TicketStatusAttentionRequired)" onclick="OpenTicket('@t.TicketID')">
+
+            <td>
+                @Html.DisplayFor(modelItem => t.TicketID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => t.Summary)
+            </td>
+            <td>
+                @if (t.LastModifiedDateTime.HasValue)
+                {
+                    @Html.DisplayFor(modelItem => t.LastModifiedDateTime.Value)
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => t.CreatedDateTime)
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => t.Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => t.TicketStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => t.CustomerPhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => t.CustomerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => t.TicketType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => t.CreatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => t.Salesman)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => t.Technician)
+            </td>
+
+        </tr>
+    }
+    </table>
+
+</fieldset>
+
+<script src="Scripts/sorttable.js"></script>
+<script type="text/javascript">
+    function OpenTicket(id) {
+        var url = "/Ticket/Edit/" + id;
+        var win = window.open(url, '_blank');
+        win.focus();
+
+    }
+    function ToggleSearch() {
+        var div = document.getElementById("TicketSearchDiv");
+        if (div.style.display == "block") {
+            $(div).slideUp(2000);
+        }
+        else {
+            $(div).slideDown(2000);
+        }
     
     }
 
+</script>
 
-</fieldset>
+<style type="text/css">
+
+    .ticketListRow:hover
+    {
+        background-color:#B0C4DE;
+    
+    }
+    .ticketListRow td
+    {
+        border-left:1px solid LightGray;
+    }
+    .attention
+    {
+        background-color:#FFA9A9;    
+    }
+</style>
+
+@functions{ 
+
+    public string GetTRClass(int? TechID, int? SalesID, bool? AttentionRequired)
+    {
+        if (AttentionRequired.HasValue)
+        {
+            if (AttentionRequired.Value)
+            {
+                var userID = ViewBag.userID;
+                if (TechID.HasValue)
+                {
+                    if (TechID.Value == userID)
+                    {
+                        return "ticketListRow attention";
+                    }
+
+                }
+                if (SalesID.HasValue)
+                {
+                    if (SalesID.Value == userID)
+                    {
+                        return "ticketListRow attention";
+                    }
+                }
+                return "ticketListRow";
+            }
+            return "ticketListRow";
+        }
+        return "ticketListRow";
+    }
+    
+}
