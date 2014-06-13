@@ -56,10 +56,10 @@ namespace InVision_Ticket.Controllers
                     EndDate = Convert.ToDateTime(form["EndDate"]);
                 }
                 int? LocationID = null;
-                if (!string.IsNullOrWhiteSpace(form["SearchLocation"]))
+                if (form["SearchLocation"] == true.ToString())
                 {
-                    var userData = ((FormsIdentity)User.Identity).Ticket.UserData.Split(':');
-                    LocationID = Convert.ToInt32(userData[0]);
+                    var user = db.Logins.Where(l => l.Deleted == false).SingleOrDefault(l => l.Email == User.Identity.Name);
+                    LocationID = Convert.ToInt32(user.LocationID);
                 }
                 
                 return View(SearchUtility.CustomerSearch(Search, LocationID, StartDate, EndDate));
@@ -92,7 +92,7 @@ namespace InVision_Ticket.Controllers
         }
         public ActionResult CustomerTickets(long id)
         {
-            return View("../Ticket/Index", SearchUtility.TicketSearch(null, null, null, null, null, id, null));
+            return View("../Ticket/Index", SearchUtility.TicketSearch(null, null, null, null, null, id, null, null));
         }
         public ActionResult CustomerCSV()
         {
