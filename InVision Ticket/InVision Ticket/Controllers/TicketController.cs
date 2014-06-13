@@ -155,7 +155,7 @@ namespace InVision_Ticket.Controllers
 
                 var userID = login.LoginID;
                 ViewBag.userID = login.LoginID;
-                var tickets = SearchUtility.TicketSearch(null, (int)login.LocationID.Value, null, null, true, null, null);
+                var tickets = SearchUtility.TicketSearch(null, (int)login.LocationID.Value, null, null, true, null, null, null);
                
                 //var ticketsq = db.Tickets.Where(t => t.TicketStatus.Open == true);
                 return View(tickets);
@@ -186,11 +186,11 @@ namespace InVision_Ticket.Controllers
                 OpenStatusOnly = Convert.ToBoolean(form["StatusSearch"]);
             }
             int? LocationID = null;
-            if(!string.IsNullOrWhiteSpace(form["SearchLocation"]))
-            {
-                var userData = ((FormsIdentity)User.Identity).Ticket.UserData.Split(':');
-                LocationID = Convert.ToInt32(userData[0]);
-            }
+            //if(!string.IsNullOrWhiteSpace(form["SearchLocation"]))
+            //{
+            //    var userData = ((FormsIdentity)User.Identity).Ticket.UserData.Split(':');
+            //    LocationID = Convert.ToInt32(userData[0]);
+            //}
             long? CustomerID = null;
             if(!string.IsNullOrWhiteSpace(form["CustomerID"]))
             {
@@ -203,14 +203,17 @@ namespace InVision_Ticket.Controllers
             }
             using (InVisionTicketContext db = new InVisionTicketContext())
             {
-                var userID = db.Logins.Where(l => l.Deleted == false).SingleOrDefault(l => l.Email == User.Identity.Name).LoginID;
-                ViewBag.userID = db.Logins.Where(l => l.Deleted == false).SingleOrDefault(l => l.Email == User.Identity.Name).LoginID;
-                var tickets = SearchUtility.TicketSearch(Search, LocationID, StartDate, EndDate, OpenStatusOnly, CustomerID, LoginID);
+                var user = db.Logins.Where(l => l.Deleted == false).SingleOrDefault(l => l.Email == User.Identity.Name);
+                ViewBag.userID = user.LoginID;
+                if (form["SearchLocation"] == true.ToString())
+                {
+                    LocationID = Convert.ToInt32(user.LocationID);
+                }
+                var tickets = SearchUtility.TicketSearch(Search, LocationID, StartDate, EndDate, OpenStatusOnly, CustomerID, LoginID, null);
 
                 //var ticketsq = db.Tickets.Where(t => t.TicketStatus.Open == true);
                 return View(tickets);
             }
-           
         }
 		////
 		//// GET: /Ticket/Details/5

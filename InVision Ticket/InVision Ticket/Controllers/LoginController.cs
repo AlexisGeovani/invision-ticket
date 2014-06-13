@@ -21,7 +21,7 @@ namespace InVision_Ticket.Controllers
         // GET: /Login/
         public ActionResult LoginTickets(int id)
         {
-            return View("../Ticket/Index", SearchUtility.TicketSearch(null, null, null, null, null, null, id));
+            return View("../Ticket/Index", SearchUtility.TicketSearch(null, null, null, null, null, null, id, null));
         }
         public ViewResult Index()
         {
