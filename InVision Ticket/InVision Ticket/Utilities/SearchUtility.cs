@@ -50,7 +50,7 @@ namespace InVision_Ticket.Utilities
                 return CustomerList.ToList();
             }
         }
-        public static List<TicketListViewModel> TicketSearch(string SearchString, int? LocationID, DateTime? StartDate, DateTime? EndDate, bool? OpenStatusOnly, long? CustomerID, int? LoginID)
+        public static List<TicketListViewModel> TicketSearch(string SearchString, int? LocationID, DateTime? StartDate, DateTime? EndDate, bool? OpenStatusOnly, long? CustomerID, int? LoginID, DateTime? LastTouchedBefore)
         {
  
             using (InVisionTicketContext db = new InVisionTicketContext())
@@ -100,6 +100,11 @@ namespace InVision_Ticket.Utilities
                         StringPredicate = StringPredicate.Or(t => t.Summary.Contains(temp));
                     }
                     predicate = predicate.And(StringPredicate.Expand());
+                }
+
+                if (LastTouchedBefore.HasValue)
+                {
+                    predicate = predicate.And(t => t.LastModifiedDateTime <= LastTouchedBefore.Value);
                 }
                 var tickets = db.Tickets.AsExpandable().Include(t => t.Updates).Include(t => t.Customer).Include(t => t.Uploads).Where(predicate);
 
