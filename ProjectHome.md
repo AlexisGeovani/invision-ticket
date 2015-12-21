@@ -1,0 +1,1 @@
+This is an MVC4 c# application meant to help computer repair shop track repairs, employees and customers.
